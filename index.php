@@ -890,22 +890,11 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                     อ่านเพิ่มเติมได้ที่ <a href="cookie_policy.php">นโยบายคุกกี้</a>
                     และ <a href="privacy_policy.php">นโยบายความเป็นส่วนตัว</a>
                 </p>
-                <button class="btn btn-accent cookie-btn" onclick="acceptCookies()">ยอมรับ</button>
+                <button class="btn btn-accent cookie-btn" id="acceptCookie" type="button">ยอมรับ</button>
             </div>
         </div>
-        <script>
-            (function() {
-                if (!localStorage.getItem('cookieAccepted')) {
-                    setTimeout(function() {
-                        document.getElementById('cookieConsentBanner').classList.add('show');
-                    }, 1000);
-                }
-            })();
-            function acceptCookies() {
-                localStorage.setItem('cookieAccepted', '1');
-                document.getElementById('cookieConsentBanner').classList.remove('show');
-            }
-        </script>
+        
 </body>
 
 </html>
+

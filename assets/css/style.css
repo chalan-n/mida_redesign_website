@@ -177,7 +177,9 @@ h3 {
 .slider-btn:focus-visible,
 .dot:focus-visible,
 .floating-contact-main:focus-visible,
-.floating-contact-option:focus-visible {
+.floating-contact-option:focus-visible,
+.back-to-top:focus-visible,
+.range-slider:focus-visible {
     outline: 3px solid rgba(254, 196, 53, 0.9);
     outline-offset: 4px;
 }
