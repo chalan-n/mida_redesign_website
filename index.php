@@ -145,7 +145,7 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
     include 'includes/nav.php'; ?>
 
     <!-- Banner Slider Section -->
-    <section class="banner-section" style="margin-top: var(--header-height);">
+    <section class="banner-section">
         <div class="container">
             <div class="slider-container">
                 <div class="slider-wrapper">
@@ -208,25 +208,24 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
     </section>
 
     <!-- Hero Section -->
-    <section class="hero" id="home" style="padding-top: 40px; padding-bottom: 20px; min-height: auto;">
+    <section class="hero section-compact-top" id="home">
         <div class="hero-bg-shape"></div>
         <div class="container hero-content">
             <!-- Left: Text -->
             <div class="hero-text">
-                <h1 style="line-height: 1.1; margin-bottom: 20px;">รถอะไร..<br>ก็ขอกู้เงินได้</h1>
-                <h2 style="font-size: 1.5rem; color: #555; font-weight: 400; margin-bottom: 30px;">
-                    <span style="font-size: 1rem; color: #777;">บริการสินเชื่อเช่าซื้อรถยนต์
+                <h1 class="hero-title">รถอะไร..<br>ก็ขอกู้เงินได้</h1>
+                <h2 class="hero-subtitle">
+                    <span class="hero-subtitle-text">บริการสินเชื่อเช่าซื้อรถยนต์
                         สินเชื่อจำนำทะเบียนรถยนต์
                         สินเชื่อส่วนบุคคล</span>
                 </h2>
-                <div style="display: flex; gap: 15px;">
+                <div class="hero-actions">
                     <a href="#products" class="btn btn-primary">ดูบริการของเรา</a>
-                    <a href="#steps" class="btn btn-primary"
-                        style="background: white; color: var(--primary-blue);">ขั้นตอนการกู้</a>
+                    <a href="#steps" class="btn btn-primary btn-secondary-light">ขั้นตอนการกู้</a>
                 </div>
 
-                <div style="margin-top: 40px; border-left: 4px solid var(--accent-gold); padding-left: 20px;">
-                    <p style="margin-bottom: 0; font-style: italic; color: #555;">"อนุมัติไว ให้วงเงินสูง ไม่ยุ่งยาก"
+                <div class="hero-note">
+                    <p class="hero-note-text">"อนุมัติไว ให้วงเงินสูง ไม่ยุ่งยาก"
                     </p>
                 </div>
             </div>
@@ -294,11 +293,11 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                                 <i class="<?php echo htmlspecialchars($service['icon_class']); ?>"></i>
                             </div>
                             <h3><?php echo htmlspecialchars($service['title']); ?></h3>
-                            <p style="margin: 15px 0; color: #666;">
+                            <p class="feature-description">
                                 <?php echo nl2br(htmlspecialchars($service['description'])); ?>
                             </p>
                             <a href="<?php echo htmlspecialchars($service['link']); ?>"
-                                style="color: var(--primary-blue); font-weight: 600; text-decoration: none;">อ่านเพิ่มเติม <i
+                                class="feature-link">อ่านเพิ่มเติม <i
                                     class="fa-solid fa-arrow-right"></i></a>
                         </div>
                     <?php endforeach; ?>
@@ -342,7 +341,7 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
         </div>
 
         <!-- Why Choose Us / Stat Section -->
-        <section class="section" style="background-color: #f0f4f8; padding: 60px 0;">
+        <section class="section section-soft">
             <div class="container">
                 <div class="section-title">
                     <h2>ทำไมต้องเลือกไมด้า ลิสซิ่ง?</h2>
@@ -398,7 +397,7 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
         </section>
 
         <!-- Testimonials Section -->
-        <section class="section" style="background-color: white; padding-top: 40px;">
+        <section class="section testimonial-section">
             <div class="container">
                 <div class="section-title">
                     <h2>เสียงจากลูกค้าของเรา</h2>
@@ -412,12 +411,12 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                         <p class="review-text">"ตอนแรกกังวลมากเพราะต้องการเงินด่วนแต่รถยังผ่อนไม่หมด
                             มาปรึกษาที่นี่เจ้าหน้าที่แนะนำดีมาก อนุมัติไว ได้เงินมาหมุนทันเวลาพอดีครับ"</p>
                         <div class="reviewer-info">
-                            <div class="reviewer-avatar" style="background-color: #e3f2fd; color: var(--primary-blue);">
+                            <div class="reviewer-avatar reviewer-avatar-blue">
                                 <i class="fa-solid fa-user"></i>
                             </div>
-                            <div>
-                                <h4 style="margin: 0; font-size: 1rem;">คุณสมชาย</h4>
-                                <span style="font-size: 0.85rem; color: #888;">เจ้าของธุรกิจส่วนตัว</span>
+                            <div class="reviewer-meta">
+                                <h4>คุณสมชาย</h4>
+                                <span class="reviewer-role">เจ้าของธุรกิจส่วนตัว</span>
                             </div>
                             <div class="stars">
                                 <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
@@ -433,12 +432,12 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                         <p class="review-text">"ประทับใจความรวดเร็วค่ะ ยื่นเอกสารตอนเช้า ตอนบ่ายรู้ผลเลย
                             ไม่ยุ่งยากอย่างที่คิด ดอกเบี้ยก็โอเครับได้ แนะนำเลยค่ะ"</p>
                         <div class="reviewer-info">
-                            <div class="reviewer-avatar" style="background-color: #fff3e0; color: var(--accent-gold);">
+                            <div class="reviewer-avatar reviewer-avatar-gold">
                                 <i class="fa-solid fa-user-tie"></i>
                             </div>
-                            <div>
-                                <h4 style="margin: 0; font-size: 1rem;">คุณนิตยา</h4>
-                                <span style="font-size: 0.85rem; color: #888;">พนักงานบริษัท</span>
+                            <div class="reviewer-meta">
+                                <h4>คุณนิตยา</h4>
+                                <span class="reviewer-role">พนักงานบริษัท</span>
                             </div>
                             <div class="stars">
                                 <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
@@ -454,12 +453,12 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                         <p class="review-text">"รถกระบะทำเงินครับ เอามาเข้าที่นี่ได้วงเงินสูงกว่าที่อื่น
                             เอาเงินไปต่อทุนค้าขายได้สบายเลย ขอบคุณไมด้าลิสซิ่งมากครับ"</p>
                         <div class="reviewer-info">
-                            <div class="reviewer-avatar" style="background-color: #e8f5e9; color: #2e7d32;">
+                            <div class="reviewer-avatar reviewer-avatar-green">
                                 <i class="fa-solid fa-user-tag"></i>
                             </div>
-                            <div>
-                                <h4 style="margin: 0; font-size: 1rem;">คุณประเสริฐ</h4>
-                                <span style="font-size: 0.85rem; color: #888;">อาชีพเกษตรกร</span>
+                            <div class="reviewer-meta">
+                                <h4>คุณประเสริฐ</h4>
+                                <span class="reviewer-role">อาชีพเกษตรกร</span>
                             </div>
                             <div class="stars">
                                 <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
@@ -473,49 +472,48 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
         </section>
 
         <!-- Steps Section (New) -->
-        <section class="section" id="steps" style="background-color: var(--bg-white);">
+        <section class="section section-plain" id="steps">
             <div class="container">
                 <div class="section-title">
                     <h2>4 ขั้นตอนง่ายๆ ขอสินเชื่อ</h2>
                     <p>สะดวกรวดเร็ว ไม่ยุ่งยาก</p>
                 </div>
 
-                <div
-                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; text-align: center;">
+                <div class="steps-grid">
                     <!-- Step 1 -->
-                    <div style="position: relative;">
+                    <div class="step-card">
                         <div
-                            style="width: 60px; height: 60px; background: var(--primary-blue); color: white; border-radius: 50%; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                            class="step-number">
                             1</div>
-                        <h4 style="margin-bottom: 15px;">สมัครง่ายๆได้ทุกที่</h4>
-                        <p style="font-size: 0.95rem; color: #666;">กรอกฟอร์มออนไลน์ รอเจ้าหน้าที่ติดต่อกลับ</p>
+                        <h4 class="step-title">สมัครง่ายๆได้ทุกที่</h4>
+                        <p class="step-description">กรอกฟอร์มออนไลน์ รอเจ้าหน้าที่ติดต่อกลับ</p>
                     </div>
 
                     <!-- Step 2 -->
-                    <div style="position: relative;">
+                    <div class="step-card">
                         <div
-                            style="width: 60px; height: 60px; background: var(--primary-blue); color: white; border-radius: 50%; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                            class="step-number">
                             2</div>
-                        <h4 style="margin-bottom: 15px;">ส่งรูปถ่ายเอกสาร</h4>
-                        <p style="font-size: 0.95rem; color: #666;">ส่งเอกสารประกอบการขอสินเชื่อ</p>
+                        <h4 class="step-title">ส่งรูปถ่ายเอกสาร</h4>
+                        <p class="step-description">ส่งเอกสารประกอบการขอสินเชื่อ</p>
                     </div>
 
                     <!-- Step 3 -->
-                    <div style="position: relative;">
+                    <div class="step-card">
                         <div
-                            style="width: 60px; height: 60px; background: var(--primary-blue); color: white; border-radius: 50%; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                            class="step-number">
                             3</div>
-                        <h4 style="margin-bottom: 15px;">รอแจ้งผลอนุมัติ</h4>
-                        <p style="font-size: 0.95rem; color: #666;">แจ้งผลหลังจากได้รับเอกสารครบถ้วน</p>
+                        <h4 class="step-title">รอแจ้งผลอนุมัติ</h4>
+                        <p class="step-description">แจ้งผลหลังจากได้รับเอกสารครบถ้วน</p>
                     </div>
 
                     <!-- Step 4 -->
-                    <div style="position: relative;">
+                    <div class="step-card">
                         <div
-                            style="width: 60px; height: 60px; background: var(--accent-gold); color: white; border-radius: 50%; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                            class="step-number step-number-highlight">
                             4</div>
-                        <h4 style="margin-bottom: 15px;">รอรับเงิน</h4>
-                        <p style="font-size: 0.95rem; color: #666;">รับเงินโอนเมื่อดำเนินการเรียบร้อย</p>
+                        <h4 class="step-title">รอรับเงิน</h4>
+                        <p class="step-description">รับเงินโอนเมื่อดำเนินการเรียบร้อย</p>
                     </div>
                 </div>
             </div>
@@ -526,7 +524,7 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
             <!-- Background with gradient and car image -->
             <div class="cta-modern-bg"></div>
 
-            <div class="container" style="position: relative; z-index: 2;">
+            <div class="container cta-container">
                 <div class="cta-modern-content">
                     <!-- Main Headline -->
                     <h2 class="cta-modern-headline">
@@ -593,21 +591,18 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                 <div class="footer-content">
                     <div>
                         <div class="footer-logo">MIDA LEASING</div>
-                        <p style="color: #ccc; margin-bottom: 10px;">บริษัท ไมด้าลิสซิ่ง จำกัด (มหาชน)</p>
-                        <p style="color: #ccc; margin-bottom: 10px; font-size: 1rem;">
+                        <p class="footer-company">บริษัท ไมด้าลิสซิ่ง จำกัด (มหาชน)</p>
+                        <p class="footer-address">
                             <?php echo nl2br(htmlspecialchars($settings['site_address'])); ?>
                         </p>
-                        <p style="color: #ccc; margin-bottom: 20px; font-size: 1rem;"><i class="fa-solid fa-phone"
-                                style="margin-right: 10px;"></i><?php echo htmlspecialchars($settings['site_phone']); ?>
+                        <p class="footer-phone"><i class="fa-solid fa-phone"></i><?php echo htmlspecialchars($settings['site_phone']); ?>
                         </p>
-                        <div style="display: flex; gap: 15px;">
-                            <a href="<?php echo htmlspecialchars($settings['site_facebook']); ?>" target="_blank"
-                                style="text-decoration: none;">
-                                <i class="fa-brands fa-facebook" style="font-size: 2rem; color: #1877F2;"></i>
+                        <div class="footer-socials">
+                            <a href="<?php echo htmlspecialchars($settings['site_facebook']); ?>" target="_blank" class="footer-social-link">
+                                <i class="fa-brands fa-facebook footer-social-icon footer-social-icon-facebook"></i>
                             </a>
-                            <a href="<?php echo htmlspecialchars($settings['site_line']); ?>" target="_blank"
-                                style="text-decoration: none;">
-                                <i class="fa-brands fa-line" style="font-size: 2rem; color: #00B900;"></i>
+                            <a href="<?php echo htmlspecialchars($settings['site_line']); ?>" target="_blank" class="footer-social-link">
+                                <i class="fa-brands fa-line footer-social-icon footer-social-icon-line"></i>
                             </a>
                         </div>
                     </div>
@@ -637,11 +632,11 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                 <div class="copyright">
                     &copy; 2026 Mida Leasing Public Company Limited. All Rights Reserved.
                     <br>
-                    <div style="margin-top: 10px;">
+                    <div class="footer-policies">
                         <a href="privacy_policy.php"
-                            style="color: #888; text-decoration: none; margin: 0 10px;">นโยบายความเป็นส่วนตัว</a> |
+                            class="footer-policy-link">นโยบายความเป็นส่วนตัว</a> |
                         <a href="cookie_policy.php"
-                            style="color: #888; text-decoration: none; margin: 0 10px;">นโยบายเกี่ยวกับ
+                            class="footer-policy-link">นโยบายเกี่ยวกับ
                             cookie</a>
                     </div>
                 </div>
@@ -756,22 +751,18 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
 
         <!-- Popup Modal -->
         <?php if ($popup_news): ?>
-            <div id="newsPopup" role="dialog" aria-modal="true" aria-labelledby="newsPopupTitle" aria-describedby="newsPopupDescription"
-                style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; display: none; align-items: center; justify-content: center;">
-                <div id="newsPopupPanel" tabindex="-1"
-                    style="background: white; width: 90%; max-width: 600px; border-radius: 8px; overflow: hidden; position: relative; animation: popupFadeIn 0.3s ease-out;">
-                    <button type="button" onclick="closePopup()" aria-label="Close popup"
-                        style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.5); color: white; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10;">
+            <div id="newsPopup" class="popup-modal" role="dialog" aria-modal="true" aria-labelledby="newsPopupTitle" aria-describedby="newsPopupDescription">
+                <div id="newsPopupPanel" class="popup-panel" tabindex="-1">
+                    <button type="button" class="popup-close-btn" onclick="closePopup()" aria-label="Close popup">
                         <i class="fa-solid fa-times" aria-hidden="true"></i>
                     </button>
 
-                    <a href="news_detail.php?id=<?php echo $popup_news_id; ?>"
-                        style="text-decoration: none; display: block;">
+                    <a href="news_detail.php?id=<?php echo $popup_news_id; ?>" class="popup-link">
                         <?php if (!empty($popup_news['cover_image'])): ?>
-                            <img src="<?php echo $popup_cover_image; ?>" alt="<?php echo $popup_title; ?>" style="width: 100%; display: block;">
+                            <img src="<?php echo $popup_cover_image; ?>" alt="<?php echo $popup_title; ?>" class="popup-image">
                         <?php endif; ?>
-                        <div style="padding: 20px; padding-bottom: 5px; text-align: center;">
-                            <h3 id="newsPopupTitle" style="margin: 0 0 10px 0; color: #333; font-size: 1.5rem;">
+                        <div class="popup-body">
+                            <h3 id="newsPopupTitle" class="popup-title">
                                 <?php echo $popup_title; ?>
                             </h3>
                             <?php
@@ -779,19 +770,18 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                             $trimmed_content = trim($plain_content);
                             if (!empty($trimmed_content)):
                                 ?>
-                                <p id="newsPopupDescription" style="color: #666; margin: 0; font-size: 1rem;">
+                                <p id="newsPopupDescription" class="popup-description">
                                     <?php echo htmlspecialchars(mb_substr($plain_content, 0, 100, 'UTF-8') . '...', ENT_QUOTES, 'UTF-8'); ?>
                                 </p>
                             <?php else: ?>
-                                <p id="newsPopupDescription" style="display:none;">Popup announcement</p>
+                                <p id="newsPopupDescription" class="popup-description popup-description-hidden">Popup announcement</p>
                             <?php endif; ?>
                         </div>
                     </a>
 
-                    <div style="padding: 10px 20px 20px 20px; text-align: center; border-top: 1px solid #eee;">
-                        <label
-                            style="color: #666; font-size: 0.9em; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                            <input type="checkbox" id="dontShowPopup" style="width: 16px; height: 16px;">
+                    <div class="popup-footer">
+                        <label class="popup-checkbox-label">
+                            <input type="checkbox" id="dontShowPopup" class="popup-checkbox">
                             ไม่ต้องแสดงอีกในวันนี้
                         </label>
                     </div>

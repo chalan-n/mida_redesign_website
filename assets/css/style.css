@@ -96,6 +96,19 @@ img, picture, video, canvas, svg {
     padding: 80px 0 0;
 }
 
+.section-soft {
+    background-color: #f0f4f8;
+    padding: 60px 0;
+}
+
+.section-plain {
+    background-color: var(--bg-white);
+}
+
+.section-compact-top {
+    padding-top: 40px;
+}
+
 /* Typography */
 h1,
 h2,
@@ -339,10 +352,43 @@ h3 {
     font-size: 3rem;
 }
 
-.hero-text p {
-    font-size: 1.2rem;
-    color: var(--text-light);
+.hero-title {
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    color: #555;
+    font-weight: 400;
     margin-bottom: 30px;
+}
+
+.hero-subtitle-text {
+    font-size: 1rem;
+    color: #777;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.btn-secondary-light {
+    background: #fff;
+    color: var(--primary-blue);
+}
+
+.hero-note {
+    margin-top: 40px;
+    border-left: 4px solid var(--accent-gold);
+    padding-left: 20px;
+}
+
+.hero-note-text {
+    margin-bottom: 0;
+    font-style: italic;
+    color: #555;
 }
 
 /* Loan Calculator Card */
@@ -489,6 +535,17 @@ h3 {
     transform: scale(1.1);
 }
 
+.feature-description {
+    margin: 15px 0;
+    color: #666;
+}
+
+.feature-link {
+    color: var(--primary-blue);
+    font-weight: 600;
+    text-decoration: none;
+}
+
 /* Footer */
 footer {
     background: #0f2d5c;
@@ -541,6 +598,223 @@ footer {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     font-size: 0.9rem;
     color: #888;
+}
+
+.banner-section {
+    margin-top: var(--header-height);
+}
+
+.testimonial-section {
+    background-color: var(--bg-white);
+    padding-top: 40px;
+}
+
+.reviewer-avatar-blue {
+    background-color: #e3f2fd;
+    color: var(--primary-blue);
+}
+
+.reviewer-avatar-gold {
+    background-color: #fff3e0;
+    color: var(--accent-gold);
+}
+
+.reviewer-avatar-green {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.reviewer-meta h4 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.reviewer-role {
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+    text-align: center;
+}
+
+.step-card {
+    position: relative;
+}
+
+.step-number {
+    width: 60px;
+    height: 60px;
+    background: var(--primary-blue);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+}
+
+.step-number-highlight {
+    background: var(--accent-gold);
+}
+
+.step-title {
+    margin-bottom: 15px;
+}
+
+.step-description {
+    font-size: 0.95rem;
+    color: #666;
+}
+
+.cta-container {
+    position: relative;
+    z-index: 2;
+}
+
+.footer-company,
+.footer-address,
+.footer-phone {
+    color: #ccc;
+    font-size: 1rem;
+}
+
+.footer-company,
+.footer-address {
+    margin-bottom: 10px;
+}
+
+.footer-phone {
+    margin-bottom: 20px;
+}
+
+.footer-phone i {
+    margin-right: 10px;
+}
+
+.footer-socials {
+    display: flex;
+    gap: 15px;
+}
+
+.footer-social-link {
+    text-decoration: none;
+}
+
+.footer-social-icon {
+    font-size: 2rem;
+}
+
+.footer-social-icon-facebook {
+    color: #1877F2;
+}
+
+.footer-social-icon-line {
+    color: #00B900;
+}
+
+.footer-policies {
+    margin-top: 10px;
+}
+
+.footer-policy-link {
+    color: #888;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.popup-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.popup-panel {
+    background: #fff;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    animation: popupFadeIn 0.3s ease-out;
+}
+
+.popup-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.popup-link {
+    text-decoration: none;
+    display: block;
+}
+
+.popup-image {
+    width: 100%;
+    display: block;
+}
+
+.popup-body {
+    padding: 20px;
+    padding-bottom: 5px;
+    text-align: center;
+}
+
+.popup-title {
+    margin: 0 0 10px;
+    color: #333;
+    font-size: 1.5rem;
+}
+
+.popup-description {
+    color: #666;
+    margin: 0;
+    font-size: 1rem;
+}
+
+.popup-description-hidden {
+    display: none;
+}
+
+.popup-footer {
+    padding: 10px 20px 20px;
+    text-align: center;
+    border-top: 1px solid #eee;
+}
+
+.popup-checkbox-label {
+    color: #666;
+    font-size: 0.9em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.popup-checkbox {
+    width: 16px;
+    height: 16px;
 }
 
 /* Responsive */
@@ -647,7 +921,7 @@ footer {
         font-size: 2rem;
     }
 
-    .hero-text div[style*="display: flex"] {
+    .hero-actions {
         justify-content: center;
         flex-wrap: wrap;
     }
