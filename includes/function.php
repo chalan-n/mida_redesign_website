@@ -33,7 +33,7 @@ function sqlExecutePrepared($stmt, $types = '', $params = array())
 	}
 
 	if(!empty($types) && !empty($params)) {
-		$bindParams = array($types);
+		$bindParams = array($stmt, $types);
 		foreach ($params as $key => $value) {
 			$bindParams[] = &$params[$key];
 		}
