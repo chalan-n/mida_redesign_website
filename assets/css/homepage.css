@@ -1,4 +1,9 @@
 /* Homepage Layout Utilities */
+.banner-section {
+    margin-top: 0;
+    padding-top: calc(var(--header-height) + 16px);
+}
+
 .section-soft {
     background-color: #f0f4f8;
     padding: 60px 0;
@@ -564,6 +569,10 @@
 }
 
 @media (max-width: 768px) {
+    .banner-section {
+        padding-top: calc(var(--header-height) + 12px);
+    }
+
     .hero-bg-shape {
         display: none;
     }
