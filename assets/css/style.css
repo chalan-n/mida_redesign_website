@@ -170,6 +170,14 @@ h3 {
     box-shadow: 0 6px 20px rgba(28, 69, 135, 0.4);
 }
 
+.btn:focus-visible,
+.nav-link:focus-visible,
+.hamburger:focus-visible,
+.logo:focus-visible {
+    outline: 3px solid rgba(254, 196, 53, 0.9);
+    outline-offset: 4px;
+}
+
 .btn-accent {
     background-color: var(--accent-gold);
     color: var(--primary-blue);
@@ -268,6 +276,20 @@ h3 {
 .hamburger {
     display: none;
     cursor: pointer;
+    border: 0;
+    background: transparent;
+    padding: 10px;
+    border-radius: 999px;
+    line-height: 1;
+    transition: var(--transition);
+}
+
+.hamburger:hover {
+    background: rgba(28, 69, 135, 0.08);
+}
+
+.hamburger.active {
+    background: rgba(28, 69, 135, 0.12);
 }
 
 /* Hero Section */
@@ -558,6 +580,7 @@ footer {
         display: block;
         font-size: 1.5rem;
         color: var(--primary-blue);
+        z-index: 1001;
     }
 
     .nav-menu {
@@ -572,10 +595,24 @@ footer {
         padding-top: 50px;
         transition: var(--transition);
         box-shadow: var(--shadow-lg);
+        overflow-y: auto;
     }
 
     .nav-menu.active {
         left: 0;
+    }
+
+    .nav-menu li {
+        width: min(100%, 320px);
+        text-align: center;
+    }
+
+    .nav-menu .nav-link,
+    .nav-menu .btn {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
     }
 
     /* Hero mobile fixes */

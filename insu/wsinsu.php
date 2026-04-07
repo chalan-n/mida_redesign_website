@@ -30,14 +30,14 @@ if($objConnect)
 	
 	*/
 	
-	$LoanType = trim($_REQUEST["LoanType"]);
-	$Gender = trim($_REQUEST["Gender"]);
-	$BirthDate = trim($_REQUEST["BirthDate"]);	
-	$IDcard = trim($_REQUEST["IDcard"]);
-	$AppDate = trim($_REQUEST["AppDate"]);
-	$sLoanTerm = trim($_REQUEST["LoanTerm"]);
-	$LoanAmount = trim($_REQUEST["LoanAmount"]);
-	$InterestRate = trim($_REQUEST["InterestRate"]);
+	$LoanType = isset($_REQUEST["LoanType"]) ? trim($_REQUEST["LoanType"]) : '';
+	$Gender = isset($_REQUEST["Gender"]) ? trim($_REQUEST["Gender"]) : '';
+	$BirthDate = isset($_REQUEST["BirthDate"]) ? trim($_REQUEST["BirthDate"]) : '';	
+	$IDcard = isset($_REQUEST["IDcard"]) ? trim($_REQUEST["IDcard"]) : '';
+	$AppDate = isset($_REQUEST["AppDate"]) ? trim($_REQUEST["AppDate"]) : '';
+	$sLoanTerm = isset($_REQUEST["LoanTerm"]) ? trim($_REQUEST["LoanTerm"]) : '';
+	$LoanAmount = isset($_REQUEST["LoanAmount"]) ? trim($_REQUEST["LoanAmount"]) : '';
+	$InterestRate = isset($_REQUEST["InterestRate"]) ? trim($_REQUEST["InterestRate"]) : '';
 	
 	$Interest = ($LoanAmount*($InterestRate/100)*$sLoanTerm)/12;
 	$vInterest = number_format(round($Interest,2),2,".","");
@@ -92,14 +92,14 @@ if($objConnect)
 		$sGender = "0";
 		$textGender = "หญิง";
 	}
-	$sql = sqlQuery("SELECT Fnc_LoanProtect_Rate ('".$insuType."','".$sGender."','".$sLoanTerm."','".$age."','".$nyy.$nmm.$ndd."') AS RATE");
+	$rateDate = $nyy . $nmm . $ndd;
+	$insuRate = number_format((float) sqlFetchScalar(
+		"SELECT Fnc_LoanProtect_Rate (?, ?, ?, ?, ?) AS RATE",
+		'sssis',
+		array($insuType, $sGender, $sLoanTerm, $age, $rateDate),
+		0
+	), 2, ".", "");
 	//echo "<br>select dbo.fnc_LoanProtect_rate('".$insuType."','".$sGender."','".$sLoanTerm."','".$age."','".$nyy.$nmm.$ndd."') as RATE";
-	$totalRows = sqlNumRows($sql);
-	if($totalRows>0){
-		while($rows = sqlFetch($sql)){
-			$insuRate = number_format(trim($rows['RATE']),2,".",""); // 16
-		}
-	}
 	//echo "<br>insuRate=".$insuRate;
 	
 	$PPIamount = ($LoanAmount_LoanVat*$insuRate)/100;
@@ -196,3 +196,4 @@ if($objConnect)
 	sqlClose($objConnect);
 }
 ?>
+
