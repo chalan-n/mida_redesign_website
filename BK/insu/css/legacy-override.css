@@ -1,0 +1,472 @@
+/* ========================================
+   OVERRIDE STYLES FOR LEGACY PAGES - LIGHT THEME
+   Apply to hirepurchase.php, ploan.php, detail.php
+   ======================================== */
+
+/* Import Modern Design System */
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap');
+
+/* Override Body */
+html {
+    background: linear-gradient(135deg, #E0E7FF 0%, #F0F4FF 50%, #FDF4FF 100%) !important;
+    min-height: 100vh;
+}
+
+html::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(circle at 20% 80%, rgba(114, 9, 183, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(67, 97, 238, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(247, 37, 133, 0.05) 0%, transparent 40%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+body {
+    font-family: 'Prompt', 'Sarabun', sans-serif !important;
+    background: transparent !important;
+    color: #1E293B;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Main Card Box */
+.databox,
+.testbox,
+.outputbox {
+    background: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.9) !important;
+    border-radius: 24px !important;
+    box-shadow: 0 8px 32px rgba(99, 102, 241, 0.15) !important;
+    width: 95% !important;
+    max-width: 400px !important;
+    height: auto !important;
+    min-height: auto !important;
+    padding-bottom: 20px !important;
+    animation: fadeInUp 0.5s ease-out;
+    overflow: hidden !important;
+}
+
+/* Title */
+h1 {
+    font-family: 'Prompt', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 1.5rem !important;
+    background: linear-gradient(135deg, #4361EE 0%, #F72585 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    padding: 15px 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative !important;
+}
+
+/* Close/Back Button - Modern Style */
+h1 a.close-btn,
+h1 .close-btn {
+    position: absolute !important;
+    right: 15px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 36px !important;
+    height: 36px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: rgba(239, 68, 68, 0.15) !important;
+    border: 1px solid rgba(239, 68, 68, 0.3) !important;
+    border-radius: 50% !important;
+    transition: all 0.3s ease !important;
+    text-decoration: none !important;
+    color: #EF4444 !important;
+    -webkit-text-fill-color: #EF4444 !important;
+    font-size: 18px !important;
+    font-weight: bold !important;
+    line-height: 1 !important;
+}
+
+h1 a.close-btn:hover,
+h1 .close-btn:hover {
+    background: #EF4444 !important;
+    transform: translateY(-50%) rotate(90deg) !important;
+    color: white !important;
+    -webkit-text-fill-color: white !important;
+}
+
+h1 a.close-btn i,
+h1 .close-btn i {
+    color: #EF4444 !important;
+    font-size: 16px !important;
+}
+
+h1 a.close-btn:hover i,
+h1 .close-btn:hover i {
+    color: white !important;
+}
+
+/* Legacy img close button fallback */
+h1 a img {
+    width: 16px !important;
+    height: 16px !important;
+    opacity: 0.8 !important;
+    filter: invert(36%) sepia(76%) saturate(2476%) hue-rotate(339deg) brightness(91%) contrast(95%) !important;
+}
+
+h1 a:hover img {
+    filter: brightness(0) invert(1) !important;
+    opacity: 1 !important;
+}
+
+/* Horizontal Rule */
+hr {
+    border: none !important;
+    height: 1px !important;
+    background: rgba(99, 102, 241, 0.15) !important;
+    margin: 15px 0 !important;
+}
+
+/* Icon Labels */
+#icon {
+    background: linear-gradient(135deg, #4361EE 0%, #7209B7 100%) !important;
+    border-radius: 12px 0 0 12px !important;
+    padding: 10px 12px !important;
+    margin-left: 8px !important;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3) !important;
+    flex-shrink: 0 !important;
+}
+
+#icon i {
+    color: white !important;
+}
+
+/* Form Inputs */
+input[type=text],
+input[type=password],
+input[type=number],
+select {
+    background: rgba(255, 255, 255, 0.8) !important;
+    border: 1px solid rgba(99, 102, 241, 0.2) !important;
+    border-radius: 0 12px 12px 0 !important;
+    color: #1E293B !important;
+    font-family: 'Prompt', sans-serif !important;
+    padding: 10px 12px !important;
+    height: 44px !important;
+    transition: all 0.3s ease !important;
+    margin-left: -1px !important;
+    width: calc(100% - 70px) !important;
+    max-width: 200px !important;
+    box-sizing: border-box !important;
+    font-size: 14px !important;
+}
+
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=number]:focus,
+select:focus {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border-color: #4361EE !important;
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15) !important;
+    outline: none !important;
+}
+
+input::placeholder {
+    color: #94A3B8 !important;
+}
+
+/* Select Dropdown */
+select {
+    appearance: none !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 10px center !important;
+    background-size: 16px !important;
+    padding-right: 35px !important;
+    cursor: pointer !important;
+}
+
+select option {
+    background: #FFFFFF !important;
+    color: #1E293B !important;
+}
+
+/* Radio Buttons */
+label.radio {
+    color: #475569 !important;
+    font-family: 'Prompt', sans-serif !important;
+}
+
+label.radio:before {
+    background: linear-gradient(135deg, #4361EE 0%, #7209B7 100%) !important;
+    border: none !important;
+}
+
+/* Buttons - Primary */
+.inputbutton,
+.button,
+button[name="btncal"],
+#btncal {
+    background: linear-gradient(135deg, #4361EE 0%, #7209B7 100%) !important;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 12px 30px !important;
+    font-family: 'Prompt', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+    color: white !important;
+    box-shadow: 0 4px 15px rgba(67, 97, 238, 0.35) !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    margin: 20px auto !important;
+    display: block !important;
+    float: none !important;
+    width: auto !important;
+    height: auto !important;
+    line-height: 1.5 !important;
+}
+
+.inputbutton:hover,
+.button:hover,
+button[name="btncal"]:hover,
+#btncal:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(67, 97, 238, 0.45) !important;
+    top: 0 !important;
+}
+
+/* Back/Detail Buttons */
+.buttonback,
+.buttonback2,
+.inputbutton2 {
+    background: rgba(255, 255, 255, 0.8) !important;
+    border: 1px solid rgba(99, 102, 241, 0.2) !important;
+    border-radius: 12px !important;
+    padding: 10px 25px !important;
+    font-family: 'Prompt', sans-serif !important;
+    font-weight: 500 !important;
+    color: #1E293B !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    margin: 10px 5px !important;
+}
+
+.buttonback:hover,
+.buttonback2:hover,
+.inputbutton2:hover {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border-color: #4361EE !important;
+    top: 0 !important;
+    box-shadow: none !important;
+}
+
+/* Success Button (Detail) */
+input[value*="Detail"],
+input[value*="detail"],
+input[onclick*="detailform"] {
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35) !important;
+}
+
+/* Result Tables */
+.accounttype table {
+    border: none !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    width: 100% !important;
+    margin: 15px 0 !important;
+}
+
+.accounttype table tr td {
+    background: rgba(255, 255, 255, 0.6) !important;
+    color: #1E293B !important;
+    padding: 12px 15px !important;
+    border-bottom: 1px solid rgba(99, 102, 241, 0.1) !important;
+    font-family: 'Prompt', sans-serif !important;
+}
+
+.accounttype table tr td[style*="background-color: #3a57af"],
+.accounttype table tr td[style*="background-color:#3a57af"] {
+    background: linear-gradient(135deg, #4361EE 0%, #7209B7 100%) !important;
+    font-weight: 500 !important;
+    color: white !important;
+}
+
+.accounttype table tr td[style*="background-color: #fee42d"],
+.accounttype table tr td[style*="background-color:#fee42d"],
+.accounttype table tr td[style*="background-color: #FFC107"],
+.accounttype table tr td[style*="background-color:#FFC107"] {
+    background: rgba(67, 97, 238, 0.12) !important;
+    color: #1E293B !important;
+    font-weight: 600 !important;
+}
+
+.accounttype table tr[style*="background-color:"] td {
+    background: linear-gradient(135deg, #7209B7 0%, #F72585 100%) !important;
+    color: white !important;
+}
+
+/* Insurance Type Header */
+.accounttype table tr td[style*="background-color: #9C27B0"],
+.accounttype table tr td[style*="background-color: #f37020"],
+.accounttype table tr td[style*="background-color: #e53a40"] {
+    background: linear-gradient(135deg, #7209B7 0%, #F72585 100%) !important;
+    border-radius: 12px 12px 0 0 !important;
+    color: white !important;
+}
+
+/* Warning/Hint Text */
+div[style*="color:#F00"],
+div[style*="color: #F00"],
+.form-hint {
+    color: #F59E0B !important;
+    font-size: 0.8rem !important;
+    opacity: 0.9;
+    padding: 5px 15px !important;
+}
+
+/* Message Box */
+#msg {
+    color: #EF4444 !important;
+    font-family: 'Prompt', sans-serif !important;
+    font-weight: 500 !important;
+    padding: 10px !important;
+    background: rgba(239, 68, 68, 0.1) !important;
+    border-radius: 8px !important;
+    margin: 10px 15px !important;
+}
+
+#msg:empty {
+    display: none;
+}
+
+/* Output Container */
+#output {
+    padding: 20px !important;
+}
+
+#output h1 {
+    margin-bottom: 10px !important;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Paragraph styles */
+p {
+    color: #475569 !important;
+    font-family: 'Prompt', sans-serif !important;
+    display: block !important;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 5px 15px !important;
+}
+
+/* Text colors */
+font[style*="color: #ff1b1b"],
+span[style*="color: #f00"],
+span[style*="color:#f00"] {
+    color: #EF4444 !important;
+}
+
+/* Date picker styling */
+.datepicker {
+    background: #FFFFFF !important;
+    border: 1px solid rgba(99, 102, 241, 0.2) !important;
+    border-radius: 12px !important;
+    font-family: 'Prompt', sans-serif !important;
+    box-shadow: 0 8px 32px rgba(99, 102, 241, 0.15) !important;
+}
+
+.datepicker table tr td,
+.datepicker table tr th {
+    color: #1E293B !important;
+}
+
+.datepicker table tr td.active,
+.datepicker table tr td.active:hover {
+    background: linear-gradient(135deg, #4361EE 0%, #7209B7 100%) !important;
+    color: white !important;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(99, 102, 241, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(99, 102, 241, 0.2);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(99, 102, 241, 0.3);
+}
+
+/* Error class */
+.errorClass {
+    border-color: #EF4444 !important;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15) !important;
+}
+
+/* Account type section */
+.accounttype {
+    padding: 10px !important;
+}
+
+/* Gender section */
+.gender {
+    margin: 15px !important;
+}
+
+/* Effective Rate display */
+#xRate {
+    color: #F72585 !important;
+    font-family: 'Prompt', sans-serif !important;
+}
+
+/* Responsive */
+@media (max-width: 420px) {
+
+    .databox,
+    .testbox,
+    .outputbox {
+        width: 95% !important;
+        margin: 15px auto !important;
+    }
+
+    h1 {
+        font-size: 1.25rem !important;
+    }
+
+    input[type=text],
+    input[type=password],
+    input[type=number],
+    select {
+        width: 180px !important;
+    }
+}

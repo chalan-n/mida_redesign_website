@@ -1,0 +1,57 @@
+# Enable URL Rewriting
+RewriteEngine On
+
+# Set base directory
+RewriteBase /webmida_newdesign/
+
+# ===== SEO Friendly URLs (Thai) =====
+
+# บริการ (Services)
+RewriteRule ^สินเชื่อเช่าซื้อรถยนต์/?$ service_hire_purchase.php [L,NC]
+RewriteRule ^สินเชื่อจำนำทะเบียนรถ/?$ service_title_loan.php [L,NC]
+RewriteRule ^สินเชื่อส่วนบุคคล/?$ service_personal_loan.php [L,NC]
+RewriteRule ^ประกันภัย/?$ service_insurance.php [L,NC]
+
+# ลงทะเบียน (Register)
+RewriteRule ^สมัครสินเชื่อเช่าซื้อ/?$ register_hire_purchase.php [L,NC]
+RewriteRule ^สมัครสินเชื่อจำนำทะเบียน/?$ register_title_loan.php [L,NC]
+RewriteRule ^สมัครสินเชื่อส่วนบุคคล/?$ register_personal_loan.php [L,NC]
+
+# ประมูลรถ (Auction)
+RewriteRule ^ประมูลรถ/?$ auction.php [L,NC]
+RewriteRule ^รายการรถประมูล/?$ auction_list.php [L,NC]
+RewriteRule ^รายละเอียดรถประมูล/([0-9]+)/?$ auction_detail.php?id=$1 [L,NC]
+
+# อสังหาริมทรัพย์ (Properties)
+RewriteRule ^อสังหาริมทรัพย์/?$ properties.php [L,NC]
+RewriteRule ^รายละเอียดอสังหาฯ/([0-9]+)/?$ property_detail.php?id=$1 [L,NC]
+
+# ติดต่อ (Contact)
+RewriteRule ^ติดต่อเรา/?$ contact_us.php [L,NC]
+RewriteRule ^สาขา/?$ contact_branches.php [L,NC]
+RewriteRule ^ร่วมงานกับเรา/?$ contact_career.php [L,NC]
+RewriteRule ^รายละเอียดตำแหน่ง/([0-9]+)/?$ career_detail.php?id=$1 [L,NC]
+
+# นักลงทุนสัมพันธ์ (Investor Relations)
+RewriteRule ^ธุรกิจของเรา/?$ investor_business.php [L,NC]
+RewriteRule ^ข้อมูลทางการเงิน/?$ investor_financial.php [L,NC]
+RewriteRule ^เอกสารเผยแพร่/?$ investor_publications.php [L,NC]
+
+# ข่าวสาร (News)
+RewriteRule ^ข่าวสาร/?$ news.php [L,NC]
+RewriteRule ^ข่าว/([0-9]+)/?$ news_detail.php?id=$1 [L,NC]
+
+# นโยบาย (Policies)
+RewriteRule ^นโยบายความเป็นส่วนตัว/?$ privacy_policy.php [L,NC]
+RewriteRule ^นโยบายคุกกี้/?$ cookie_policy.php [L,NC]
+
+# หน้าแรก
+RewriteRule ^หน้าแรก/?$ index.php [L,NC]
+
+# ===== Prevent direct access to .php files (optional) =====
+# Uncomment below if you want to force using SEO URLs only
+# RewriteCond %{THE_REQUEST} \.php
+# RewriteRule ^(.*)\.php$ /$1 [R=301,L]
+
+# ===== Error Pages =====
+ErrorDocument 404 /webmida_newdesign/index.php

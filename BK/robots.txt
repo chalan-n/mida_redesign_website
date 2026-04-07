@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /includes/
+Disallow: /assets/
+Allow: /assets/img/
+Allow: /assets/css/
+Allow: /assets/js/
+
+Sitemap: https://www.midaleasing.com/sitemap.xml

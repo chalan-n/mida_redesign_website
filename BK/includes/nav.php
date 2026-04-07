@@ -1,0 +1,48 @@
+<?php
+/**
+ * Navigation Menu Component
+ * Include this file in all pages: <?php include 'includes/nav.php'; ?>
+ * 
+ * Available variables (optional):
+ * - $active_page: string to mark active menu item (e.g., 'home', 'services', 'used_cars', 'properties', 'auction', 'branches')
+ * - $settings: array containing site settings (logo, etc.)
+ */
+
+// Default active page if not set
+if (!isset($active_page)) {
+    $active_page = '';
+}
+
+// Get logo source
+$nav_logo_src = !empty($settings['site_logo']) ? $settings['site_logo'] : 'img/mida_logo_5.png';
+?>
+
+<header class="header">
+    <div class="container nav-container">
+        <a href="index.php" class="logo">
+            <img src="<?php echo htmlspecialchars($nav_logo_src); ?>" alt="MIDA LEASING" class="logo-img">
+        </a>
+
+        <ul class="nav-menu">
+            <li><a href="index.php" class="nav-link <?php echo $active_page == 'home' ? 'active' : ''; ?>">หน้าแรก</a>
+            </li>
+            <li><a href="service_hire_purchase.php"
+                    class="nav-link <?php echo $active_page == 'services' ? 'active' : ''; ?>">บริการสินเชื่อ</a></li>
+            <li><a href="used_cars.php"
+                    class="nav-link <?php echo $active_page == 'used_cars' ? 'active' : ''; ?>">รถสวยพร้อมขาย</a></li>
+            <li><a href="properties.php"
+                    class="nav-link <?php echo $active_page == 'properties' ? 'active' : ''; ?>">บ้าน คอนโด ที่ดิน</a>
+            </li>
+            <li><a href="auction.php"
+                    class="nav-link <?php echo $active_page == 'auction' ? 'active' : ''; ?>">ประมูลรถยนต์</a></li>
+            <li><a href="contact_branches.php"
+                    class="nav-link <?php echo $active_page == 'branches' ? 'active' : ''; ?>">ค้นหาสาขา</a></li>
+            <li><a href="contact_us.php" class="btn btn-primary"
+                    style="padding: 8px 20px; font-size: 0.9rem;">ติดต่อเรา</a></li>
+        </ul>
+
+        <div class="hamburger">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </div>
+</header>
