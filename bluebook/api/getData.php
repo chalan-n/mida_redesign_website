@@ -8,37 +8,6 @@ header('Access-Control-Allow-Origin: *');
 include("../includes/config.php");
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 $response = array('success' => false, 'data' => array(), 'message' => '');
-function bluebookFetchAll($sql, $types = '', $params = array())
-{
-    global $objConnect;
-    $stmt = mysqli_prepare($objConnect, $sql);
-    if (!$stmt) {
-        return array();
-    }
-    if (!empty($types) && !empty($params)) {
-        $bindParams = array($types);
-        foreach ($params as $key => $value) {
-            $bindParams[] = &$params[$key];
-        }
-        call_user_func_array('mysqli_stmt_bind_param', $bindParams);
-    }
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-    $rows = array();
-    if ($result) {
-        while ($row = mysqli_fetch_assoc($result)) {
-            $rows[] = $row;
-        }
-        mysqli_free_result($result);
-    }
-    mysqli_stmt_close($stmt);
-    return $rows;
-}
-function bluebookFetchOne($sql, $types = '', $params = array())
-{
-    $rows = bluebookFetchAll($sql, $types, $params);
-    return !empty($rows) ? $rows[0] : null;
-}
 function bluebookGetCid()
 {
     $cid = isset($_GET['cid']) ? trim($_GET['cid']) : '';
@@ -63,7 +32,7 @@ switch ($action) {
             $arryCar = array('HONDA', 'TOYOTA', 'NISSAN', 'MITSUBISHI', 'MAZDA', 'FORD', 'BMW', 'MERCEDES-BENZ');
             $sWhere = " AND carBrand NOT IN ('HONDA','TOYOTA','NISSAN','MITSUBISHI','MAZDA','FORD','BMW','MERCEDES-BENZ')";
         }
-        $rows = bluebookFetchAll(
+        $rows = sqlFetchAllAssoc(
             "SELECT carBrand FROM " . DB_TABLE_NAME . " WHERE carID = ? AND carType = ? " . $sWhere . " GROUP BY carBrand ORDER BY carBrand ASC",
             'ss',
             array($bluebook_year, $cid)
@@ -86,7 +55,7 @@ switch ($action) {
         $cid = bluebookGetCid();
         $bid = isset($_GET['bid']) ? trim($_GET['bid']) : '';
         $models = array();
-        $rows = bluebookFetchAll(
+        $rows = sqlFetchAllAssoc(
             "SELECT carModel FROM " . DB_TABLE_NAME . " WHERE carID = ? AND carType = ? AND carBrand = ? GROUP BY carModel ORDER BY carModel ASC",
             'sss',
             array($bluebook_year, $cid, $bid)
@@ -102,7 +71,7 @@ switch ($action) {
         $bid = isset($_GET['bid']) ? trim($_GET['bid']) : '';
         $mid = isset($_GET['mid']) ? trim($_GET['mid']) : '';
         $years = array();
-        $rows = bluebookFetchAll(
+        $rows = sqlFetchAllAssoc(
             "SELECT carYear FROM " . DB_TABLE_NAME . " WHERE carID = ? AND carType = ? AND carBrand = ? AND carModel = ? GROUP BY carYear ORDER BY carYear DESC",
             'ssss',
             array($bluebook_year, $cid, $bid, $mid)
@@ -119,7 +88,7 @@ switch ($action) {
         $mid = isset($_GET['mid']) ? trim($_GET['mid']) : '';
         $yy = isset($_GET['yy']) ? trim($_GET['yy']) : '';
         $submodels = array();
-        $rows = bluebookFetchAll(
+        $rows = sqlFetchAllAssoc(
             "SELECT ID, carSubModel, carGear, carPrice, car_picture FROM " . DB_TABLE_NAME . " WHERE carID = ? AND carType = ? AND carBrand = ? AND carModel = ? AND carYear = ? ORDER BY carSubModel, carGear ASC",
             'sssss',
             array($bluebook_year, $cid, $bid, $mid, $yy)
@@ -138,7 +107,7 @@ switch ($action) {
         break;
     case 'getPrice':
         $carid = isset($_GET['carid']) ? (int) $_GET['carid'] : 0;
-        $row = bluebookFetchOne(
+        $row = sqlFetchOneAssoc(
             "SELECT carSubModel, carGear, carPrice, carCode, car_picture FROM " . DB_TABLE_NAME . " WHERE ID = ?",
             'i',
             array($carid)

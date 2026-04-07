@@ -30,8 +30,10 @@ if(DB_TYPE == "mssql"){
 		die("Database connection failed.");
 	}
 	
-	// Set charset to UTF-8
-	mysqli_set_charset($objConnect, "utf8");
+	// Match PDO-side charset handling and support full Unicode data.
+	if (!mysqli_set_charset($objConnect, "utf8mb4")) {
+		error_log("Failed to set mysqli charset: " . mysqli_error($objConnect));
+	}
 }
 
 $webname = "Mida Blue Book - II";

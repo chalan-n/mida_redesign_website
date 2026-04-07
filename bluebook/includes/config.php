@@ -4,12 +4,13 @@ define("DB_TYPE", "mysql"); //  'mssql' , 'mysql'
 /*define("DB_SERVER", "localhost");
 define("DB_USERNAME", "mida-leasing_usr1");
 define("DB_PASSWORD", "U2s@al34");*/
-define("DB_SERVER", "localhost");
-define("DB_PORT", 3307);
-define("DB_USERNAME", "root");
-define("DB_PASSWORD", "");
+define("DB_SERVER", getenv('DB_HOST') ? getenv('DB_HOST') : "localhost");
+define("DB_PORT", (int) (getenv('DB_PORT') ? getenv('DB_PORT') : 3307));
+define("DB_USERNAME", getenv('DB_USER') ? getenv('DB_USER') : "root");
+$dbPassword = getenv('DB_PASSWORD');
+define("DB_PASSWORD", $dbPassword !== false ? $dbPassword : "");
 
-define("DB_DATABASE_NAME", "db_mida_leasing"); 
+define("DB_DATABASE_NAME", getenv('DB_NAME') ? getenv('DB_NAME') : "db_mida_leasing"); 
 define("DB_TABLE_NAME", "redbook_II"); 
 
 // Global connection variable for mysqli
@@ -25,11 +26,14 @@ if(DB_TYPE == "mssql"){
 	$objConnect = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_DATABASE_NAME, DB_PORT);
 	
 	if (!$objConnect) {
-		die("Connection failed: " . mysqli_connect_error());
+		error_log("Database connection failed: " . mysqli_connect_error());
+		die("Database connection failed.");
 	}
 	
-	// Set charset to UTF-8
-	mysqli_set_charset($objConnect, "utf8");
+	// Match PDO-side charset handling and support full Unicode data.
+	if (!mysqli_set_charset($objConnect, "utf8mb4")) {
+		error_log("Failed to set mysqli charset: " . mysqli_error($objConnect));
+	}
 }
 
 $webname = "Mida Blue Book - II";
