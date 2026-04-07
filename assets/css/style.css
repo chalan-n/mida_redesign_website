@@ -173,7 +173,11 @@ h3 {
 .btn:focus-visible,
 .nav-link:focus-visible,
 .hamburger:focus-visible,
-.logo:focus-visible {
+.logo:focus-visible,
+.slider-btn:focus-visible,
+.dot:focus-visible,
+.floating-contact-main:focus-visible,
+.floating-contact-option:focus-visible {
     outline: 3px solid rgba(254, 196, 53, 0.9);
     outline-offset: 4px;
 }
@@ -1007,6 +1011,7 @@ footer {
     transition: all 0.3s ease;
     position: relative;
     animation: pulse 2s infinite;
+    border: 0;
 }
 
 @keyframes pulse {

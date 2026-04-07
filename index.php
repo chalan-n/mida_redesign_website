@@ -200,9 +200,9 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                     <?php endif; ?>
                 </div>
 
-                <button class="slider-btn prev-btn"><i class="fa-solid fa-chevron-left"></i></button>
-                <button class="slider-btn next-btn"><i class="fa-solid fa-chevron-right"></i></button>
-                <div class="slider-dots"></div>
+                <button class="slider-btn prev-btn" type="button" aria-label="Previous banner slide"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+                <button class="slider-btn next-btn" type="button" aria-label="Next banner slide"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+                <div class="slider-dots" role="tablist" aria-label="Banner slides"></div>
             </div>
         </div>
     </section>
@@ -711,7 +711,7 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
 
         <!-- Floating Contact Button -->
         <div class="floating-contact" id="floatingContact">
-            <div class="floating-contact-options">
+            <div class="floating-contact-options" id="floatingContactOptions">
                 <a href="<?php echo htmlspecialchars($settings['site_line']); ?>" target="_blank" class="floating-contact-option line">
                     <i class="fa-brands fa-line"></i>
                     <span>คุยกับเจ้าหน้าที่ทาง LINE</span>
@@ -721,15 +721,18 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                     <span>โทร: <?php echo htmlspecialchars($settings['site_phone']); ?></span>
                 </a>
             </div>
-            <div class="floating-contact-main" onclick="toggleFloatingContact()">
-                <i class="fa-solid fa-headset"></i>
-            </div>
+            <button type="button" class="floating-contact-main" aria-label="Toggle contact options" aria-expanded="false" aria-controls="floatingContactOptions" onclick="toggleFloatingContact()">
+                <i class="fa-solid fa-headset" aria-hidden="true"></i>
+            </button>
         </div>
 
         <script>
-            function toggleFloatingContact() {
+            function toggleFloatingContact(forceState) {
                 const contact = document.getElementById('floatingContact');
-                contact.classList.toggle('active');
+                const trigger = contact.querySelector('.floating-contact-main');
+                const nextState = typeof forceState === 'boolean' ? forceState : !contact.classList.contains('active');
+                contact.classList.toggle('active', nextState);
+                trigger.setAttribute('aria-expanded', nextState ? 'true' : 'false');
             }
 
             // Close floating contact when clicking outside
@@ -738,20 +741,28 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                 const isClickInside = contact.contains(event.target);
                 
                 if (!isClickInside && contact.classList.contains('active')) {
-                    contact.classList.remove('active');
+                    toggleFloatingContact(false);
+                }
+            });
+
+            document.addEventListener('keydown', function(event) {
+                const contact = document.getElementById('floatingContact');
+                if (event.key === 'Escape' && contact.classList.contains('active')) {
+                    toggleFloatingContact(false);
+                    contact.querySelector('.floating-contact-main').focus();
                 }
             });
         </script>
 
         <!-- Popup Modal -->
         <?php if ($popup_news): ?>
-            <div id="newsPopup"
+            <div id="newsPopup" role="dialog" aria-modal="true" aria-labelledby="newsPopupTitle" aria-describedby="newsPopupDescription"
                 style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; display: none; align-items: center; justify-content: center;">
-                <div
+                <div id="newsPopupPanel" tabindex="-1"
                     style="background: white; width: 90%; max-width: 600px; border-radius: 8px; overflow: hidden; position: relative; animation: popupFadeIn 0.3s ease-out;">
-                    <button onclick="closePopup()"
+                    <button type="button" onclick="closePopup()" aria-label="Close popup"
                         style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.5); color: white; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10;">
-                        <i class="fa-solid fa-times"></i>
+                        <i class="fa-solid fa-times" aria-hidden="true"></i>
                     </button>
 
                     <a href="news_detail.php?id=<?php echo $popup_news_id; ?>"
@@ -760,7 +771,7 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                             <img src="<?php echo $popup_cover_image; ?>" alt="<?php echo $popup_title; ?>" style="width: 100%; display: block;">
                         <?php endif; ?>
                         <div style="padding: 20px; padding-bottom: 5px; text-align: center;">
-                            <h3 style="margin: 0 0 10px 0; color: #333; font-size: 1.5rem;">
+                            <h3 id="newsPopupTitle" style="margin: 0 0 10px 0; color: #333; font-size: 1.5rem;">
                                 <?php echo $popup_title; ?>
                             </h3>
                             <?php
@@ -768,9 +779,11 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                             $trimmed_content = trim($plain_content);
                             if (!empty($trimmed_content)):
                                 ?>
-                                <p style="color: #666; margin: 0; font-size: 1rem;">
+                                <p id="newsPopupDescription" style="color: #666; margin: 0; font-size: 1rem;">
                                     <?php echo htmlspecialchars(mb_substr($plain_content, 0, 100, 'UTF-8') . '...', ENT_QUOTES, 'UTF-8'); ?>
                                 </p>
+                            <?php else: ?>
+                                <p id="newsPopupDescription" style="display:none;">Popup announcement</p>
                             <?php endif; ?>
                         </div>
                     </a>
@@ -785,7 +798,26 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                 </div>
             </div>
             <script>
+                let lastFocusedElement = null;
+
                 document.addEventListener('DOMContentLoaded', function () {
+                    const popup = document.getElementById('newsPopup');
+                    const popupPanel = document.getElementById('newsPopupPanel');
+                    const popupCloseButton = popup ? popup.querySelector('button') : null;
+
+                    function openPopup() {
+                        if (!popup) {
+                            return;
+                        }
+                        lastFocusedElement = document.activeElement;
+                        popup.style.display = 'flex';
+                        if (popupPanel) {
+                            popupPanel.focus();
+                        } else if (popupCloseButton) {
+                            popupCloseButton.focus();
+                        }
+                    }
+
                     // Check local storage for long-term suppression
                     const popupId = '<?php echo $popup_news_id; ?>';
                     const hideTime = localStorage.getItem('hidePopup_' + popupId);
@@ -803,17 +835,35 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                     }
 
                     if (shouldShow) {
-                        document.getElementById('newsPopup').style.display = 'flex';
+                        openPopup();
                     }
+
+                    if (popup) {
+                        popup.addEventListener('click', function (event) {
+                            if (event.target === popup) {
+                                closePopup();
+                            }
+                        });
+                    }
+
+                    document.addEventListener('keydown', function (event) {
+                        if (event.key === 'Escape' && popup && popup.style.display === 'flex') {
+                            closePopup();
+                        }
+                    });
                 });
 
                 function closePopup() {
-                    document.getElementById('newsPopup').style.display = 'none';
+                    const popup = document.getElementById('newsPopup');
+                    popup.style.display = 'none';
                     const dontShow = document.getElementById('dontShowPopup').checked;
                     if (dontShow) {
                         const popupId = '<?php echo $popup_news_id; ?>';
                         const now = new Date().getTime();
                         localStorage.setItem('hidePopup_' + popupId, now.toString());
+                    }
+                    if (typeof lastFocusedElement !== 'undefined' && lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+                        lastFocusedElement.focus();
                     }
                 }
             </script>

@@ -13,8 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Create Dots
     slides.forEach((_, index) => {
-        const dot = document.createElement('div');
+        const dot = document.createElement('button');
+        dot.type = 'button';
         dot.classList.add('dot');
+        dot.setAttribute('aria-label', `Go to banner slide ${index + 1}`);
+        dot.setAttribute('role', 'tab');
         if (index === 0) dot.classList.add('active');
         dot.addEventListener('click', () => goToSlide(index));
         dotsContainer.appendChild(dot);
@@ -24,8 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateDots() {
         dots.forEach((dot, index) => {
-            if (index === currentIndex) dot.classList.add('active');
-            else dot.classList.remove('active');
+            const isActive = index === currentIndex;
+            dot.classList.toggle('active', isActive);
+            dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            dot.setAttribute('tabindex', isActive ? '0' : '-1');
         });
     }
 
@@ -60,6 +65,24 @@ document.addEventListener('DOMContentLoaded', () => {
     if (prevBtn) prevBtn.addEventListener('click', prevSlide);
     if (nextBtn) nextBtn.addEventListener('click', nextSlide);
 
+    sliderWrapper.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowLeft') prevSlide();
+        if (event.key === 'ArrowRight') nextSlide();
+    });
+
+    [prevBtn, nextBtn, dotsContainer].forEach((element) => {
+        if (!element) return;
+        element.addEventListener('focusin', () => clearInterval(autoPlayInterval));
+        element.addEventListener('focusout', resetTimer);
+    });
+
+    sliderWrapper.addEventListener('mouseenter', () => clearInterval(autoPlayInterval));
+    sliderWrapper.addEventListener('mouseleave', resetTimer);
+    sliderWrapper.setAttribute('tabindex', '0');
+    sliderWrapper.setAttribute('aria-label', 'Homepage banner slider');
+    sliderWrapper.setAttribute('role', 'region');
+
     // Initial Start
+    updateDots();
     startTimer();
 });
