@@ -3,6 +3,11 @@ require_once 'admin/config/db.php';
 $database = new Database();
 $db = $database->getConnection();
 
+function logPageDataError($section, PDOException $e)
+{
+    error_log(sprintf('Homepage data load failed [%s]: %s', $section, $e->getMessage()));
+}
+
 // Track visitor
 @include_once 'track_visitor.php';
 
@@ -12,7 +17,7 @@ try {
     $stmt = $db->query("SELECT * FROM banners WHERE is_active = 1 ORDER BY sort_order ASC");
     $banners = $stmt->fetchAll();
 } catch (PDOException $e) {
-    // Handle error or ignore
+    logPageDataError('banners', $e);
 }
 
 // Fetch Services
@@ -21,6 +26,7 @@ try {
     $stmt = $db->query("SELECT * FROM services WHERE is_active = 1 ORDER BY sort_order ASC");
     $services = $stmt->fetchAll();
 } catch (PDOException $e) {
+    logPageDataError('services', $e);
 }
 
 // Fetch Settings
@@ -29,6 +35,7 @@ try {
     $stmt = $db->query("SELECT * FROM settings WHERE id = 1");
     $settings = $stmt->fetch();
 } catch (PDOException $e) {
+    logPageDataError('settings', $e);
 }
 
 // Fetch Latest News
@@ -37,6 +44,7 @@ try {
     $stmt = $db->query("SELECT * FROM announcements WHERE is_active = 1 AND is_popup = 0 AND (start_date IS NULL OR start_date <= CURDATE()) AND (end_date IS NULL OR end_date >= CURDATE()) ORDER BY start_date DESC, created_at DESC LIMIT 3");
     $news_items = $stmt->fetchAll();
 } catch (PDOException $e) {
+    logPageDataError('news_items', $e);
 }
 
 // Fetch Popup
@@ -45,6 +53,7 @@ try {
     $stmt = $db->query("SELECT * FROM announcements WHERE is_active = 1 AND is_popup = 1 AND (start_date IS NULL OR start_date <= CURDATE()) AND (end_date IS NULL OR end_date >= CURDATE()) ORDER BY created_at DESC LIMIT 1");
     $popup_news = $stmt->fetch();
 } catch (PDOException $e) {
+    logPageDataError('popup_news', $e);
 }
 
 $popup_news_id = $popup_news && isset($popup_news['id']) ? (int) $popup_news['id'] : 0;

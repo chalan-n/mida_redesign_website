@@ -12,7 +12,7 @@ if (session_status() === PHP_SESSION_NONE) {
 // ไม่เก็บสถิติถ้าเป็น bot หรือ admin
 function isBot($userAgent)
 {
-    $bots = ['bot', 'spider', 'crawler', 'slurp', 'googlebot', 'bingbot', 'yandex', 'baidu', 'duckduck'];
+    $bots = array('bot', 'spider', 'crawler', 'slurp', 'googlebot', 'bingbot', 'yandex', 'baidu', 'duckduck');
     $userAgent = strtolower($userAgent);
     foreach ($bots as $bot) {
         if (strpos($userAgent, $bot) !== false) {
@@ -41,54 +41,53 @@ function detectDeviceType($userAgent)
     return 'desktop';
 }
 
+function getClientIpAddress()
+{
+    $forwardedFor = isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : '';
+    if (!empty($forwardedFor)) {
+        $parts = explode(',', $forwardedFor);
+        foreach ($parts as $part) {
+            $candidate = trim($part);
+            if (filter_var($candidate, FILTER_VALIDATE_IP)) {
+                return $candidate;
+            }
+        }
+    }
+
+    $remoteAddr = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
+    return filter_var($remoteAddr, FILTER_VALIDATE_IP) ? $remoteAddr : '';
+}
+
+function isPrivateIpAddress($ip)
+{
+    if (empty($ip)) {
+        return true;
+    }
+
+    if (in_array($ip, array('127.0.0.1', '::1', 'localhost'), true)) {
+        return true;
+    }
+
+    return !filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE);
+}
+
 // ดึงข้อมูลจังหวัดจาก IP (ใช้ ip-api.com - ฟรี 45 requests/minute)
 function getLocationFromIP($ip)
 {
-    // Skip local IPs
-    if (in_array($ip, ['127.0.0.1', '::1', 'localhost']) || strpos($ip, '192.168.') === 0 || strpos($ip, '10.') === 0) {
-        return ['province' => 'Local', 'city' => 'Local'];
+    if (isPrivateIpAddress($ip)) {
+        return array('province' => 'Local', 'city' => 'Local');
     }
 
-    // Cache location in session to reduce API calls
-    if (isset($_SESSION['visitor_location']) && isset($_SESSION['visitor_ip']) && $_SESSION['visitor_ip'] === $ip) {
-        return $_SESSION['visitor_location'];
-    }
-
-    try {
-        $url = "http://ip-api.com/json/{$ip}?fields=status,regionName,city&lang=th";
-        $context = stream_context_create([
-            'http' => [
-                'timeout' => 2 // 2 seconds timeout
-            ]
-        ]);
-        $response = @file_get_contents($url, false, $context);
-
-        if ($response) {
-            $data = json_decode($response, true);
-            if ($data && $data['status'] === 'success') {
-                $location = [
-                    'province' => $data['regionName'] ?? null,
-                    'city' => $data['city'] ?? null
-                ];
-                $_SESSION['visitor_location'] = $location;
-                $_SESSION['visitor_ip'] = $ip;
-                return $location;
-            }
-        }
-    } catch (Exception $e) {
-        // Silently fail
-    }
-
-    return ['province' => null, 'city' => null];
+    return array('province' => null, 'city' => null);
 }
 
 // ตรวจสอบว่าอยู่ในหน้า admin หรือไม่
-$current_url = $_SERVER['REQUEST_URI'] ?? '';
+$current_url = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
 if (strpos($current_url, '/admin/') !== false) {
     return; // ไม่เก็บสถิติหน้า admin
 }
 
-$userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+$userAgent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
 if (isBot($userAgent)) {
     return; // ไม่เก็บสถิติ bot
 }
@@ -100,12 +99,17 @@ if (!isset($db)) {
     $db = $database->getConnection();
 }
 
+if (!$db) {
+    error_log('Visitor tracking skipped: database connection unavailable.');
+    return;
+}
+
 try {
     // Get visitor info
-    $page_url = $_SERVER['REQUEST_URI'] ?? '/';
+    $page_url = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';
     $page_title = '';
-    $ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '';
-    $referrer = $_SERVER['HTTP_REFERER'] ?? '';
+    $ip_address = getClientIpAddress();
+    $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
     $session_id = session_id();
 
     // Detect device type
@@ -121,7 +125,7 @@ try {
         INSERT INTO page_views (page_url, page_title, ip_address, user_agent, referrer, session_id, device_type, province, city)
         VALUES (:page_url, :page_title, :ip_address, :user_agent, :referrer, :session_id, :device_type, :province, :city)
     ");
-    $stmt->execute([
+    $stmt->execute(array(
         ':page_url' => $page_url,
         ':page_title' => $page_title,
         ':ip_address' => $ip_address,
@@ -131,33 +135,43 @@ try {
         ':device_type' => $device_type,
         ':province' => $province,
         ':city' => $city
-    ]);
+    ));
 
     // Update daily stats
     $today = date('Y-m-d');
+    $sessionCounterKey = 'visitor_stats_counted_' . $today;
+    $isFirstVisitTodayForSession = empty($_SESSION[$sessionCounterKey]);
 
     // Check if today's stats exist
     $stmt = $db->prepare("SELECT id FROM daily_stats WHERE stat_date = :today");
-    $stmt->execute([':today' => $today]);
+    $stmt->execute(array(':today' => $today));
 
     if ($stmt->fetch()) {
         // Update existing
-        $db->prepare("
+        $sql = "
             UPDATE daily_stats 
-            SET total_views = total_views + 1,
-                unique_visitors = (SELECT COUNT(DISTINCT session_id) FROM page_views WHERE DATE(visited_at) = :today)
-            WHERE stat_date = :today2
-        ")->execute([':today' => $today, ':today2' => $today]);
+            SET total_views = total_views + 1";
+
+        if ($isFirstVisitTodayForSession) {
+            $sql .= ",
+                unique_visitors = unique_visitors + 1";
+        }
+
+        $sql .= "
+            WHERE stat_date = :today";
+
+        $db->prepare($sql)->execute(array(':today' => $today));
     } else {
         // Insert new
         $db->prepare("
             INSERT INTO daily_stats (stat_date, total_views, unique_visitors)
             VALUES (:today, 1, 1)
-        ")->execute([':today' => $today]);
+        ")->execute(array(':today' => $today));
     }
 
+    $_SESSION[$sessionCounterKey] = true;
+
 } catch (PDOException $e) {
-    // Silently fail - don't break the page
     error_log("Visitor tracking error: " . $e->getMessage());
 }
 ?>

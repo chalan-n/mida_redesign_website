@@ -3,40 +3,48 @@ require_once 'admin/config/db.php';
 $database = new Database();
 $db = $database->getConnection();
 
+function logPageDataError($section, PDOException $e)
+{
+    error_log(sprintf('Homepage data load failed [%s]: %s', $section, $e->getMessage()));
+}
+
 // Track visitor
 @include_once 'track_visitor.php';
 
 // Fetch Banners
-$banners = [];
+$banners = array();
 try {
     $stmt = $db->query("SELECT * FROM banners WHERE is_active = 1 ORDER BY sort_order ASC");
     $banners = $stmt->fetchAll();
 } catch (PDOException $e) {
-    // Handle error or ignore
+    logPageDataError('banners', $e);
 }
 
 // Fetch Services
-$services = [];
+$services = array();
 try {
     $stmt = $db->query("SELECT * FROM services WHERE is_active = 1 ORDER BY sort_order ASC");
     $services = $stmt->fetchAll();
 } catch (PDOException $e) {
+    logPageDataError('services', $e);
 }
 
 // Fetch Settings
-$settings = [];
+$settings = array();
 try {
     $stmt = $db->query("SELECT * FROM settings WHERE id = 1");
     $settings = $stmt->fetch();
 } catch (PDOException $e) {
+    logPageDataError('settings', $e);
 }
 
 // Fetch Latest News
-$news_items = [];
+$news_items = array();
 try {
     $stmt = $db->query("SELECT * FROM announcements WHERE is_active = 1 AND is_popup = 0 AND (start_date IS NULL OR start_date <= CURDATE()) AND (end_date IS NULL OR end_date >= CURDATE()) ORDER BY start_date DESC, created_at DESC LIMIT 3");
     $news_items = $stmt->fetchAll();
 } catch (PDOException $e) {
+    logPageDataError('news_items', $e);
 }
 
 // Fetch Popup
@@ -45,6 +53,7 @@ try {
     $stmt = $db->query("SELECT * FROM announcements WHERE is_active = 1 AND is_popup = 1 AND (start_date IS NULL OR start_date <= CURDATE()) AND (end_date IS NULL OR end_date >= CURDATE()) ORDER BY created_at DESC LIMIT 1");
     $popup_news = $stmt->fetch();
 } catch (PDOException $e) {
+    logPageDataError('popup_news', $e);
 }
 
 ?>
@@ -610,7 +619,8 @@ try {
                             </h3>
                             <?php
                             $plain_content = strip_tags($popup_news['content']);
-                            if (!empty(trim($plain_content))):
+                            $trimmed_content = trim($plain_content);
+                            if (!empty($trimmed_content)):
                                 ?>
                                 <p style="color: #666; margin: 0; font-size: 1rem;">
                                     <?php echo mb_substr($plain_content, 0, 100, 'UTF-8') . '...'; ?>
