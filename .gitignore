@@ -1,0 +1,10 @@
+# Local and host-specific database configuration
+admin/config/Host/
+includes/Host/
+bluebook/includes/Host/
+bluebook/includes/Hsot/
+insu/includes/Host/
+manage_loanrate/config/Host/
+
+# Local temporary copies
+* - Copy.php
