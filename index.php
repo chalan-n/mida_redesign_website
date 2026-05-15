@@ -221,29 +221,13 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                         สินเชื่อส่วนบุคคล</span>
                 </h2>
                 <div class="hero-actions">
-                    <a href="bluebook/" class="btn btn-primary">เช็กวงเงินเบื้องต้น</a>
-                    <a href="register_hire_purchase.php" class="btn btn-accent">สมัครสินเชื่อออนไลน์</a>
-                    <a href="contact_branches.php" class="btn btn-primary btn-secondary-light">ค้นหาสาขา</a>
+                    <a href="#products" class="btn btn-primary">ดูบริการของเรา</a>
+                    <a href="#steps" class="btn btn-primary btn-secondary-light">ขั้นตอนการกู้</a>
                 </div>
 
                 <div class="hero-note">
                     <p class="hero-note-text">"อนุมัติไว ให้วงเงินสูง ไม่ยุ่งยาก"
                     </p>
-                </div>
-
-                <div class="hero-trust-row" aria-label="จุดเด่นบริการ">
-                    <div>
-                        <strong>1 นาที</strong>
-                        <span>เริ่มเช็กข้อมูลรถ</span>
-                    </div>
-                    <div>
-                        <strong>3 ช่องทาง</strong>
-                        <span>ออนไลน์ โทร Line</span>
-                    </div>
-                    <div>
-                        <strong>ครบวงจร</strong>
-                        <span>สินเชื่อ ประกัน ประมูล</span>
-                    </div>
                 </div>
             </div>
 
@@ -290,63 +274,6 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                 </div>
 
                 <a href="register_hire_purchase.php" class="btn btn-primary selector-apply-btn">สนใจสมัครสินเชื่อ</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Fast Application Journey -->
-    <section class="quick-journey-section" aria-labelledby="quickJourneyTitle">
-        <div class="container">
-            <div class="quick-journey-header">
-                <span>เริ่มจากสิ่งที่ต้องการ</span>
-                <h2 id="quickJourneyTitle">เลือกทางที่เร็วที่สุดสำหรับคุณ</h2>
-            </div>
-
-            <div class="quick-journey-grid">
-                <a href="bluebook/" class="quick-journey-item">
-                    <i class="fa-solid fa-calculator" aria-hidden="true"></i>
-                    <span>เช็กวงเงินเบื้องต้น</span>
-                    <strong>ประเมินจากประเภทรถ ยี่ห้อ รุ่น และปี</strong>
-                </a>
-                <a href="register_hire_purchase.php" class="quick-journey-item quick-journey-item-primary">
-                    <i class="fa-solid fa-file-signature" aria-hidden="true"></i>
-                    <span>สมัครสินเชื่อออนไลน์</span>
-                    <strong>กรอกข้อมูลให้เจ้าหน้าที่ติดต่อกลับ</strong>
-                </a>
-                <a href="contact_branches.php" class="quick-journey-item">
-                    <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
-                    <span>ค้นหาสาขาใกล้บ้าน</span>
-                    <strong>ดูเบอร์โทร แผนที่ และพื้นที่ให้บริการ</strong>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Bluebook Spotlight -->
-    <section class="bluebook-spotlight" aria-labelledby="bluebookTitle">
-        <div class="container bluebook-spotlight-inner">
-            <div class="bluebook-copy">
-                <span class="section-eyebrow">MIDA Bluebook</span>
-                <h2 id="bluebookTitle">รู้ราคาประเมินรถ ก่อนขอสินเชื่อ</h2>
-                <p>เลือกประเภทรถ ยี่ห้อ รุ่น และปี เพื่อดูข้อมูลประเมินเบื้องต้น แล้วต่อยอดไปสมัครสินเชื่อได้ทันที</p>
-                <div class="bluebook-actions">
-                    <a href="bluebook/" class="btn btn-primary">เริ่มประเมินราคารถ</a>
-                    <a href="register_hire_purchase.php" class="bluebook-text-link">สมัครโดยให้เจ้าหน้าที่ช่วยดูแล <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
-                </div>
-            </div>
-            <div class="bluebook-points" aria-label="ประโยชน์ของ Bluebook">
-                <div>
-                    <i class="fa-solid fa-car-side" aria-hidden="true"></i>
-                    <span>เลือกรถได้หลายประเภท</span>
-                </div>
-                <div>
-                    <i class="fa-solid fa-chart-line" aria-hidden="true"></i>
-                    <span>ใช้ข้อมูลช่วยประเมินวงเงิน</span>
-                </div>
-                <div>
-                    <i class="fa-solid fa-phone-volume" aria-hidden="true"></i>
-                    <span>ส่งข้อมูลให้เจ้าหน้าที่ติดต่อกลับ</span>
-                </div>
             </div>
         </div>
     </section>
