@@ -154,7 +154,7 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                 <p class="hero-kicker">MIDA LEASING</p>
                 <h1 class="hero-title">สินเชื่อรถ ใช้เงินไว<br>ให้ไมด้าช่วยดูแล</h1>
                 <h2 class="hero-subtitle">
-                    <span class="hero-subtitle-text">เลือกบริการที่เหมาะกับคุณ สมัครออนไลน์ได้ง่าย หรือค้นหาสาขาใกล้บ้านเพื่อให้เจ้าหน้าที่ดูแลต่อ</span>
+                    <span class="hero-subtitle-text">เลือกสินเชื่อ สมัครออนไลน์ หรือค้นหาสาขาใกล้บ้าน</span>
                 </h2>
                 <div class="hero-actions">
                     <a href="register_hire_purchase.php" class="btn btn-accent hero-primary-cta">สมัครสินเชื่อออนไลน์</a>
@@ -176,56 +176,47 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                     </div>
                 </div>
 
-                <div class="hero-note">
-                    <p class="hero-note-text">ฝากข้อมูลไว้ เจ้าหน้าที่จะติดต่อกลับเพื่อแนะนำบริการที่เหมาะกับคุณ</p>
-                </div>
             </div>
 
             <!-- Right: Loan Selector (Tidlor Style) -->
             <div class="loan-selector-card" id="loanSelector">
-                <h3 class="selector-title">เลือกบริการที่ต้องการ</h3>
+                <h3 class="selector-title">เลือกบริการ</h3>
 
                 <div class="selector-grid">
                     <!-- Item 1: Sedan -->
                     <a href="service_hire_purchase.php#sedan" class="selector-item">
                         <i class="fa-solid fa-car-side"></i>
                         <span>รถเก๋ง</span>
-                        <small>ดูบริการที่เกี่ยวข้อง</small>
                     </a>
 
                     <!-- Item 2: Pickup -->
                     <a href="service_hire_purchase.php#pickup" class="selector-item">
                         <i class="fa-solid fa-truck-pickup"></i>
                         <span>รถกระบะ</span>
-                        <small>เหมาะกับงานและธุรกิจ</small>
                     </a>
 
                     <!-- Item 3: Truck -->
                     <a href="service_hire_purchase.php#truck" class="selector-item">
                         <i class="fa-solid fa-truck"></i>
                         <span>รถบรรทุก</span>
-                        <small>สำหรับรถเชิงพาณิชย์</small>
                     </a>
 
                     <!-- Item 4: Nano -->
                     <a href="service_title_loan.php" class="selector-item">
                         <i class="fa-solid fa-passport"></i>
                         <span>จำนำทะเบียนรถ</span>
-                        <small>มีรถ ใช้ทะเบียนต่อยอด</small>
                     </a>
 
                     <!-- Item 5: Personal -->
                     <a href="service_personal_loan.php" class="selector-item">
                         <i class="fa-solid fa-user-tag"></i>
                         <span>สินเชื่อบุคคล</span>
-                        <small>ดูเงื่อนไขบริการ</small>
                     </a>
 
                     <!-- Item 6: Other/Contact -->
                     <a href="contact_us.php" class="selector-item">
                         <i class="fa-solid fa-headset"></i>
                         <span>สอบถามเพิ่มเติม</span>
-                        <small>คุยกับเจ้าหน้าที่</small>
                     </a>
                 </div>
             </div>
@@ -252,7 +243,6 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
         <div class="container">
             <div class="campaign-strip-header">
                 <span>โปรโมชันและข่าวสาร</span>
-                <a href="news.php">ดูข่าวทั้งหมด</a>
             </div>
             <div class="slider-container campaign-slider">
                 <div class="slider-wrapper">
@@ -611,37 +601,11 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                         พร้อมเริ่มสมัครสินเชื่อกับไมด้า?
                     </h2>
 
-                    <!-- Features & Icons (3 columns) -->
-                    <div class="cta-features-row">
-                        <div class="cta-feature-item">
-                            <div class="cta-feature-icon">
-                                <i class="fa-solid fa-shield"></i>
-                            </div>
-                            <div class="cta-feature-text">
-                                <strong>บริการถูกต้อง</strong>
-                                <span>ดำเนินการตามขั้นตอน ตรวจสอบได้</span>
-                            </div>
-                        </div>
-
-                        <div class="cta-feature-item">
-                            <div class="cta-feature-icon">
-                                <i class="fa-solid fa-chart-line"></i>
-                            </div>
-                            <div class="cta-feature-text">
-                                <strong>เงื่อนไขชัดเจน</strong>
-                                <span>เจ้าหน้าที่อธิบายก่อนตัดสินใจ</span>
-                            </div>
-                        </div>
-
-                        <div class="cta-feature-item">
-                            <div class="cta-feature-icon">
-                                <i class="fa-solid fa-lock"></i>
-                            </div>
-                            <div class="cta-feature-text">
-                                <strong>ข้อมูลปลอดภัย</strong>
-                                <span>ดูแลข้อมูลตามนโยบายความเป็นส่วนตัว</span>
-                            </div>
-                        </div>
+                    <!-- Compact Trust Row -->
+                    <div class="cta-features-row cta-trust-row-compact" aria-label="จุดเด่นก่อนสมัคร">
+                        <span><i class="fa-solid fa-shield"></i> บริการถูกต้อง</span>
+                        <span><i class="fa-solid fa-file-circle-check"></i> เงื่อนไขชัดเจน</span>
+                        <span><i class="fa-solid fa-lock"></i> ข้อมูลปลอดภัย</span>
                     </div>
 
                     <!-- Action Buttons (CTA) -->
