@@ -69,7 +69,7 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MIDA LEASING - รถอะไร..ก็ขอกู้เงินได้</title>
     <meta name="description"
-        content="ไมด้า ลิสซิ่ง บริการสินเชื่อรถยนต์มือสอง สินเชื่อจำนำทะเบียนรถ และสินเชื่อส่วนบุคคล อนุมัติไว ให้วงเงินสูง ดอกเบี้ยเป็นธรรม รถอะไร..ก็ขอกู้เงินได้ เช็ควงเงินฟรี!">
+        content="ไมด้า ลิสซิ่ง บริการสินเชื่อรถยนต์มือสอง สินเชื่อจำนำทะเบียนรถ และสินเชื่อส่วนบุคคล สมัครออนไลน์ได้ง่าย มีเจ้าหน้าที่ดูแล และมีสาขาให้บริการ">
     <meta name="keywords"
         content="สินเชื่อรถยนต์, จำนำทะเบียนรถ, ไมด้า ลิสซิ่ง, กู้เงินด่วน">
 
@@ -145,27 +145,133 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
     <?php $active_page = 'home';
     include 'includes/nav.php'; ?>
 
-    <!-- Banner Slider Section -->
-    <section class="banner-section">
+    <!-- Hero Section -->
+    <section class="hero section-compact-top" id="home">
+        <div class="hero-bg-shape"></div>
+        <div class="container hero-content">
+            <!-- Left: Text -->
+            <div class="hero-text">
+                <p class="hero-kicker">MIDA LEASING</p>
+                <h1 class="hero-title">สินเชื่อรถ ใช้เงินไว<br>ให้ไมด้าช่วยดูแล</h1>
+                <h2 class="hero-subtitle">
+                    <span class="hero-subtitle-text">เลือกบริการที่เหมาะกับคุณ สมัครออนไลน์ได้ง่าย หรือค้นหาสาขาใกล้บ้านเพื่อให้เจ้าหน้าที่ดูแลต่อ</span>
+                </h2>
+                <div class="hero-actions">
+                    <a href="register_hire_purchase.php" class="btn btn-accent hero-primary-cta">สมัครสินเชื่อออนไลน์</a>
+                    <a href="contact_branches.php" class="btn btn-primary btn-secondary-light">ค้นหาสาขา</a>
+                </div>
+
+                <div class="hero-trust-row" aria-label="จุดเด่นบริการไมด้า ลิสซิ่ง">
+                    <div class="hero-trust-item">
+                        <i class="fa-solid fa-user-check" aria-hidden="true"></i>
+                        <span>เจ้าหน้าที่ดูแล</span>
+                    </div>
+                    <div class="hero-trust-item">
+                        <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+                        <span>ข้อมูลปลอดภัย</span>
+                    </div>
+                    <div class="hero-trust-item">
+                        <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+                        <span>มีสาขาให้บริการ</span>
+                    </div>
+                </div>
+
+                <div class="hero-note">
+                    <p class="hero-note-text">ฝากข้อมูลไว้ เจ้าหน้าที่จะติดต่อกลับเพื่อแนะนำบริการที่เหมาะกับคุณ</p>
+                </div>
+            </div>
+
+            <!-- Right: Loan Selector (Tidlor Style) -->
+            <div class="loan-selector-card" id="loanSelector">
+                <h3 class="selector-title">เลือกบริการที่ต้องการ</h3>
+
+                <div class="selector-grid">
+                    <!-- Item 1: Sedan -->
+                    <a href="service_hire_purchase.php#sedan" class="selector-item">
+                        <i class="fa-solid fa-car-side"></i>
+                        <span>รถเก๋ง</span>
+                        <small>ดูบริการที่เกี่ยวข้อง</small>
+                    </a>
+
+                    <!-- Item 2: Pickup -->
+                    <a href="service_hire_purchase.php#pickup" class="selector-item">
+                        <i class="fa-solid fa-truck-pickup"></i>
+                        <span>รถกระบะ</span>
+                        <small>เหมาะกับงานและธุรกิจ</small>
+                    </a>
+
+                    <!-- Item 3: Truck -->
+                    <a href="service_hire_purchase.php#truck" class="selector-item">
+                        <i class="fa-solid fa-truck"></i>
+                        <span>รถบรรทุก</span>
+                        <small>สำหรับรถเชิงพาณิชย์</small>
+                    </a>
+
+                    <!-- Item 4: Nano -->
+                    <a href="service_title_loan.php" class="selector-item">
+                        <i class="fa-solid fa-passport"></i>
+                        <span>จำนำทะเบียนรถ</span>
+                        <small>มีรถ ใช้ทะเบียนต่อยอด</small>
+                    </a>
+
+                    <!-- Item 5: Personal -->
+                    <a href="service_personal_loan.php" class="selector-item">
+                        <i class="fa-solid fa-user-tag"></i>
+                        <span>สินเชื่อบุคคล</span>
+                        <small>ดูเงื่อนไขบริการ</small>
+                    </a>
+
+                    <!-- Item 6: Other/Contact -->
+                    <a href="contact_us.php" class="selector-item">
+                        <i class="fa-solid fa-headset"></i>
+                        <span>สอบถามเพิ่มเติม</span>
+                        <small>คุยกับเจ้าหน้าที่</small>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <nav class="mobile-quick-cta" aria-label="ทางลัดสำหรับมือถือ">
+        <a href="register_hire_purchase.php" class="mobile-quick-link mobile-quick-link-primary">
+            <i class="fa-solid fa-file-signature" aria-hidden="true"></i>
+            <span>สมัคร</span>
+        </a>
+        <a href="<?php echo htmlspecialchars($settings['site_line']); ?>" target="_blank" class="mobile-quick-link">
+            <i class="fa-brands fa-line" aria-hidden="true"></i>
+            <span>LINE</span>
+        </a>
+        <a href="contact_branches.php" class="mobile-quick-link">
+            <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+            <span>สาขา</span>
+        </a>
+    </nav>
+
+    <!-- Campaign Strip -->
+    <section class="banner-section campaign-strip" aria-label="โปรโมชันและข่าวสาร">
         <div class="container">
-            <div class="slider-container">
+            <div class="campaign-strip-header">
+                <span>โปรโมชันและข่าวสาร</span>
+                <a href="news.php">ดูข่าวทั้งหมด</a>
+            </div>
+            <div class="slider-container campaign-slider">
                 <div class="slider-wrapper">
                     <?php if (count($banners) > 0): ?>
                         <?php foreach ($banners as $index => $banner): ?>
                             <div class="slide">
                                 <a href="<?php echo htmlspecialchars($banner['link']); ?>">
                                     <picture>
-                                        <?php 
+                                        <?php
                                         $webp_path = preg_replace('/\.(jpg|jpeg|png)$/i', '.webp', $banner['image_path']);
                                         $original_path = $banner['image_path'];
                                         ?>
-                                        <source 
-                                            srcset="<?php echo htmlspecialchars($webp_path); ?>" 
+                                        <source
+                                            srcset="<?php echo htmlspecialchars($webp_path); ?>"
                                             type="image/webp">
-                                        <source 
-                                            srcset="<?php echo htmlspecialchars($original_path); ?>" 
+                                        <source
+                                            srcset="<?php echo htmlspecialchars($original_path); ?>"
                                             type="image/<?php echo pathinfo($original_path, PATHINFO_EXTENSION) === 'jpg' ? 'jpeg' : pathinfo($original_path, PATHINFO_EXTENSION); ?>">
-                                        <img 
+                                        <img
                                             src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 375'%3E%3C/svg%3E"
                                             data-src="<?php echo htmlspecialchars($original_path); ?>"
                                             alt="<?php echo htmlspecialchars($banner['title']); ?>"
@@ -181,13 +287,13 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                     <?php else: ?>
                         <div class="slide">
                             <picture>
-                                <source 
-                                    srcset="img/hire_purchase.webp" 
+                                <source
+                                    srcset="img/hire_purchase.webp"
                                     type="image/webp">
-                                <source 
-                                    srcset="img/hire_purchase.jpg" 
+                                <source
+                                    srcset="img/hire_purchase.jpg"
                                     type="image/jpeg">
-                                <img 
+                                <img
                                     src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 375'%3E%3C/svg%3E"
                                     data-src="img/hire_purchase.jpg"
                                     alt="Default Banner"
@@ -201,79 +307,9 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                     <?php endif; ?>
                 </div>
 
-                <button class="slider-btn prev-btn" type="button" aria-label="Previous banner slide"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
-                <button class="slider-btn next-btn" type="button" aria-label="Next banner slide"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
-                <div class="slider-dots" role="tablist" aria-label="Banner slides"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Hero Section -->
-    <section class="hero section-compact-top" id="home">
-        <div class="hero-bg-shape"></div>
-        <div class="container hero-content">
-            <!-- Left: Text -->
-            <div class="hero-text">
-                <h1 class="hero-title">รถอะไร..<br>ก็ขอกู้เงินได้</h1>
-                <h2 class="hero-subtitle">
-                    <span class="hero-subtitle-text">บริการสินเชื่อเช่าซื้อรถยนต์
-                        สินเชื่อจำนำทะเบียนรถยนต์
-                        สินเชื่อส่วนบุคคล</span>
-                </h2>
-                <div class="hero-actions">
-                    <a href="#products" class="btn btn-primary">ดูบริการของเรา</a>
-                    <a href="#steps" class="btn btn-primary btn-secondary-light">ขั้นตอนการกู้</a>
-                </div>
-
-                <div class="hero-note">
-                    <p class="hero-note-text">"อนุมัติไว ให้วงเงินสูง ไม่ยุ่งยาก"
-                    </p>
-                </div>
-            </div>
-
-            <!-- Right: Loan Selector (Tidlor Style) -->
-            <div class="loan-selector-card" id="loanSelector">
-                <h3 class="selector-title">เลือกสินเชื่อที่เหมาะกับคุณ</h3>
-
-                <div class="selector-grid">
-                    <!-- Item 1: Sedan -->
-                    <a href="service_hire_purchase.php#sedan" class="selector-item">
-                        <i class="fa-solid fa-car-side"></i>
-                        <span>รถเก๋ง</span>
-                    </a>
-
-                    <!-- Item 2: Pickup -->
-                    <a href="service_hire_purchase.php#pickup" class="selector-item">
-                        <i class="fa-solid fa-truck-pickup"></i>
-                        <span>รถกระบะ</span>
-                    </a>
-
-                    <!-- Item 3: Truck -->
-                    <a href="service_hire_purchase.php#truck" class="selector-item">
-                        <i class="fa-solid fa-truck"></i>
-                        <span>รถบรรทุก</span>
-                    </a>
-
-                    <!-- Item 4: Nano -->
-                    <a href="service_title_loan.php" class="selector-item">
-                        <i class="fa-solid fa-passport"></i>
-                        <span>จำนำทะเบียนรถยนต์</span>
-                    </a>
-
-                    <!-- Item 5: Personal -->
-                    <a href="service_personal_loan.php" class="selector-item">
-                        <i class="fa-solid fa-user-tag"></i>
-                        <span>สินเชื่อบุคคล</span>
-                    </a>
-
-                    <!-- Item 6: Other/Contact -->
-                    <a href="contact_us.php" class="selector-item">
-                        <i class="fa-solid fa-headset"></i>
-                        <span>สอบถามเพิ่มเติม</span>
-                    </a>
-                </div>
-
-                <a href="register_hire_purchase.php" class="btn btn-primary selector-apply-btn">สนใจสมัครสินเชื่อ</a>
+                <button class="slider-btn prev-btn" type="button" aria-label="Previous campaign slide"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+                <button class="slider-btn next-btn" type="button" aria-label="Next campaign slide"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+                <div class="slider-dots" role="tablist" aria-label="Campaign slides"></div>
             </div>
         </div>
     </section>
@@ -289,16 +325,46 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
             <div class="features-grid">
                 <?php if (count($services) > 0): ?>
                     <?php foreach ($services as $service): ?>
+                        <?php
+                        $service_link = isset($service['link']) ? $service['link'] : '';
+                        $service_copy = array(
+                            'service_hire_purchase.php' => array(
+                                'title' => 'สินเชื่อเช่าซื้อ',
+                                'description' => 'ผ่อนรถมือสอง รถเก๋ง กระบะ และรถบรรทุก พร้อมเจ้าหน้าที่ดูแล',
+                                'cta' => 'ดูรายละเอียด'
+                            ),
+                            'service_title_loan.php' => array(
+                                'title' => 'สินเชื่อจำนำทะเบียน',
+                                'description' => 'ใช้เล่มทะเบียนต่อยอดสภาพคล่อง รถยังมีขับตามปกติ',
+                                'cta' => 'ดูเงื่อนไข'
+                            ),
+                            'service_personal_loan.php' => array(
+                                'title' => 'สินเชื่อส่วนบุคคล',
+                                'description' => 'เงินก้อนพร้อมใช้ ช่วยเสริมสภาพคล่องในชีวิตประจำวัน',
+                                'cta' => 'ดูบริการ'
+                            ),
+                            'service_insurance.php' => array(
+                                'title' => 'ต่อภาษีและประกันภัย',
+                                'description' => 'บริการต่อภาษี พ.ร.บ. และประกันรถยนต์ ครบในที่เดียว',
+                                'cta' => 'ดูบริการ'
+                            ),
+                        );
+                        $service_display = isset($service_copy[$service_link]) ? $service_copy[$service_link] : array(
+                            'title' => $service['title'],
+                            'description' => $service['description'],
+                            'cta' => 'อ่านเพิ่มเติม'
+                        );
+                        ?>
                         <div class="feature-card">
                             <div class="feature-icon">
                                 <i class="<?php echo htmlspecialchars($service['icon_class']); ?>"></i>
                             </div>
-                            <h3><?php echo htmlspecialchars($service['title']); ?></h3>
+                            <h3><?php echo htmlspecialchars($service_display['title']); ?></h3>
                             <p class="feature-description">
-                                <?php echo nl2br(htmlspecialchars($service['description'])); ?>
+                                <?php echo nl2br(htmlspecialchars($service_display['description'])); ?>
                             </p>
                             <a href="<?php echo htmlspecialchars($service['link']); ?>"
-                                class="feature-link">อ่านเพิ่มเติม <i
+                                class="feature-link"><?php echo htmlspecialchars($service_display['cta']); ?> <i
                                     class="fa-solid fa-arrow-right"></i></a>
                         </div>
                     <?php endforeach; ?>
@@ -311,94 +377,116 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
     <section class="section" id="properties">
         <div class="container">
             <div class="section-title">
-                <h2>รถยนต์ บ้าน คอนโด และที่ดินราคาพิเศษ</h2>
+                <h2>ทรัพย์และรถราคาพิเศษจากไมด้า</h2>
+                <p>รวมรายการประมูลและทรัพย์พร้อมขาย</p>
             </div>
 
             <div class="properties-grid">
                 <!-- Auction Card -->
                 <div class="property-card auction-card">
-                    <div class="property-icon">
-                        <i class="fa-solid fa-gavel"></i>
-                    </div>
                     <div class="property-info">
-                        <h3>ประมูลรถยนต์</h3>
-                        <p>ศูนย์ประมูลรถยนต์มาตรฐาน รถมือสองสภาพดี หลากหลายรุ่น ยี่ห้อ ราคาเริ่มต้นต่ำกว่าท้องตลาด
-                            ประมูลอย่างเปิดเผยและโปร่งใส</p>
-                        <a href="auction.php" class="btn btn-outline-white">ดูรอบประมูล</a>
+                        <div class="property-heading">
+                            <div class="property-icon">
+                                <i class="fa-solid fa-gavel"></i>
+                            </div>
+                            <h3>ประมูลรถยนต์</h3>
+                        </div>
+                        <p>รถมือสองสภาพดีจากศูนย์ประมูลมาตรฐาน ราคาพิเศษ เปิดเผย โปร่งใส</p>
+                        <ul class="property-points">
+                            <li>รถมือสองสภาพดี</li>
+                            <li>ราคาเริ่มต้นพิเศษ</li>
+                            <li>ประมูลโปร่งใส</li>
+                        </ul>
+                        <div class="property-actions">
+                            <a href="auction.php" class="btn btn-outline-white property-primary-link">ดูรอบประมูล</a>
+                            <a href="contact_us.php" class="property-secondary-link">สอบถามรายละเอียด</a>
+                        </div>
                     </div>
                 </div>
 
                 <!-- NPA Card -->
                 <div class="property-card npa-card">
-                    <div class="property-icon">
-                        <i class="fa-solid fa-house-chimney"></i>
-                    </div>
                     <div class="property-info">
-                        <h3>รถยนต์ บ้าน คอนโด ที่ดินราคาพิเศษ</h3>
-                        <a href="properties.php" class="btn btn-outline-white">ดูรายการทรัพย์</a>
+                        <div class="property-heading">
+                            <div class="property-icon">
+                                <i class="fa-solid fa-house-chimney"></i>
+                            </div>
+                            <h3>ทรัพย์ราคาพิเศษ</h3>
+                        </div>
+                        <p>รวมบ้าน คอนโด และที่ดิน พร้อมรายละเอียดให้เลือกชม</p>
+                        <ul class="property-points">
+                            <li>บ้านและคอนโด</li>
+                            <li>ที่ดินราคาพิเศษ</li>
+                            <li>มีรายละเอียดให้เลือกชม</li>
+                        </ul>
+                        <div class="property-actions">
+                            <a href="properties.php" class="btn btn-outline-white property-primary-link">ดูรายการทรัพย์</a>
+                            <a href="contact_us.php" class="property-secondary-link">ติดต่อเจ้าหน้าที่</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- Why Choose Us / Stat Section -->
-        <section class="section section-soft">
-            <div class="container">
-                <div class="section-title">
-                    <h2>ทำไมต้องเลือกไมด้า ลิสซิ่ง?</h2>
-                    <p>มั่นใจได้ในมาตรฐาน บริษัทจดทะเบียนในตลาดหลักทรัพย์</p>
+    <!-- Why Choose Us / Stat Section -->
+    <section class="section section-soft">
+        <div class="container">
+            <div class="section-title">
+                <h2>ทำไมต้องเลือกไมด้า ลิสซิ่ง?</h2>
+                <p>มั่นใจได้ในมาตรฐาน บริษัทจดทะเบียนในตลาดหลักทรัพย์</p>
+            </div>
+
+            <div class="stats-grid">
+                <!-- Stat 1 -->
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-building-columns"></i>
+                    </div>
+                    <div class="stat-text">
+                        <h3>บริษัทมหาชน</h3>
+                        <p>จดทะเบียนในตลาดหลักทรัพย์<br>มีความมั่นคงสูง</p>
+                    </div>
                 </div>
 
-                <div class="stats-grid">
-                    <!-- Stat 1 -->
-                    <div class="stat-item">
-                        <div class="stat-icon">
-                            <i class="fa-solid fa-building-columns"></i>
-                        </div>
-                        <div class="stat-text">
-                            <h3>บริษัทมหาชน</h3>
-                            <p>จดทะเบียนในตลาดหลักทรัพย์<br>มีความมั่นคงสูง</p>
-                        </div>
+                <!-- Stat 2 -->
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
                     </div>
-
-                    <!-- Stat 2 -->
-                    <div class="stat-item">
-                        <div class="stat-icon">
-                            <i class="fa-solid fa-clock-rotate-left"></i>
-                        </div>
-                        <div class="stat-text">
-                            <h3>ประสบการณ์ 20+ ปี</h3>
-                            <p>เชี่ยวชาญด้านสินเชื่อรถยนต์<br>ให้บริการมายาวนาน</p>
-                        </div>
+                    <div class="stat-text">
+                        <h3>ประสบการณ์ 20+ ปี</h3>
+                        <p>เชี่ยวชาญด้านสินเชื่อรถยนต์<br>ให้บริการมายาวนาน</p>
                     </div>
+                </div>
 
-                    <!-- Stat 3 -->
-                    <div class="stat-item">
-                        <div class="stat-icon">
-                            <i class="fa-solid fa-map-location-dot"></i>
-                        </div>
-                        <div class="stat-text">
-                            <h3>สาขาทั่วประเทศ</h3>
-                            <p>มีสาขาให้บริการครอบคลุม<br>พร้อมดูแลคุณใกล้บ้าน</p>
-                        </div>
+                <!-- Stat 3 -->
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-map-location-dot"></i>
                     </div>
+                    <div class="stat-text">
+                        <h3>สาขาทั่วประเทศ</h3>
+                        <p>มีสาขาให้บริการครอบคลุม<br>พร้อมดูแลคุณใกล้บ้าน</p>
+                    </div>
+                </div>
 
-                    <!-- Stat 4 -->
-                    <div class="stat-item">
-                        <div class="stat-icon">
-                            <i class="fa-solid fa-hand-holding-dollar"></i>
-                        </div>
-                        <div class="stat-text">
-                            <h3>ดอกเบี้ยยุติธรรม</h3>
-                            <p>อัตราดอกเบี้ยมาตรฐาน<br>ถูกต้องตามกฎหมาย</p>
-                        </div>
+                <!-- Stat 4 -->
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                    </div>
+                    <div class="stat-text">
+                        <h3>ดอกเบี้ยยุติธรรม</h3>
+                        <p>อัตราดอกเบี้ยมาตรฐาน<br>ถูกต้องตามกฎหมาย</p>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Testimonials Section -->
-        <section class="section testimonial-section">
+    <!-- Testimonials Section -->
+    <section class="section testimonial-section">
             <div class="container">
                 <div class="section-title">
                     <h2>เสียงจากลูกค้าของเรา</h2>
@@ -476,8 +564,8 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
         <section class="section section-plain" id="steps">
             <div class="container">
                 <div class="section-title">
-                    <h2>4 ขั้นตอนง่ายๆ ขอสินเชื่อ</h2>
-                    <p>สะดวกรวดเร็ว ไม่ยุ่งยาก</p>
+                    <h2>3 ขั้นตอนง่ายๆ ขอสินเชื่อ</h2>
+                    <p>เริ่มจากเลือกบริการ ฝากข้อมูล แล้วให้เจ้าหน้าที่ดูแลต่อ</p>
                 </div>
 
                 <div class="steps-grid">
@@ -486,8 +574,8 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                         <div
                             class="step-number">
                             1</div>
-                        <h4 class="step-title">สมัครง่ายๆได้ทุกที่</h4>
-                        <p class="step-description">กรอกฟอร์มออนไลน์ รอเจ้าหน้าที่ติดต่อกลับ</p>
+                        <h4 class="step-title">เลือกบริการและกรอกข้อมูล</h4>
+                        <p class="step-description">เลือกสินเชื่อที่สนใจ แล้วฝากข้อมูลติดต่อกลับ</p>
                     </div>
 
                     <!-- Step 2 -->
@@ -495,8 +583,8 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                         <div
                             class="step-number">
                             2</div>
-                        <h4 class="step-title">ส่งรูปถ่ายเอกสาร</h4>
-                        <p class="step-description">ส่งเอกสารประกอบการขอสินเชื่อ</p>
+                        <h4 class="step-title">เจ้าหน้าที่ติดต่อกลับ</h4>
+                        <p class="step-description">รับคำแนะนำบริการ เอกสาร และขั้นตอนที่เหมาะกับคุณ</p>
                     </div>
 
                     <!-- Step 3 -->
@@ -504,17 +592,8 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                         <div
                             class="step-number">
                             3</div>
-                        <h4 class="step-title">รอแจ้งผลอนุมัติ</h4>
-                        <p class="step-description">แจ้งผลหลังจากได้รับเอกสารครบถ้วน</p>
-                    </div>
-
-                    <!-- Step 4 -->
-                    <div class="step-card">
-                        <div
-                            class="step-number step-number-highlight">
-                            4</div>
-                        <h4 class="step-title">รอรับเงิน</h4>
-                        <p class="step-description">รับเงินโอนเมื่อดำเนินการเรียบร้อย</p>
+                        <h4 class="step-title">ยื่นเอกสารและรอผล</h4>
+                        <p class="step-description">ดำเนินการตามขั้นตอน พร้อมรับบริการเมื่ออนุมัติเรียบร้อย</p>
                     </div>
                 </div>
             </div>
@@ -529,7 +608,7 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                 <div class="cta-modern-content">
                     <!-- Main Headline -->
                     <h2 class="cta-modern-headline">
-                        มีรถ มีเงินใช้! อนุมัติไวใน 1 ชม.
+                        พร้อมเริ่มสมัครสินเชื่อกับไมด้า?
                     </h2>
 
                     <!-- Features & Icons (3 columns) -->
@@ -539,8 +618,8 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                                 <i class="fa-solid fa-shield"></i>
                             </div>
                             <div class="cta-feature-text">
-                                <strong>ถูกกฎหมาย</strong>
-                                <span>มั่นใจ ตรวจสอบได้ทุกขั้นตอน</span>
+                                <strong>บริการถูกต้อง</strong>
+                                <span>ดำเนินการตามขั้นตอน ตรวจสอบได้</span>
                             </div>
                         </div>
 
@@ -549,8 +628,8 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                                 <i class="fa-solid fa-chart-line"></i>
                             </div>
                             <div class="cta-feature-text">
-                                <strong>ดอกเบี้ยเป็นธรรม</strong>
-                                <span>เริ่มต้นต่ำตามกฎหมาย</span>
+                                <strong>เงื่อนไขชัดเจน</strong>
+                                <span>เจ้าหน้าที่อธิบายก่อนตัดสินใจ</span>
                             </div>
                         </div>
 
@@ -559,8 +638,8 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                                 <i class="fa-solid fa-lock"></i>
                             </div>
                             <div class="cta-feature-text">
-                                <strong>ปลอดภัย 100%</strong>
-                                <span>ข้อมูลเป็นความลับสูงสุด</span>
+                                <strong>ข้อมูลปลอดภัย</strong>
+                                <span>ดูแลข้อมูลตามนโยบายความเป็นส่วนตัว</span>
                             </div>
                         </div>
                     </div>
@@ -570,17 +649,17 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                         <a href="<?php echo htmlspecialchars($settings['site_line']); ?>" target="_blank"
                             class="cta-btn cta-btn-line">
                             <i class="fa-brands fa-line"></i>
-                            <span>ปรึกษาเรื่องยอดจัดฟรี</span>
+                            <span>คุยกับเจ้าหน้าที่ทาง LINE</span>
                         </a>
                         <a href="register_hire_purchase.php" class="cta-btn cta-btn-form">
                             <i class="fa-solid fa-file-signature"></i>
-                            <span>สมัครสินเชื่อออนไลน์</span>
+                            <span>ฝากข้อมูลสมัครสินเชื่อ</span>
                         </a>
                     </div>
 
                     <!-- Trust & Sub-text -->
                     <div class="cta-trust-text">
-                        ไม่ต้องมีคนค้ำ | ประเมินฟรีไม่มีข้อผูกมัด | รับเงินทันทีหลังอนุมัติ
+                        ข้อมูลเป็นความลับ | มีสาขาให้บริการ | เจ้าหน้าที่ดูแลทุกขั้นตอน
                     </div>
                 </div>
             </div>
@@ -795,11 +874,20 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                     const popup = document.getElementById('newsPopup');
                     const popupPanel = document.getElementById('newsPopupPanel');
                     const popupCloseButton = popup ? popup.querySelector('button') : null;
+                    const popupId = '<?php echo $popup_news_id; ?>';
+                    const popupSessionKey = 'seenPopup_' + popupId;
+                    const hasAnchorTarget = window.location.hash && window.location.hash !== '#home';
+                    const popupDelayMs = 4500;
+                    let popupTimer = null;
 
                     function openPopup() {
                         if (!popup) {
                             return;
                         }
+                        if (window.location.hash && window.location.hash !== '#home') {
+                            return;
+                        }
+                        sessionStorage.setItem(popupSessionKey, '1');
                         lastFocusedElement = document.activeElement;
                         popup.style.display = 'flex';
                         if (popupPanel) {
@@ -810,7 +898,6 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                     }
 
                     // Check local storage for long-term suppression
-                    const popupId = '<?php echo $popup_news_id; ?>';
                     const hideTime = localStorage.getItem('hidePopup_' + popupId);
 
                     let shouldShow = true;
@@ -825,8 +912,12 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                         }
                     }
 
+                    if (sessionStorage.getItem(popupSessionKey) === '1' || hasAnchorTarget) {
+                        shouldShow = false;
+                    }
+
                     if (shouldShow) {
-                        openPopup();
+                        popupTimer = window.setTimeout(openPopup, popupDelayMs);
                     }
 
                     if (popup) {
@@ -842,12 +933,28 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                             closePopup();
                         }
                     });
+
+                    window.cancelNewsPopupTimer = function () {
+                        if (popupTimer) {
+                            window.clearTimeout(popupTimer);
+                            popupTimer = null;
+                        }
+                    };
+
+                    window.addEventListener('hashchange', window.cancelNewsPopupTimer);
                 });
 
                 function closePopup() {
+                    if (typeof window.cancelNewsPopupTimer === 'function') {
+                        window.cancelNewsPopupTimer();
+                    }
                     const popup = document.getElementById('newsPopup');
+                    if (!popup) {
+                        return;
+                    }
                     popup.style.display = 'none';
-                    const dontShow = document.getElementById('dontShowPopup').checked;
+                    const dontShowCheckbox = document.getElementById('dontShowPopup');
+                    const dontShow = dontShowCheckbox ? dontShowCheckbox.checked : false;
                     if (dontShow) {
                         const popupId = '<?php echo $popup_news_id; ?>';
                         const now = new Date().getTime();
