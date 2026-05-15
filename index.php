@@ -149,76 +149,139 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
     <section class="hero section-compact-top" id="home">
         <div class="hero-bg-shape"></div>
         <div class="container hero-content">
-            <!-- Left: Text -->
-            <div class="hero-text">
-                <p class="hero-kicker">MIDA LEASING</p>
-                <h1 class="hero-title">สินเชื่อรถ ใช้เงินไว<br>ให้ไมด้าช่วยดูแล</h1>
-                <h2 class="hero-subtitle">
-                    <span class="hero-subtitle-text">เลือกสินเชื่อ สมัครออนไลน์ หรือค้นหาสาขาใกล้บ้าน</span>
-                </h2>
-                <div class="hero-actions">
-                    <a href="register_hire_purchase.php" class="btn btn-accent hero-primary-cta">สมัครสินเชื่อออนไลน์</a>
-                    <a href="contact_branches.php" class="btn btn-primary btn-secondary-light">ค้นหาสาขา</a>
+            <div class="hero-campaign" aria-label="โปรโมชันและข่าวสาร">
+                <div class="hero-campaign-copy">
+                    <p class="hero-kicker">MIDA LEASING</p>
+                    <h1 class="hero-title">สินเชื่อรถ ใช้เงินไว<br>ให้ไมด้าช่วยดูแล</h1>
                 </div>
 
-                <div class="hero-trust-row" aria-label="จุดเด่นบริการไมด้า ลิสซิ่ง">
-                    <div class="hero-trust-item">
-                        <i class="fa-solid fa-user-check" aria-hidden="true"></i>
-                        <span>เจ้าหน้าที่ดูแล</span>
+                <div class="slider-container campaign-slider hero-slider">
+                    <div class="slider-wrapper">
+                        <?php if (count($banners) > 0): ?>
+                            <?php foreach ($banners as $index => $banner): ?>
+                                <div class="slide">
+                                    <a href="<?php echo htmlspecialchars($banner['link']); ?>">
+                                        <picture>
+                                            <?php
+                                            $webp_path = preg_replace('/\.(jpg|jpeg|png)$/i', '.webp', $banner['image_path']);
+                                            $original_path = $banner['image_path'];
+                                            ?>
+                                            <source
+                                                srcset="<?php echo htmlspecialchars($webp_path); ?>"
+                                                type="image/webp">
+                                            <source
+                                                srcset="<?php echo htmlspecialchars($original_path); ?>"
+                                                type="image/<?php echo pathinfo($original_path, PATHINFO_EXTENSION) === 'jpg' ? 'jpeg' : pathinfo($original_path, PATHINFO_EXTENSION); ?>">
+                                            <img
+                                                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 375'%3E%3C/svg%3E"
+                                                data-src="<?php echo htmlspecialchars($original_path); ?>"
+                                                alt="<?php echo htmlspecialchars($banner['title']); ?>"
+                                                loading="<?php echo $index === 0 ? 'eager' : 'lazy'; ?>"
+                                                decoding="async"
+                                                width="1200"
+                                                height="375"
+                                                class="slider-image">
+                                        </picture>
+                                    </a>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div class="slide">
+                                <picture>
+                                    <source
+                                        srcset="img/hire_purchase.webp"
+                                        type="image/webp">
+                                    <source
+                                        srcset="img/hire_purchase.jpg"
+                                        type="image/jpeg">
+                                    <img
+                                        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 375'%3E%3C/svg%3E"
+                                        data-src="img/hire_purchase.jpg"
+                                        alt="สมัครสินเชื่อไมด้า ลิสซิ่ง"
+                                        loading="eager"
+                                        decoding="async"
+                                        width="1200"
+                                        height="375"
+                                        class="slider-image">
+                                </picture>
+                            </div>
+                        <?php endif; ?>
                     </div>
-                    <div class="hero-trust-item">
-                        <i class="fa-solid fa-lock" aria-hidden="true"></i>
-                        <span>ข้อมูลปลอดภัย</span>
-                    </div>
-                    <div class="hero-trust-item">
-                        <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
-                        <span>มีสาขาให้บริการ</span>
-                    </div>
-                </div>
 
+                    <button class="slider-btn prev-btn" type="button" aria-label="Previous campaign slide"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+                    <button class="slider-btn next-btn" type="button" aria-label="Next campaign slide"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+                    <div class="slider-dots" role="tablist" aria-label="Campaign slides"></div>
+                </div>
             </div>
 
-            <!-- Right: Loan Selector (Tidlor Style) -->
-            <div class="loan-selector-card" id="loanSelector">
-                <h3 class="selector-title">เลือกบริการ</h3>
+            <div class="hero-form-card" id="heroLoanFormCard">
+                <h2 class="hero-form-title">เลือกสินเชื่อที่ต้องการ</h2>
 
-                <div class="selector-grid">
-                    <!-- Item 1: Sedan -->
-                    <a href="service_hire_purchase.php#sedan" class="selector-item">
-                        <i class="fa-solid fa-car-side"></i>
-                        <span>รถเก๋ง</span>
-                    </a>
+                <form id="heroLoanForm" class="hero-loan-form" action="register_hire_purchase.php?type=sedan" method="POST">
+                    <input type="hidden" name="car_type" id="heroCarType" value="รถเก๋ง">
 
-                    <!-- Item 2: Pickup -->
-                    <a href="service_hire_purchase.php#pickup" class="selector-item">
-                        <i class="fa-solid fa-truck-pickup"></i>
-                        <span>รถกระบะ</span>
-                    </a>
+                    <div class="hero-loan-options" role="radiogroup" aria-label="เลือกสินเชื่อหรือรูปแบบรถ">
+                        <label class="hero-loan-option">
+                            <input type="radio" name="hero_loan_choice" value="sedan" data-action="register_hire_purchase.php?type=sedan" data-car-type="รถเก๋ง" checked>
+                            <span><i class="fa-solid fa-car-side" aria-hidden="true"></i> รถเก๋ง</span>
+                        </label>
+                        <label class="hero-loan-option">
+                            <input type="radio" name="hero_loan_choice" value="pickup" data-action="register_hire_purchase.php?type=pickup" data-car-type="รถกระบะ">
+                            <span><i class="fa-solid fa-truck-pickup" aria-hidden="true"></i> รถกระบะ</span>
+                        </label>
+                        <label class="hero-loan-option">
+                            <input type="radio" name="hero_loan_choice" value="truck" data-action="register_hire_purchase.php?type=truck" data-car-type="รถบรรทุก">
+                            <span><i class="fa-solid fa-truck" aria-hidden="true"></i> รถบรรทุก</span>
+                        </label>
+                        <label class="hero-loan-option">
+                            <input type="radio" name="hero_loan_choice" value="title_loan" data-action="register_title_loan.php" data-car-type="จำนำทะเบียนรถ">
+                            <span><i class="fa-solid fa-passport" aria-hidden="true"></i> จำนำทะเบียน</span>
+                        </label>
+                    </div>
 
-                    <!-- Item 3: Truck -->
-                    <a href="service_hire_purchase.php#truck" class="selector-item">
-                        <i class="fa-solid fa-truck"></i>
-                        <span>รถบรรทุก</span>
-                    </a>
+                    <div class="hero-form-grid">
+                        <div class="hero-form-field">
+                            <label for="heroFullname">ชื่อ - นามสกุล <span>*</span></label>
+                            <input id="heroFullname" type="text" name="fullname" placeholder="ระบุชื่อและนามสกุล" required>
+                        </div>
+                        <div class="hero-form-field">
+                            <label for="heroPhone">เบอร์โทรศัพท์มือถือ <span>*</span></label>
+                            <input id="heroPhone" type="tel" name="phone" placeholder="08x-xxx-xxxx" required>
+                        </div>
+                    </div>
 
-                    <!-- Item 4: Nano -->
-                    <a href="service_title_loan.php" class="selector-item">
-                        <i class="fa-solid fa-passport"></i>
-                        <span>จำนำทะเบียนรถ</span>
-                    </a>
+                    <div class="hero-form-grid">
+                        <div class="hero-form-field">
+                            <label for="heroLineId">LINE ID (ถ้ามี)</label>
+                            <input id="heroLineId" type="text" name="line_id" placeholder="ไอดีไลน์">
+                        </div>
+                        <div class="hero-form-field">
+                            <label for="heroLoanAmount">วงเงินที่ต้องการ</label>
+                            <input id="heroLoanAmount" type="number" name="loan_amount" placeholder="ระบุจำนวนเงิน">
+                        </div>
+                    </div>
 
-                    <!-- Item 5: Personal -->
-                    <a href="service_personal_loan.php" class="selector-item">
-                        <i class="fa-solid fa-user-tag"></i>
-                        <span>สินเชื่อบุคคล</span>
-                    </a>
+                    <div class="hero-form-field hero-debt-field" id="heroDebtField" hidden>
+                        <label for="heroDebtStatus">ภาระหนี้ปัจจุบัน (ถ้ามี)</label>
+                        <select id="heroDebtStatus" name="debt_status" disabled>
+                            <option value="none">ปลอดภาระ (เล่มอยู่กับตัว)</option>
+                            <option value="finance">ติดไฟแนนซ์อื่น (ต้องการรีไฟแนนซ์)</option>
+                        </select>
+                    </div>
 
-                    <!-- Item 6: Other/Contact -->
-                    <a href="contact_us.php" class="selector-item">
-                        <i class="fa-solid fa-headset"></i>
-                        <span>สอบถามเพิ่มเติม</span>
-                    </a>
-                </div>
+                    <p class="hero-consent-text">
+                        การกดส่งข้อมูล แสดงว่าคุณอ่านและรับทราบ
+                        <a href="privacy_policy.php" target="_blank">นโยบายความเป็นส่วนตัว</a>
+                        <br>เรียบร้อยแล้ว
+                    </p>
+
+                    <button type="submit" class="btn btn-accent hero-submit-btn">ส่งข้อมูล</button>
+
+                    <div class="hero-form-links">
+                        <a href="contact_branches.php">ค้นหาสาขา</a>
+                        <a href="<?php echo htmlspecialchars($settings['site_line']); ?>" target="_blank">คุยผ่าน LINE</a>
+                    </div>
+                </form>
             </div>
         </div>
     </section>
@@ -237,72 +300,6 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
             <span>สาขา</span>
         </a>
     </nav>
-
-    <!-- Campaign Strip -->
-    <section class="banner-section campaign-strip" aria-label="โปรโมชันและข่าวสาร">
-        <div class="container">
-            <div class="campaign-strip-header">
-                <span>โปรโมชันและข่าวสาร</span>
-            </div>
-            <div class="slider-container campaign-slider">
-                <div class="slider-wrapper">
-                    <?php if (count($banners) > 0): ?>
-                        <?php foreach ($banners as $index => $banner): ?>
-                            <div class="slide">
-                                <a href="<?php echo htmlspecialchars($banner['link']); ?>">
-                                    <picture>
-                                        <?php
-                                        $webp_path = preg_replace('/\.(jpg|jpeg|png)$/i', '.webp', $banner['image_path']);
-                                        $original_path = $banner['image_path'];
-                                        ?>
-                                        <source
-                                            srcset="<?php echo htmlspecialchars($webp_path); ?>"
-                                            type="image/webp">
-                                        <source
-                                            srcset="<?php echo htmlspecialchars($original_path); ?>"
-                                            type="image/<?php echo pathinfo($original_path, PATHINFO_EXTENSION) === 'jpg' ? 'jpeg' : pathinfo($original_path, PATHINFO_EXTENSION); ?>">
-                                        <img
-                                            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 375'%3E%3C/svg%3E"
-                                            data-src="<?php echo htmlspecialchars($original_path); ?>"
-                                            alt="<?php echo htmlspecialchars($banner['title']); ?>"
-                                            loading="<?php echo $index === 0 ? 'eager' : 'lazy'; ?>"
-                                            decoding="async"
-                                            width="1200"
-                                            height="375"
-                                            class="slider-image">
-                                    </picture>
-                                </a>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <div class="slide">
-                            <picture>
-                                <source
-                                    srcset="img/hire_purchase.webp"
-                                    type="image/webp">
-                                <source
-                                    srcset="img/hire_purchase.jpg"
-                                    type="image/jpeg">
-                                <img
-                                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 375'%3E%3C/svg%3E"
-                                    data-src="img/hire_purchase.jpg"
-                                    alt="Default Banner"
-                                    loading="eager"
-                                    decoding="async"
-                                    width="1200"
-                                    height="375"
-                                    class="slider-image">
-                            </picture>
-                        </div>
-                    <?php endif; ?>
-                </div>
-
-                <button class="slider-btn prev-btn" type="button" aria-label="Previous campaign slide"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
-                <button class="slider-btn next-btn" type="button" aria-label="Next campaign slide"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
-                <div class="slider-dots" role="tablist" aria-label="Campaign slides"></div>
-            </div>
-        </div>
-    </section>
 
     <!-- Services / Products -->
     <section class="section" id="products">
@@ -359,6 +356,17 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                         </div>
                     <?php endforeach; ?>
                 <?php endif; ?>
+
+                <div class="feature-card feature-card-contact">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+                    <h3>สอบถามเพิ่มเติม</h3>
+                    <p class="feature-description">
+                        คุยกับเจ้าหน้าที่เพื่อเลือกบริการที่เหมาะกับคุณ หรือสอบถามรายละเอียดก่อนสมัคร
+                    </p>
+                    <a href="contact_us.php" class="feature-link">ติดต่อเจ้าหน้าที่ <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
             </div>
         </div>
     </section>
@@ -743,6 +751,38 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                         img.removeAttribute('data-src');
                         img.classList.add('loaded');
                     }
+                }
+            });
+        });
+        </script>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('heroLoanForm');
+            const carTypeInput = document.getElementById('heroCarType');
+            const debtField = document.getElementById('heroDebtField');
+            const debtSelect = document.getElementById('heroDebtStatus');
+            const choices = document.querySelectorAll('input[name="hero_loan_choice"]');
+
+            if (!form || !carTypeInput || !debtField || !debtSelect || choices.length === 0) {
+                return;
+            }
+
+            function syncHeroLoanForm(choice) {
+                const isTitleLoan = choice.value === 'title_loan';
+                form.action = choice.dataset.action || 'register_hire_purchase.php?type=sedan';
+                carTypeInput.value = choice.dataset.carType || 'รถเก๋ง';
+                debtField.hidden = !isTitleLoan;
+                debtSelect.disabled = !isTitleLoan;
+            }
+
+            choices.forEach(function(choice) {
+                choice.addEventListener('change', function() {
+                    syncHeroLoanForm(choice);
+                });
+
+                if (choice.checked) {
+                    syncHeroLoanForm(choice);
                 }
             });
         });

@@ -521,11 +521,12 @@ footer {
         height: calc(100vh - var(--header-height));
         background: #fff;
         flex-direction: column;
-        align-items: center;
-        padding-top: 50px;
+        align-items: flex-start;
+        padding: 42px 28px 120px;
         transition: var(--transition);
         box-shadow: var(--shadow-lg);
         overflow-y: auto;
+        text-align: left;
     }
 
     .nav-menu.active {
@@ -534,15 +535,16 @@ footer {
 
     .nav-menu li {
         width: min(100%, 320px);
-        text-align: center;
+        text-align: left;
     }
 
     .nav-menu .nav-link,
     .nav-menu .btn {
         display: inline-flex;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
         width: 100%;
+        text-align: left;
     }
 
     .calculator-card {
