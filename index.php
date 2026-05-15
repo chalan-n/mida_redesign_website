@@ -305,7 +305,7 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
     <section class="section" id="products">
         <div class="container">
             <div class="section-title">
-                <h2>บริการสินเชื่อของเรา</h2>
+                <h2>สินเชื่อและบริการของไมด้า</h2>
                 <p>ตอบโจทย์ทุกความต้องการทางการเงินของคุณ</p>
             </div>
 
@@ -431,7 +431,7 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
     <section class="section section-soft">
         <div class="container">
             <div class="section-title">
-                <h2>ทำไมต้องเลือกไมด้า ลิสซิ่ง?</h2>
+                <h2>ทำไมต้องเลือกไมด้าลิสซิ่ง?</h2>
                 <p>มั่นใจได้ในมาตรฐาน บริษัทจดทะเบียนในตลาดหลักทรัพย์</p>
             </div>
 
