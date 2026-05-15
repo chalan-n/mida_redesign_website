@@ -236,6 +236,14 @@
     box-shadow: 0 10px 24px rgba(28, 69, 135, 0.1);
 }
 
+.btn-secondary-light:hover,
+.btn-secondary-light:focus-visible {
+    background: #fff;
+    color: #0f2d5c;
+    border-color: rgba(28, 69, 135, 0.32);
+    box-shadow: 0 12px 28px rgba(28, 69, 135, 0.18);
+}
+
 .hero-trust-row {
     display: flex;
     flex-wrap: wrap;
@@ -634,23 +642,50 @@
 
 .footer-socials {
     display: flex;
-    gap: 15px;
+    align-items: center;
+    gap: 12px;
 }
 
 .footer-social-link {
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    box-shadow: 0 10px 22px rgba(4, 15, 35, 0.22);
     text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.footer-social-link:hover,
+.footer-social-link:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px rgba(4, 15, 35, 0.3);
+    filter: brightness(1.06);
+}
+
+.footer-social-link-facebook {
+    background: #1877f2;
+}
+
+.footer-social-link-line {
+    background: #06c755;
 }
 
 .footer-social-icon {
-    font-size: 2rem;
+    color: #fff;
+    font-size: 1.55rem;
+    line-height: 1;
 }
 
 .footer-social-icon-facebook {
-    color: #1877F2;
+    color: #fff;
 }
 
 .footer-social-icon-line {
-    color: #00B900;
+    color: #fff;
 }
 
 .footer-policies {

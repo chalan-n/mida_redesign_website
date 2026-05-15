@@ -167,7 +167,7 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                         <span>เจ้าหน้าที่ดูแล</span>
                     </div>
                     <div class="hero-trust-item">
-                        <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+                        <i class="fa-solid fa-lock" aria-hidden="true"></i>
                         <span>ข้อมูลปลอดภัย</span>
                     </div>
                     <div class="hero-trust-item">
@@ -604,7 +604,7 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                     <!-- Compact Trust Row -->
                     <div class="cta-features-row cta-trust-row-compact" aria-label="จุดเด่นก่อนสมัคร">
                         <span><i class="fa-solid fa-shield"></i> บริการถูกต้อง</span>
-                        <span><i class="fa-solid fa-file-circle-check"></i> เงื่อนไขชัดเจน</span>
+                        <span><i class="fa-solid fa-check-circle"></i> เงื่อนไขชัดเจน</span>
                         <span><i class="fa-solid fa-lock"></i> ข้อมูลปลอดภัย</span>
                     </div>
 
@@ -642,10 +642,10 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                         <p class="footer-phone"><i class="fa-solid fa-phone"></i><?php echo htmlspecialchars($settings['site_phone']); ?>
                         </p>
                         <div class="footer-socials">
-                            <a href="<?php echo htmlspecialchars($settings['site_facebook']); ?>" target="_blank" class="footer-social-link">
+                            <a href="<?php echo htmlspecialchars($settings['site_facebook']); ?>" target="_blank" class="footer-social-link footer-social-link-facebook" aria-label="Facebook MIDA Leasing">
                                 <i class="fa-brands fa-facebook footer-social-icon footer-social-icon-facebook"></i>
                             </a>
-                            <a href="<?php echo htmlspecialchars($settings['site_line']); ?>" target="_blank" class="footer-social-link">
+                            <a href="<?php echo htmlspecialchars($settings['site_line']); ?>" target="_blank" class="footer-social-link footer-social-link-line" aria-label="LINE MIDA Leasing">
                                 <i class="fa-brands fa-line footer-social-icon footer-social-icon-line"></i>
                             </a>
                         </div>
