@@ -254,6 +254,13 @@ try {
             font-weight: bold;
             margin: 0 auto 15px;
         }
+
+        .auction-steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -437,8 +444,7 @@ try {
                 <p>ง่ายๆ ใครก็ประมูลได้</p>
             </div>
 
-            <div
-                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: center;">
+            <div class="auction-steps-grid">
                 <div>
                     <div class="step-circle">1</div>
                     <h4 style="margin-bottom: 10px;">ลงทะเบียน</h4>
