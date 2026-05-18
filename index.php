@@ -260,12 +260,12 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
 
                     <div class="hero-form-grid">
                         <div class="hero-form-field">
-                            <label for="heroLineId">LINE ID (ถ้ามี)</label>
-                            <input id="heroLineId" type="text" name="line_id" placeholder="ไอดีไลน์">
-                        </div>
-                        <div class="hero-form-field">
                             <label for="heroLoanAmount">วงเงินที่ต้องการ</label>
                             <input id="heroLoanAmount" type="number" name="loan_amount" placeholder="ระบุจำนวนเงิน">
+                        </div>
+                        <div class="hero-form-field">
+                            <label for="heroLineId">LINE ID (ถ้ามี)</label>
+                            <input id="heroLineId" type="text" name="line_id" placeholder="ไอดีไลน์">
                         </div>
                     </div>
 
