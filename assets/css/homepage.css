@@ -261,6 +261,30 @@
     gap: 14px;
 }
 
+.hero-form-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 14px;
+    border: 1px solid rgba(213, 57, 57, 0.18);
+    border-radius: 16px;
+    background: linear-gradient(135deg, #fff3f1 0%, #fff9ed 100%);
+    color: #9f2f2f;
+    font-size: 0.88rem;
+    font-weight: 700;
+    line-height: 1.5;
+    box-shadow: 0 12px 26px rgba(213, 57, 57, 0.08);
+}
+
+.hero-form-alert[hidden] {
+    display: none;
+}
+
+.hero-form-alert i {
+    margin-top: 2px;
+    color: #d53939;
+}
+
 .hero-loan-options {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -371,6 +395,29 @@
     border-color: var(--primary-blue);
     background: #fff;
     box-shadow: 0 0 0 4px rgba(28, 69, 135, 0.1);
+}
+
+.hero-form-field.is-invalid label {
+    color: #9f2f2f;
+}
+
+.hero-form-field.is-invalid input,
+.hero-form-field.is-invalid select {
+    border-color: #d53939;
+    background: #fffafa;
+    box-shadow: 0 0 0 4px rgba(213, 57, 57, 0.1);
+}
+
+.hero-field-error {
+    min-height: 16px;
+    color: #c0392b;
+    font-size: 0.76rem;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.hero-field-error:empty {
+    display: none;
 }
 
 .hero-debt-field {

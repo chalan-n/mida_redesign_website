@@ -350,9 +350,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </label>
                     </div>
 
-                    <button type="submit" class="btn btn-primary" id="submitBtn"
-                    style="width: 100%; padding: 15px; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(28, 69, 135, 0.3);"
-                    disabled>
+                <button type="submit" class="btn btn-primary" id="submitBtn"
+                    style="width: 100%; padding: 15px; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(28, 69, 135, 0.3);">
                     ส่งข้อมูลสมัครสินเชื่อ
                 </button>
                 <p style="text-align: center; margin-top: 15px; font-size: 0.9rem; color: #888;">
@@ -431,33 +430,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- JS -->
     <script src="assets/js/main.js"></script>
-
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const privacyCheckbox = document.querySelector('input[name="privacy_consent"]');
-        const submitBtn = document.getElementById('submitBtn');
-        
-        if (privacyCheckbox && submitBtn) {
-            // Initial state - button disabled
-            submitBtn.disabled = true;
-            submitBtn.style.opacity = '0.6';
-            submitBtn.style.cursor = 'not-allowed';
-            
-            // Add change event listener to checkbox
-            privacyCheckbox.addEventListener('change', function() {
-                if (this.checked) {
-                    submitBtn.disabled = false;
-                    submitBtn.style.opacity = '1';
-                    submitBtn.style.cursor = 'pointer';
-                } else {
-                    submitBtn.disabled = true;
-                    submitBtn.style.opacity = '0.6';
-                    submitBtn.style.cursor = 'not-allowed';
-                }
-            });
-        }
-    });
-    </script>
+    <script src="assets/js/register-validation.js"></script>
 
 </body>
 

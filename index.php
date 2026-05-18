@@ -225,8 +225,13 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
             <div class="hero-form-card" id="heroLoanFormCard">
                 <h2 class="hero-form-title">เลือกสินเชื่อที่ต้องการ</h2>
 
-                <form id="heroLoanForm" class="hero-loan-form" action="register_hire_purchase.php?type=sedan" method="POST">
+                <form id="heroLoanForm" class="hero-loan-form" action="register_hire_purchase.php?type=sedan" method="POST" novalidate>
                     <input type="hidden" name="car_type" id="heroCarType" value="รถเก๋ง">
+
+                    <div class="hero-form-alert" id="heroFormAlert" role="alert" hidden>
+                        <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
+                        <span>กรุณากรอกข้อมูลที่จำเป็นให้ครบก่อนส่งข้อมูล</span>
+                    </div>
 
                     <div class="hero-loan-options" role="radiogroup" aria-label="เลือกสินเชื่อหรือรูปแบบรถ">
                         <label class="hero-loan-option">
@@ -251,10 +256,12 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                         <div class="hero-form-field">
                             <label for="heroFullname">ชื่อ - นามสกุล <span>*</span></label>
                             <input id="heroFullname" type="text" name="fullname" placeholder="ระบุชื่อและนามสกุล" required>
+                            <small class="hero-field-error" id="heroFullnameError"></small>
                         </div>
                         <div class="hero-form-field">
                             <label for="heroPhone">เบอร์โทรศัพท์มือถือ <span>*</span></label>
                             <input id="heroPhone" type="tel" name="phone" placeholder="08x-xxx-xxxx" required>
+                            <small class="hero-field-error" id="heroPhoneError"></small>
                         </div>
                     </div>
 
@@ -770,10 +777,65 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
             const carTypeInput = document.getElementById('heroCarType');
             const debtField = document.getElementById('heroDebtField');
             const debtSelect = document.getElementById('heroDebtStatus');
+            const formAlert = document.getElementById('heroFormAlert');
             const choices = document.querySelectorAll('input[name="hero_loan_choice"]');
 
             if (!form || !carTypeInput || !debtField || !debtSelect || choices.length === 0) {
                 return;
+            }
+
+            const validationFields = [
+                {
+                    input: document.getElementById('heroFullname'),
+                    message: 'กรุณาระบุชื่อและนามสกุล'
+                },
+                {
+                    input: document.getElementById('heroPhone'),
+                    message: 'กรุณาระบุเบอร์โทรศัพท์มือถือ'
+                }
+            ];
+            let hasAttemptedSubmit = false;
+
+            function setFieldError(input, message) {
+                const field = input ? input.closest('.hero-form-field') : null;
+                const error = field ? field.querySelector('.hero-field-error') : null;
+
+                if (!input || !field || !error) {
+                    return;
+                }
+
+                field.classList.toggle('is-invalid', Boolean(message));
+                input.setAttribute('aria-invalid', message ? 'true' : 'false');
+                error.textContent = message || '';
+
+                if (message) {
+                    input.setAttribute('aria-describedby', error.id);
+                } else {
+                    input.removeAttribute('aria-describedby');
+                }
+            }
+
+            function validateHeroForm(showErrors) {
+                let firstInvalid = null;
+
+                validationFields.forEach(function(field) {
+                    if (!field.input) {
+                        return;
+                    }
+
+                    const isEmpty = field.input.value.trim() === '';
+                    setFieldError(field.input, showErrors && isEmpty ? field.message : '');
+
+                    if (isEmpty && !firstInvalid) {
+                        firstInvalid = field.input;
+                    }
+                });
+
+                if (formAlert) {
+                    formAlert.hidden = !(showErrors && firstInvalid);
+                }
+
+                return firstInvalid;
             }
 
             function syncHeroLoanForm(choice) {
@@ -792,6 +854,35 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                 if (choice.checked) {
                     syncHeroLoanForm(choice);
                 }
+            });
+
+            validationFields.forEach(function(field) {
+                if (!field.input) {
+                    return;
+                }
+
+                field.input.addEventListener('input', function() {
+                    if (field.input.value.trim() !== '') {
+                        setFieldError(field.input, '');
+                    }
+
+                    if (hasAttemptedSubmit) {
+                        validateHeroForm(true);
+                    }
+                });
+            });
+
+            form.addEventListener('submit', function(event) {
+                hasAttemptedSubmit = true;
+                const firstInvalid = validateHeroForm(true);
+
+                if (!firstInvalid) {
+                    return;
+                }
+
+                event.preventDefault();
+                firstInvalid.focus({ preventScroll: true });
+                firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
             });
         });
         </script>

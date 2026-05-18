@@ -152,6 +152,61 @@ body.register-page {
     text-decoration: none;
 }
 
+.register-page .register-form-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 14px 16px;
+    border: 1px solid rgba(213, 57, 57, 0.18);
+    border-radius: 18px;
+    background: linear-gradient(135deg, #fff3f1 0%, #fff9ed 100%);
+    color: #9f2f2f;
+    font-size: 0.92rem;
+    font-weight: 700;
+    line-height: 1.55;
+    box-shadow: 0 12px 26px rgba(213, 57, 57, 0.08);
+}
+
+.register-page .register-form-alert[hidden] {
+    display: none;
+}
+
+.register-page .register-form-alert i {
+    margin-top: 2px;
+    color: #d53939;
+}
+
+.register-page .form-group.is-invalid .form-label,
+.register-page .register-privacy-note.is-invalid {
+    color: #9f2f2f;
+}
+
+.register-page .form-group.is-invalid .form-control {
+    border-color: #d53939;
+    background: #fffafa;
+    box-shadow: 0 0 0 4px rgba(213, 57, 57, 0.1);
+}
+
+.register-page .register-privacy-note.is-invalid {
+    border-color: rgba(213, 57, 57, 0.24);
+    background: linear-gradient(135deg, #fffafa 0%, #fff8ed 100%);
+}
+
+.register-page .register-field-error {
+    display: block;
+    min-height: 16px;
+    margin-top: 7px;
+    color: #c0392b;
+    font-size: 0.78rem;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.register-page .register-field-error:empty {
+    display: none;
+}
+
 .register-page #submitBtn {
     width: 100%;
     padding: 15px;
