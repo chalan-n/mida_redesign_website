@@ -7,7 +7,7 @@ $db = $database->getConnection();
 @include_once 'track_visitor.php';
 
 // Fetch Settings
-$settings = [];
+$settings = array();
 try {
     $stmt = $db->query("SELECT * FROM settings WHERE id = 1");
     $settings = $stmt->fetch();
@@ -20,42 +20,73 @@ $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 if ($page < 1)
     $page = 1;
 $start = ($page - 1) * $limit;
+$schedule_id = isset($_GET['schedule_id']) ? (int) $_GET['schedule_id'] : 0;
+if ($schedule_id < 1)
+    $schedule_id = 0;
+$selected_schedule = array();
+
+if ($schedule_id > 0) {
+    try {
+        $stmt_schedule = $db->prepare("SELECT * FROM auction_schedules WHERE id = :schedule_id AND is_active = 1");
+        $stmt_schedule->bindValue(':schedule_id', $schedule_id, PDO::PARAM_INT);
+        $stmt_schedule->execute();
+        $selected_schedule = $stmt_schedule->fetch();
+    } catch (PDOException $e) {
+        $selected_schedule = array();
+    }
+}
 
 // Fetch Filter Options
-$brands = [];
-$car_types = [];
-$grades = [];
+$brands = array();
+$car_types = array();
+$grades = array();
 
 try {
+    $filter_scope = $schedule_id > 0 ? " AND schedule_id = :schedule_id" : "";
+
     // Brands
-    $sql_brands = "SELECT DISTINCT brand, COUNT(*) as count FROM auction_cars WHERE brand != '' GROUP BY brand ORDER BY brand";
-    $stmt_brands = $db->query($sql_brands);
+    $sql_brands = "SELECT DISTINCT brand, COUNT(*) as count FROM auction_cars WHERE brand != '' $filter_scope GROUP BY brand ORDER BY brand";
+    $stmt_brands = $db->prepare($sql_brands);
+    if ($schedule_id > 0)
+        $stmt_brands->bindValue(':schedule_id', $schedule_id, PDO::PARAM_INT);
+    $stmt_brands->execute();
     $brands = $stmt_brands->fetchAll();
 
     // Car Types
-    $sql_types = "SELECT DISTINCT car_type, COUNT(*) as count FROM auction_cars WHERE car_type != '' GROUP BY car_type ORDER BY car_type";
-    $stmt_types = $db->query($sql_types);
+    $sql_types = "SELECT DISTINCT car_type, COUNT(*) as count FROM auction_cars WHERE car_type != '' $filter_scope GROUP BY car_type ORDER BY car_type";
+    $stmt_types = $db->prepare($sql_types);
+    if ($schedule_id > 0)
+        $stmt_types->bindValue(':schedule_id', $schedule_id, PDO::PARAM_INT);
+    $stmt_types->execute();
     $car_types = $stmt_types->fetchAll();
 
     // Grades
-    $sql_grades = "SELECT DISTINCT grade, COUNT(*) as count FROM auction_cars WHERE grade != '' GROUP BY grade ORDER BY grade";
-    $stmt_grades = $db->query($sql_grades);
+    $sql_grades = "SELECT DISTINCT grade, COUNT(*) as count FROM auction_cars WHERE grade != '' $filter_scope GROUP BY grade ORDER BY grade";
+    $stmt_grades = $db->prepare($sql_grades);
+    if ($schedule_id > 0)
+        $stmt_grades->bindValue(':schedule_id', $schedule_id, PDO::PARAM_INT);
+    $stmt_grades->execute();
     $grades = $stmt_grades->fetchAll();
 
 } catch (PDOException $e) {
 }
 
 // Fetch Cars
-$cars = [];
+$cars = array();
 $total_cars = 0;
 $total_pages = 0;
 
 // Build Filter Query
-$where_clauses = ["1=1"];
-$params = [];
+$where_clauses = array("1=1");
+$params = array();
+
+if ($schedule_id > 0) {
+    $where_clauses[] = "schedule_id = :schedule_id";
+    $params[':schedule_id'] = $schedule_id;
+}
 
 if (isset($_GET['brands']) && is_array($_GET['brands'])) {
-    $brand_placeholders = [];
+    $brand_placeholders = array();
     foreach ($_GET['brands'] as $key => $brand) {
         $placeholder = ":brand_" . $key;
         $brand_placeholders[] = $placeholder;
@@ -67,7 +98,7 @@ if (isset($_GET['brands']) && is_array($_GET['brands'])) {
 }
 
 if (isset($_GET['types']) && is_array($_GET['types'])) {
-    $type_placeholders = [];
+    $type_placeholders = array();
     foreach ($_GET['types'] as $key => $type) {
         $placeholder = ":type_" . $key;
         $type_placeholders[] = $placeholder;
@@ -79,7 +110,7 @@ if (isset($_GET['types']) && is_array($_GET['types'])) {
 }
 
 if (isset($_GET['grades']) && is_array($_GET['grades'])) {
-    $grade_placeholders = [];
+    $grade_placeholders = array();
     foreach ($_GET['grades'] as $key => $grade) {
         $placeholder = ":grade_" . $key;
         $grade_placeholders[] = $placeholder;
@@ -104,8 +135,7 @@ try {
     $total_pages = ceil($total_cars / $limit);
 
     // Fetch cars for current page
-    $sql = "SELECT * FROM auction_cars WHERE $where_sql ORDER BY created_at DESC LIMIT :start, :limit";
-    $stmt = $db->prepare($sql);
+    $sql = "SELECT * FROM auction_cars WHERE $where_sql ORDER BY CASE WHEN queue_number IS NULL OR queue_number = '' THEN 1 ELSE 0 END, CAST(queue_number AS UNSIGNED) ASC, created_at DESC LIMIT :start, :limit";
     $stmt = $db->prepare($sql);
     foreach ($params as $key => $value) {
         $stmt->bindValue($key, $value);
@@ -146,10 +176,32 @@ try {
 
     <style>
         .page-header {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            background:
+                radial-gradient(circle at 18% 8%, rgba(116, 169, 255, 0.22), transparent 34%),
+                radial-gradient(circle at 86% 18%, rgba(255, 255, 255, 0.12), transparent 28%),
+                linear-gradient(135deg, #0f356f 0%, #174b99 46%, #2b68c8 100%);
             color: white;
             padding: 140px 0 60px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+            background-size: 48px 48px;
+            opacity: 0.22;
+            pointer-events: none;
+        }
+
+        .page-header .container {
+            position: relative;
+            z-index: 1;
         }
 
         .layout-grid {
@@ -274,8 +326,8 @@ try {
             }
 
             .filter-sidebar {
-                display: none;
-                /* Hide sidebar on mobile for now (or make it a modal) */
+                display: block;
+                margin-bottom: 24px;
             }
         }
     </style>
@@ -290,7 +342,14 @@ try {
     <div class="page-header">
         <div class="container">
             <h1 style="font-size: 2.5rem; margin-bottom: 10px; font-weight: 700; color: #fec435;">รายการรถประมูล</h1>
-            <p style="opacity: 0.8;">รอบประมูล: 13 ม.ค. 2569 - สาขานครปฐม</p>
+            <?php if (!empty($selected_schedule)): ?>
+                <p style="opacity: 0.88;">
+                    รอบประมูล: <?php echo htmlspecialchars($selected_schedule['auction_date']); ?>
+                    - สาขา<?php echo htmlspecialchars($selected_schedule['branch_name']); ?>
+                </p>
+            <?php else: ?>
+                <p style="opacity: 0.88;">เลือกรถประมูลสภาพดีจากรอบประมูลของไมด้า</p>
+            <?php endif; ?>
         </div>
     </div>
 
@@ -385,7 +444,9 @@ try {
 
                     <!-- Hidden data for JavaScript -->
                     <input type="hidden" id="currentFilters" value="<?php
-                    $filters = [];
+                    $filters = array();
+                    if ($schedule_id > 0)
+                        $filters['schedule_id'] = $schedule_id;
                     if (isset($_GET['brands']))
                         $filters['brands'] = implode(',', $_GET['brands']);
                     if (isset($_GET['types']))
@@ -631,9 +692,13 @@ try {
                                 url.searchParams.delete('types[]');
                                 url.searchParams.delete('grades[]');
                                 url.searchParams.delete('page');
+                                url.searchParams.delete('schedule_id');
 
                                 // Set new params
                                 url.searchParams.set('page', page);
+                                if (filters.schedule_id) {
+                                    url.searchParams.set('schedule_id', filters.schedule_id);
+                                }
                                 if (filters.brands) {
                                     filters.brands.split(',').forEach(b => url.searchParams.append('brands[]', b));
                                 }
@@ -695,7 +760,9 @@ try {
                                 // Load all cars
                                 loadCars(1);
                                 // Update URL
-                                window.history.pushState({ page: 1, filters: {} }, '', 'auction_list.php');
+                                const filters = getFiltersFromForm();
+                                const clearUrl = filters.schedule_id ? `auction_list.php?schedule_id=${encodeURIComponent(filters.schedule_id)}` : 'auction_list.php';
+                                window.history.pushState({ page: 1, filters: filters.schedule_id ? { schedule_id: filters.schedule_id } : {} }, '', clearUrl);
                             });
 
                             // Initial load

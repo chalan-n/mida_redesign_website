@@ -972,9 +972,9 @@
     padding: 100px 0;
     overflow: hidden;
     background:
-        radial-gradient(circle at 16% 0%, rgba(255, 199, 44, 0.28), transparent 28%),
-        radial-gradient(circle at 88% 18%, rgba(255, 255, 255, 0.16), transparent 24%),
-        linear-gradient(135deg, #123a7a 0%, var(--primary-blue) 50%, var(--primary-light) 100%);
+        radial-gradient(circle at 14% 4%, rgba(116, 169, 255, 0.22), transparent 32%),
+        radial-gradient(circle at 88% 18%, rgba(255, 255, 255, 0.12), transparent 28%),
+        linear-gradient(135deg, #0f356f 0%, #174b99 46%, #2b68c8 100%);
 }
 
 .cta-modern-bg {
@@ -987,7 +987,20 @@
     background-position: right center;
     background-repeat: no-repeat;
     background-size: 600px auto;
-    opacity: 0.15;
+    opacity: 0.1;
+    z-index: 1;
+}
+
+.cta-banner-modern::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    opacity: 0.2;
     z-index: 1;
 }
 

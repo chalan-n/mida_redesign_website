@@ -16,12 +16,12 @@ if ($page < 1)
 $start = ($page - 1) * $limit;
 
 // Build Filter Query
-$where_clauses = ["1=1"];
-$params = [];
+$where_clauses = array("1=1");
+$params = array();
 
 if (isset($_GET['brands']) && !empty($_GET['brands'])) {
     $brands = is_array($_GET['brands']) ? $_GET['brands'] : explode(',', $_GET['brands']);
-    $brand_placeholders = [];
+    $brand_placeholders = array();
     foreach ($brands as $key => $brand) {
         $placeholder = ":brand_" . $key;
         $brand_placeholders[] = $placeholder;
@@ -34,7 +34,7 @@ if (isset($_GET['brands']) && !empty($_GET['brands'])) {
 
 if (isset($_GET['types']) && !empty($_GET['types'])) {
     $types = is_array($_GET['types']) ? $_GET['types'] : explode(',', $_GET['types']);
-    $type_placeholders = [];
+    $type_placeholders = array();
     foreach ($types as $key => $type) {
         $placeholder = ":type_" . $key;
         $type_placeholders[] = $placeholder;
@@ -47,7 +47,7 @@ if (isset($_GET['types']) && !empty($_GET['types'])) {
 
 if (isset($_GET['grades']) && !empty($_GET['grades'])) {
     $grades = is_array($_GET['grades']) ? $_GET['grades'] : explode(',', $_GET['grades']);
-    $grade_placeholders = [];
+    $grade_placeholders = array();
     foreach ($grades as $key => $grade) {
         $placeholder = ":grade_" . $key;
         $grade_placeholders[] = $placeholder;
@@ -88,21 +88,21 @@ try {
     $stmt->execute();
     $cars = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    echo json_encode([
+    echo json_encode(array(
         'success' => true,
-        'data' => [
+        'data' => array(
             'cars' => $cars,
             'total_cars' => (int) $total_cars,
             'total_pages' => (int) $total_pages,
             'current_page' => (int) $page,
             'limit' => (int) $limit
-        ]
-    ], JSON_UNESCAPED_UNICODE);
+        )
+    ), JSON_UNESCAPED_UNICODE);
 
 } catch (PDOException $e) {
     http_response_code(500);
-    echo json_encode([
+    echo json_encode(array(
         'success' => false,
         'error' => $e->getMessage()
-    ], JSON_UNESCAPED_UNICODE);
+    ), JSON_UNESCAPED_UNICODE);
 }

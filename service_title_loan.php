@@ -6,7 +6,7 @@ $db = $database->getConnection();
 // Track visitor
 @include_once 'track_visitor.php';
 // Fetch Settings
-$settings = [];
+$settings = array();
 try {
     $stmt = $db->query("SELECT * FROM settings WHERE id = 1");
     $settings = $stmt->fetch();
@@ -190,100 +190,6 @@ try {
             }
         }
 
-        body {
-            background:
-                radial-gradient(circle at 8% 0%, rgba(255, 199, 44, 0.12), transparent 26%),
-                linear-gradient(180deg, #ffffff 0%, var(--bg-light) 100%);
-        }
-
-        .service-hero {
-            background:
-                radial-gradient(circle at 16% 0%, rgba(255, 199, 44, 0.32), transparent 30%),
-                radial-gradient(circle at 86% 18%, rgba(255, 255, 255, 0.18), transparent 24%),
-                linear-gradient(135deg, #17458f 0%, #2f6bc6 100%);
-            border-bottom-left-radius: 44px;
-            border-bottom-right-radius: 44px;
-            padding: 128px 0 68px;
-        }
-
-        .service-hero h1 {
-            color: var(--accent-gold) !important;
-            letter-spacing: -0.03em;
-        }
-
-        .section[style*="#f4f6f9"],
-        .doc-section {
-            background:
-                radial-gradient(circle at 10% 0%, rgba(255, 199, 44, 0.1), transparent 24%),
-                #f4f8ff !important;
-        }
-
-        .service-card,
-        .feature-box {
-            border: 1px solid rgba(23, 69, 143, 0.1);
-            border-radius: 24px;
-            box-shadow: 0 18px 44px rgba(23, 69, 143, 0.1);
-        }
-
-        .service-card:hover,
-        .feature-box:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 24px 58px rgba(23, 69, 143, 0.16);
-        }
-
-        .service-img {
-            background:
-                radial-gradient(circle at 50% 10%, rgba(255, 199, 44, 0.28), transparent 40%),
-                linear-gradient(180deg, #ffffff 0%, #eef5ff 100%);
-            color: var(--primary-blue);
-        }
-
-        .service-content h3,
-        .feature-box h4 {
-            color: var(--primary-blue);
-            font-weight: 800;
-        }
-
-        .service-content .btn,
-        .cta-section .btn {
-            border-radius: 999px;
-            font-weight: 800;
-        }
-
-        .service-content .btn-primary,
-        .cta-section .btn[style*="background"] {
-            background: linear-gradient(135deg, var(--accent-gold) 0%, #ffe07a 100%) !important;
-            color: #0f2d5c !important;
-            box-shadow: 0 14px 28px rgba(255, 199, 44, 0.3);
-        }
-
-        .cta-section {
-            background:
-                radial-gradient(circle at 18% 0%, rgba(255, 199, 44, 0.28), transparent 30%),
-                linear-gradient(135deg, #17458f 0%, #2f6bc6 100%) !important;
-        }
-
-        @media (max-width: 768px) {
-            .service-hero {
-                padding: 104px 0 48px;
-                border-bottom-left-radius: 30px;
-                border-bottom-right-radius: 30px;
-            }
-
-            .service-card,
-            .feature-box {
-                border-radius: 20px;
-            }
-
-            .service-img {
-                height: 148px;
-                font-size: 3rem;
-            }
-
-            .service-content {
-                padding: 22px;
-            }
-        }
     </style>
     <link rel="stylesheet" href="assets/css/content-pages.css">
 </head>
@@ -296,11 +202,9 @@ try {
     <!-- Hero Section -->
     <section class="service-hero">
         <div class="container">
-            <h1 style="font-size: 3rem; margin-bottom: 10px; font-weight: 700; color: #fec435;">
-                สินเชื่อจำนำทะเบียนรถยนต์</h1>
-            <p style="font-size: 1.2rem; font-weight: 300; max-width: 800px; margin: 0 auto;">
-                เปลี่ยนเล่มทะเบียนเป็นเงินสด รับเงินก้อนใหญ่ อนุมัติไว <span style="display: block;">ไม่ต้องโอนเล่ม
-                    รับป้ายทะเบียนเดิม รถยังมีขับ</span>
+            <h1 style="font-size: 3rem; margin-bottom: 10px; font-weight: 700;">สินเชื่อจำนำทะเบียนรถยนต์</h1>
+            <p class="service-lead">
+                ใช้เล่มทะเบียนรถช่วยเสริมสภาพคล่อง รับเงินก้อน รถยังมีขับ และไม่ต้องโอนเล่ม
             </p>
         </div>
     </section>
@@ -320,12 +224,12 @@ try {
                     <p class="text-secondary">กรรมสิทธิ์ยังเป็นของคุณ ไม่ต้องโอนให้ยุ่งยาก</p>
                 </div>
                 <div class="feature-box">
-                    <i class="fa-solid fa-car-on"></i>
+                    <i class="fa-solid fa-car-side"></i>
                     <h4>มีรถใช้เหมือนเดิม</h4>
                     <p class="text-secondary">ได้รับเงินก้อน แต่ยังสามารถใช้รถได้ตามปกติ</p>
                 </div>
                 <div class="feature-box">
-                    <i class="fa-solid fa-sack-dollar"></i>
+                    <i class="fa-solid fa-money-bill-wave"></i>
                     <h4>รับเงินเต็มจำนวน</h4>
                     <p class="text-secondary">ไม่หักค่าธรรมเนียมซับซ้อน รับเงินเข้าบัญชีเต็มๆ</p>
                 </div>
@@ -343,7 +247,7 @@ try {
         <div class="container">
             <div class="section-title">
                 <h2>ประเภทรถที่รับจำนำ</h2>
-                <p>รองรับรถหลากหลายประเภท ตอบโจทย์ทุกความต้องการ</p>
+                <p>เลือกประเภทสินเชื่อให้ตรงกับรถและความต้องการใช้เงินของคุณ</p>
             </div>
 
             <div class="features-grid">
@@ -355,12 +259,13 @@ try {
                     </div>
                     <div class="service-content">
                         <h3>รถเก๋ง</h3>
-                        <p style="color: #666; line-height: 1.6; margin-bottom: 20px;">
-                            เปลี่ยนรถเก๋งคู่ใจเป็นทุนหมุนเวียน รับรถเก๋งทุกยี่ห้อ ปีใหม่-เก่า คุยกันได้
-                            ให้วงเงินสูงตามสภาพรถจริง
-                        </p>
+                        <ul class="service-card-points">
+                            <li>รถยังมีขับ ใช้งานได้ตามปกติ</li>
+                            <li>ประเมินวงเงินตามสภาพรถจริง</li>
+                            <li>เจ้าหน้าที่ช่วยแนะนำเอกสาร</li>
+                        </ul>
                         <a href="register_title_loan.php?type=sedan" class="btn btn-primary"
-                            style="width: 100%; text-align: center;">สนใจสมัคร</a>
+                            style="width: 100%; text-align: center;">สมัครจำนำทะเบียนรถเก๋ง</a>
                     </div>
                 </div>
 
@@ -371,12 +276,13 @@ try {
                     </div>
                     <div class="service-content">
                         <h3>รถกระบะ</h3>
-                        <p style="color: #666; line-height: 1.6; margin-bottom: 20px;">
-                            รถกระบะทำเงิน จำนำทะเบียนง่ายๆ ได้เงินก้อนไปหมุนธุรกิจ หรือใช้จ่ายฉุกเฉิน
-                            รับทั้งแบบตอนเดียว แคป และ 4 ประตู
-                        </p>
+                        <ul class="service-card-points">
+                            <li>เหมาะกับใช้หมุนธุรกิจหรือค่าใช้จ่ายจำเป็น</li>
+                            <li>รองรับตอนเดียว แคป และ 4 ประตู</li>
+                            <li>รู้ผลไวเมื่อเอกสารครบ</li>
+                        </ul>
                         <a href="register_title_loan.php?type=pickup" class="btn btn-primary"
-                            style="width: 100%; text-align: center;">สนใจสมัคร</a>
+                            style="width: 100%; text-align: center;">สมัครจำนำทะเบียนรถกระบะ</a>
                     </div>
                 </div>
 
@@ -387,12 +293,13 @@ try {
                     </div>
                     <div class="service-content">
                         <h3>รถบรรทุก</h3>
-                        <p style="color: #666; line-height: 1.6; margin-bottom: 20px;">
-                            เสริมสภาพคล่องให้ธุรกิจขนส่ง ด้วยเล่มทะเบียนรถบรรทุก 6 ล้อ 10 ล้อ
-                            วงเงินสูงพิเศษ รองรับการขยายกิจการ
-                        </p>
+                        <ul class="service-card-points">
+                            <li>สำหรับธุรกิจขนส่งและพาณิชย์</li>
+                            <li>รองรับรถ 6 ล้อ 10 ล้อ และหัวลาก</li>
+                            <li>ช่วยวางแผนวงเงินให้เหมาะกับธุรกิจ</li>
+                        </ul>
                         <a href="register_title_loan.php?type=truck" class="btn btn-primary"
-                            style="width: 100%; text-align: center;">สนใจสมัคร</a>
+                            style="width: 100%; text-align: center;">สมัครจำนำทะเบียนรถบรรทุก</a>
                     </div>
                 </div>
 
@@ -404,17 +311,13 @@ try {
     <section class="section doc-section">
         <div class="container">
             <div class="section-title">
-                <h2>เอกสารประกอบการสมัคร</h2>
-                <p>เตรียมเอกสารเบื้องต้นสำหรับการพิจารณา</p>
+                <h2>เอกสารที่ควรเตรียม</h2>
+                <p>เตรียมข้อมูลพื้นฐานไว้ล่วงหน้า เพื่อให้เจ้าหน้าที่ประเมินและติดต่อกลับได้เร็วขึ้น</p>
             </div>
 
             <div class="doc-grid">
-                <div
-                    style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
-                    <h3
-                        style="color: var(--primary-blue); margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 15px;">
-                        <i class="fa-solid fa-user"></i> บุคคลธรรมดา
-                    </h3>
+                <div class="doc-card">
+                    <h3><i class="fa-solid fa-user"></i> บุคคลธรรมดา</h3>
                     <ul class="doc-list">
                         <li>สำเนาบัตรประชาชน</li>
                         <li>สำเนาทะเบียนบ้าน</li>
@@ -424,12 +327,8 @@ try {
                     </ul>
                 </div>
 
-                <div
-                    style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
-                    <h3
-                        style="color: var(--primary-blue); margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 15px;">
-                        <i class="fa-solid fa-briefcase"></i> นิติบุคคล
-                    </h3>
+                <div class="doc-card">
+                    <h3><i class="fa-solid fa-briefcase"></i> นิติบุคคล</h3>
                     <ul class="doc-list">
                         <li>หนังสือรับรองบริษัท</li>
                         <li>สำเนาบัตรประชาชนกรรมการ</li>
@@ -442,17 +341,16 @@ try {
         </div>
     </section>
 
-    <!-- GTA Section -->
+    <!-- CTA Section -->
     <section class="section cta-section">
         <div class="container">
-            <h2 style="margin-bottom: 20px; color: white;">ต้องการเงินด่วน? มีเล่มมีเงิน</h2>
-            <p style="margin-bottom: 30px; font-size: 1.1rem;">
-                ปรึกษาเจ้าหน้าที่เพื่อประเมินวงเงินเบื้องต้น ฟรี!</p>
-            <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-                <a href="#" class="btn"
-                    style="background: white; color: var(--primary-blue); min-width: 180px;">ติดต่อเรา</a>
+            <h2 style="margin-bottom: 16px; color: white;">ต้องการใช้เล่มทะเบียนช่วยเสริมสภาพคล่อง?</h2>
+            <p style="margin-bottom: 28px; font-size: 1.05rem;">
+                ส่งข้อมูลสั้น ๆ แล้วให้เจ้าหน้าที่ไมด้าติดต่อกลับเพื่อประเมินวงเงินเบื้องต้น</p>
+            <div class="cta-actions">
                 <a href="register_title_loan.php" class="btn"
-                    style="background: var(--accent-gold); color: white; min-width: 180px;">สมัครสินเชื่อออนไลน์</a>
+                    style="background: var(--accent-gold); color: white; min-width: 220px;">ส่งข้อมูลให้ติดต่อกลับ</a>
+                <a href="contact_us.php" class="btn btn-secondary-light" style="min-width: 220px;">ติดต่อเจ้าหน้าที่</a>
             </div>
         </div>
     </section>
@@ -464,18 +362,18 @@ try {
                 <div>
                     <div class="footer-logo">MIDA LEASING</div>
                     <p style="color: #ccc; margin-bottom: 10px;">บริษัท ไมด้าลิสซิ่ง จำกัด (มหาชน)</p>
-                    <p style="color: #ccc; margin-bottom: 10px; font-size: 1rem;">48/1-5 ซอยแจ้งวัฒนะ 14
-                        ถนนแจ้งวัฒนะ
-                        แขวงทุ่งสองห้อง
-                        เขตหลักสี่ กรุงเทพฯ 10210</p>
+                    <p style="color: #ccc; margin-bottom: 10px; font-size: 1rem;">
+                        <?php echo nl2br(htmlspecialchars($settings['site_address'])); ?>
+                    </p>
                     <p style="color: #ccc; margin-bottom: 20px; font-size: 1rem;"><i class="fa-solid fa-phone"
-                            style="margin-right: 10px;"></i>02-574-6901</p>
+                            style="margin-right: 10px;"></i><?php echo htmlspecialchars($settings['site_phone']); ?></p>
                     <div style="display: flex; gap: 15px;">
-                        <a href="https://www.facebook.com/midaleasing.th" target="_blank"
+                        <a href="<?php echo htmlspecialchars($settings['site_facebook']); ?>" target="_blank"
                             style="text-decoration: none;">
                             <i class="fa-brands fa-facebook" style="font-size: 2rem; color: #1877F2;"></i>
                         </a>
-                        <a href="https://line.me/R/ti/p/@midaleasing" target="_blank" style="text-decoration: none;">
+                        <a href="<?php echo htmlspecialchars($settings['site_line']); ?>" target="_blank"
+                            style="text-decoration: none;">
                             <i class="fa-brands fa-line" style="font-size: 2rem; color: #00B900;"></i>
                         </a>
                     </div>

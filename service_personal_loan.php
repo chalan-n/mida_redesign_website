@@ -188,100 +188,6 @@ try {
             }
         }
 
-        body {
-            background:
-                radial-gradient(circle at 8% 0%, rgba(255, 199, 44, 0.12), transparent 26%),
-                linear-gradient(180deg, #ffffff 0%, var(--bg-light) 100%);
-        }
-
-        .service-hero {
-            background:
-                radial-gradient(circle at 16% 0%, rgba(255, 199, 44, 0.32), transparent 30%),
-                radial-gradient(circle at 86% 18%, rgba(255, 255, 255, 0.18), transparent 24%),
-                linear-gradient(135deg, #17458f 0%, #2f6bc6 100%);
-            border-bottom-left-radius: 44px;
-            border-bottom-right-radius: 44px;
-            padding: 128px 0 68px;
-        }
-
-        .service-hero h1 {
-            color: var(--accent-gold) !important;
-            letter-spacing: -0.03em;
-        }
-
-        .section[style*="#f4f6f9"],
-        .doc-section {
-            background:
-                radial-gradient(circle at 10% 0%, rgba(255, 199, 44, 0.1), transparent 24%),
-                #f4f8ff !important;
-        }
-
-        .service-card,
-        .feature-box {
-            border: 1px solid rgba(23, 69, 143, 0.1);
-            border-radius: 24px;
-            box-shadow: 0 18px 44px rgba(23, 69, 143, 0.1);
-        }
-
-        .service-card:hover,
-        .feature-box:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 24px 58px rgba(23, 69, 143, 0.16);
-        }
-
-        .service-img {
-            background:
-                radial-gradient(circle at 50% 10%, rgba(255, 199, 44, 0.28), transparent 40%),
-                linear-gradient(180deg, #ffffff 0%, #eef5ff 100%);
-            color: var(--primary-blue);
-        }
-
-        .service-content h3,
-        .feature-box h4 {
-            color: var(--primary-blue);
-            font-weight: 800;
-        }
-
-        .service-content .btn,
-        .cta-section .btn {
-            border-radius: 999px;
-            font-weight: 800;
-        }
-
-        .service-content .btn-primary,
-        .cta-section .btn[style*="background"] {
-            background: linear-gradient(135deg, var(--accent-gold) 0%, #ffe07a 100%) !important;
-            color: #0f2d5c !important;
-            box-shadow: 0 14px 28px rgba(255, 199, 44, 0.3);
-        }
-
-        .cta-section {
-            background:
-                radial-gradient(circle at 18% 0%, rgba(255, 199, 44, 0.28), transparent 30%),
-                linear-gradient(135deg, #17458f 0%, #2f6bc6 100%) !important;
-        }
-
-        @media (max-width: 768px) {
-            .service-hero {
-                padding: 104px 0 48px;
-                border-bottom-left-radius: 30px;
-                border-bottom-right-radius: 30px;
-            }
-
-            .service-card,
-            .feature-box {
-                border-radius: 20px;
-            }
-
-            .service-img {
-                height: 148px;
-                font-size: 3rem;
-            }
-
-            .service-content {
-                padding: 22px;
-            }
-        }
     </style>
     <link rel="stylesheet" href="assets/css/content-pages.css">
 </head>
@@ -294,10 +200,9 @@ try {
     <!-- Hero Section -->
     <section class="service-hero">
         <div class="container">
-            <h1 style="font-size: 3rem; margin-bottom: 10px; font-weight: 700; color: #fec435;">สินเชื่อส่วนบุคคล</h1>
-            <p style="font-size: 1.2rem; font-weight: 300; max-width: 800px; margin: 0 auto;">
-                เงินก้อนพร้อมใช้ เพื่อทุกความต้องการในชีวิต <span style="display: block;">อนุมัติไว ไม่ต้องง้อคนค้ำ
-                    วงเงินสูง</span>
+            <h1 style="font-size: 3rem; margin-bottom: 10px; font-weight: 700;">สินเชื่อส่วนบุคคล</h1>
+            <p class="service-lead">
+                เงินก้อนพร้อมใช้ ให้ไมด้าช่วยดูแลเรื่องสินเชื่อส่วนบุคคล สมัครง่าย ไม่ต้องมีคนค้ำ
             </p>
         </div>
     </section>
@@ -340,7 +245,7 @@ try {
         <div class="container">
             <div class="section-title">
                 <h2>กลุ่มลูกค้าที่เราให้บริการ</h2>
-                <p>สินเชื่อที่ออกแบบมาเพื่อทุกคน</p>
+                <p>เลือกแนวทางสินเชื่อให้เหมาะกับอาชีพและรายได้ของคุณ</p>
             </div>
 
             <div class="features-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
@@ -352,12 +257,13 @@ try {
                     </div>
                     <div class="service-content">
                         <h3>พนักงานประจำ</h3>
-                        <p style="color: #666; line-height: 1.6; margin-bottom: 20px;">
-                            สำหรับผู้ที่มีรายได้ประจำ สำนักงานเชื่อถือได้
-                            เพียงมีอายุงาน 1 ปีขึ้นไป รับเงินก้อนไปใช้ได้เลย
-                        </p>
+                        <ul class="service-card-points">
+                            <li>เหมาะกับผู้มีรายได้ประจำ</li>
+                            <li>ใช้สลิปเงินเดือนและ Statement ประกอบ</li>
+                            <li>เจ้าหน้าที่ช่วยดูแลขั้นตอนสมัคร</li>
+                        </ul>
                         <a href="register_personal_loan.php" class="btn btn-primary"
-                            style="width: 100%; text-align: center;">สนใจสมัคร</a>
+                            style="width: 100%; text-align: center;">สมัครสินเชื่อพนักงานประจำ</a>
                     </div>
                 </div>
 
@@ -368,12 +274,13 @@ try {
                     </div>
                     <div class="service-content">
                         <h3>เจ้าของกิจการ / อาชีพอิสระ</h3>
-                        <p style="color: #666; line-height: 1.6; margin-bottom: 20px;">
-                            สำหรับผู้ประกอบธุรกิจส่วนตัว หรือฟรีแลนซ์ที่มีรายการเดินบัญชีสม่ำเสมอ
-                            เสริมสภาพคล่องให้ธุรกิจเดินหน้าต่อได้ไม่มีสะดุด
-                        </p>
+                        <ul class="service-card-points">
+                            <li>เหมาะกับธุรกิจส่วนตัวและอาชีพอิสระ</li>
+                            <li>ใช้รายการเดินบัญชีประกอบการพิจารณา</li>
+                            <li>ช่วยเสริมสภาพคล่องให้ธุรกิจเดินต่อ</li>
+                        </ul>
                         <a href="register_personal_loan.php" class="btn btn-primary"
-                            style="width: 100%; text-align: center;">สนใจสมัคร</a>
+                            style="width: 100%; text-align: center;">สมัครสินเชื่อเจ้าของกิจการ</a>
                     </div>
                 </div>
 
@@ -385,17 +292,13 @@ try {
     <section class="section doc-section">
         <div class="container">
             <div class="section-title">
-                <h2>เอกสารประกอบการสมัคร</h2>
-                <p>เตรียมเอกสารให้พร้อม สมัครได้ทันที</p>
+                <h2>เอกสารที่ควรเตรียม</h2>
+                <p>เตรียมข้อมูลพื้นฐานไว้ล่วงหน้า เพื่อให้เจ้าหน้าที่ประเมินและติดต่อกลับได้เร็วขึ้น</p>
             </div>
 
             <div class="doc-grid">
-                <div
-                    style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
-                    <h3
-                        style="color: var(--primary-blue); margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 15px;">
-                        <i class="fa-solid fa-user-tie"></i> พนักงานประจำ
-                    </h3>
+                <div class="doc-card">
+                    <h3><i class="fa-solid fa-user-tie"></i> พนักงานประจำ</h3>
                     <ul class="doc-list">
                         <li>สำเนาบัตรประชาชน</li>
                         <li>สำเนาทะเบียนบ้าน</li>
@@ -404,12 +307,8 @@ try {
                     </ul>
                 </div>
 
-                <div
-                    style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
-                    <h3
-                        style="color: var(--primary-blue); margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 15px;">
-                        <i class="fa-solid fa-shop"></i> เจ้าของกิจการ
-                    </h3>
+                <div class="doc-card">
+                    <h3><i class="fa-solid fa-shop"></i> เจ้าของกิจการ</h3>
                     <ul class="doc-list">
                         <li>สำเนาบัตรประชาชน</li>
                         <li>สำเนาทะเบียนบ้าน</li>
@@ -422,17 +321,16 @@ try {
         </div>
     </section>
 
-    <!-- GTA Section -->
+    <!-- CTA Section -->
     <section class="section cta-section">
         <div class="container">
-            <h2 style="margin-bottom: 20px; color: white;">พร้อมรับเงินก้อนหรือยัง?</h2>
-            <p style="margin-bottom: 30px; font-size: 1.1rem;">
-                สมัครสินเชื่อส่วนบุคคลออนไลน์ ง่ายๆ ได้ทุกที่</p>
-            <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-                <a href="#" class="btn"
-                    style="background: white; color: var(--primary-blue); min-width: 180px;">ติดต่อเรา</a>
+            <h2 style="margin-bottom: 16px; color: white;">สนใจสินเชื่อส่วนบุคคล?</h2>
+            <p style="margin-bottom: 28px; font-size: 1.05rem;">
+                ส่งข้อมูลสั้น ๆ แล้วให้เจ้าหน้าที่ไมด้าติดต่อกลับเพื่อแนะนำวงเงินที่เหมาะกับคุณ</p>
+            <div class="cta-actions">
                 <a href="register_personal_loan.php" class="btn"
-                    style="background: var(--accent-gold); color: white; min-width: 180px;">สมัครสินเชื่อออนไลน์</a>
+                    style="background: var(--accent-gold); color: white; min-width: 220px;">ส่งข้อมูลให้ติดต่อกลับ</a>
+                <a href="contact_us.php" class="btn btn-secondary-light" style="min-width: 220px;">ติดต่อเจ้าหน้าที่</a>
             </div>
         </div>
     </section>
@@ -444,17 +342,18 @@ try {
                 <div>
                     <div class="footer-logo">MIDA LEASING</div>
                     <p style="color: #ccc; margin-bottom: 10px;">บริษัท ไมด้าลิสซิ่ง จำกัด (มหาชน)</p>
-                    <p style="color: #ccc; margin-bottom: 10px; font-size: 1rem;">48/1-5 ซอยแจ้งวัฒนะ 14 ถนนแจ้งวัฒนะ
-                        แขวงทุ่งสองห้อง
-                        เขตหลักสี่ กรุงเทพฯ 10210</p>
+                    <p style="color: #ccc; margin-bottom: 10px; font-size: 1rem;">
+                        <?php echo nl2br(htmlspecialchars($settings['site_address'])); ?>
+                    </p>
                     <p style="color: #ccc; margin-bottom: 20px; font-size: 1rem;"><i class="fa-solid fa-phone"
-                            style="margin-right: 10px;"></i>02-574-6901</p>
+                            style="margin-right: 10px;"></i><?php echo htmlspecialchars($settings['site_phone']); ?></p>
                     <div style="display: flex; gap: 15px;">
-                        <a href="https://www.facebook.com/midaleasing.th" target="_blank"
+                        <a href="<?php echo htmlspecialchars($settings['site_facebook']); ?>" target="_blank"
                             style="text-decoration: none;">
                             <i class="fa-brands fa-facebook" style="font-size: 2rem; color: #1877F2;"></i>
                         </a>
-                        <a href="https://line.me/R/ti/p/@midaleasing" target="_blank" style="text-decoration: none;">
+                        <a href="<?php echo htmlspecialchars($settings['site_line']); ?>" target="_blank"
+                            style="text-decoration: none;">
                             <i class="fa-brands fa-line" style="font-size: 2rem; color: #00B900;"></i>
                         </a>
                     </div>

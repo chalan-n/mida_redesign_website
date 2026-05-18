@@ -207,100 +207,6 @@ try {
             }
         }
 
-        body {
-            background:
-                radial-gradient(circle at 8% 0%, rgba(255, 199, 44, 0.12), transparent 26%),
-                linear-gradient(180deg, #ffffff 0%, var(--bg-light) 100%);
-        }
-
-        .service-hero {
-            background:
-                radial-gradient(circle at 16% 0%, rgba(255, 199, 44, 0.32), transparent 30%),
-                radial-gradient(circle at 86% 18%, rgba(255, 255, 255, 0.18), transparent 24%),
-                linear-gradient(135deg, #17458f 0%, #2f6bc6 100%);
-            border-bottom-left-radius: 44px;
-            border-bottom-right-radius: 44px;
-            padding: 128px 0 68px;
-        }
-
-        .service-hero h1 {
-            color: var(--accent-gold) !important;
-            letter-spacing: -0.03em;
-        }
-
-        .section[style*="#f4f6f9"],
-        .doc-section {
-            background:
-                radial-gradient(circle at 10% 0%, rgba(255, 199, 44, 0.1), transparent 24%),
-                #f4f8ff !important;
-        }
-
-        .service-card,
-        .feature-box {
-            border: 1px solid rgba(23, 69, 143, 0.1);
-            border-radius: 24px;
-            box-shadow: 0 18px 44px rgba(23, 69, 143, 0.1);
-        }
-
-        .service-card:hover,
-        .feature-box:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 24px 58px rgba(23, 69, 143, 0.16);
-        }
-
-        .service-img {
-            background:
-                radial-gradient(circle at 50% 10%, rgba(255, 199, 44, 0.28), transparent 40%),
-                linear-gradient(180deg, #ffffff 0%, #eef5ff 100%);
-            color: var(--primary-blue);
-        }
-
-        .service-content h3,
-        .feature-box h4 {
-            color: var(--primary-blue);
-            font-weight: 800;
-        }
-
-        .service-content .btn,
-        .cta-section .btn {
-            border-radius: 999px;
-            font-weight: 800;
-        }
-
-        .service-content .btn-primary,
-        .cta-section .btn[style*="background"] {
-            background: linear-gradient(135deg, var(--accent-gold) 0%, #ffe07a 100%) !important;
-            color: #0f2d5c !important;
-            box-shadow: 0 14px 28px rgba(255, 199, 44, 0.3);
-        }
-
-        .cta-section {
-            background:
-                radial-gradient(circle at 18% 0%, rgba(255, 199, 44, 0.28), transparent 30%),
-                linear-gradient(135deg, #17458f 0%, #2f6bc6 100%) !important;
-        }
-
-        @media (max-width: 768px) {
-            .service-hero {
-                padding: 104px 0 48px;
-                border-bottom-left-radius: 30px;
-                border-bottom-right-radius: 30px;
-            }
-
-            .service-card,
-            .feature-box {
-                border-radius: 20px;
-            }
-
-            .service-img {
-                height: 148px;
-                font-size: 3rem;
-            }
-
-            .service-content {
-                padding: 22px;
-            }
-        }
     </style>
     <link rel="stylesheet" href="assets/css/content-pages.css">
 </head>
@@ -313,12 +219,9 @@ try {
     <!-- Hero Section -->
     <section class="service-hero">
         <div class="container">
-            <h1 style="font-size: 3rem; margin-bottom: 10px; font-weight: 700; color: #fec435;">สินเชื่อเช่าซื้อรถยนต์
-            </h1>
-            <p style="font-size: 1.2rem; font-weight: 300; max-width: 800px; margin: 0 auto;">
-                บริการทางการเงินมืออาชีพสำหรับรถที่คุณต้องการ อนุมัติไว ให้วงเงินสูง <span
-                    style="display: block;">รองรับทั้งรถเก๋ง รถกระบะ
-                    และรถบรรทุก</span>
+            <h1 style="font-size: 3rem; margin-bottom: 10px; font-weight: 700;">สินเชื่อเช่าซื้อรถยนต์</h1>
+            <p class="service-lead">
+                เลือกรถที่ใช่ พร้อมให้ไมด้าช่วยดูแลเรื่องสินเชื่อสำหรับรถเก๋ง รถกระบะ และรถบรรทุก
             </p>
         </div>
     </section>
@@ -361,7 +264,7 @@ try {
         <div class="container">
             <div class="section-title">
                 <h2>ประเภทรถที่ให้บริการ</h2>
-                <p>เลือกสินเชื่อที่เหมาะกับความต้องการของคุณ</p>
+                <p>เลือกประเภทสินเชื่อให้ตรงกับรถและการใช้งานของคุณ</p>
             </div>
 
             <div class="features-grid">
@@ -372,13 +275,14 @@ try {
                         <i class="fa-solid fa-car-side"></i>
                     </div>
                     <div class="service-content">
-                        <h3>รถเก๋ง (Sedan)</h3>
-                        <p style="color: #666; line-height: 1.6; margin-bottom: 20px;">
-                            สินเชื่อรถเก๋งมือสอง วงเงินสูง อนุมัติไว ให้คุณเป็นเจ้าของรถในฝันได้ง่ายๆ
-                            ไม่ว่าจะเป็นรถญี่ปุ่นหรือรถยุโรป เรารับพิจารณาทุกเงื่อนไข
-                        </p>
+                        <h3>รถเก๋ง</h3>
+                        <ul class="service-card-points">
+                            <li>เหมาะกับรถใช้งานส่วนตัว</li>
+                            <li>ประเมินวงเงินตามสภาพรถ</li>
+                            <li>เจ้าหน้าที่ช่วยดูแลขั้นตอนสมัคร</li>
+                        </ul>
                         <a href="register_hire_purchase.php?type=sedan" class="btn btn-primary"
-                            style="width: 100%; text-align: center;">สนใจสมัคร</a>
+                            style="width: 100%; text-align: center;">สมัครสินเชื่อรถเก๋ง</a>
                     </div>
                 </div>
 
@@ -388,13 +292,14 @@ try {
                         <i class="fa-solid fa-truck-pickup"></i>
                     </div>
                     <div class="service-content">
-                        <h3>รถกระบะ (Pickup)</h3>
-                        <p style="color: #666; line-height: 1.6; margin-bottom: 20px;">
-                            เสริมแกร่งให้งานของคุณด้วยสินเชื่อรถกระบะ จะบรรทุกหนักหรือใช้งานทั่วไปก็กู้ได้
-                            รับทุุกรุ่น ทุกยี่ห้อ ดอกเบี้ยพิเศษสำหรับรถเพื่อการพาณิชย์
-                        </p>
+                        <h3>รถกระบะ</h3>
+                        <ul class="service-card-points">
+                            <li>เหมาะกับงานทั่วไปและธุรกิจ</li>
+                            <li>รองรับหลายรุ่น หลายยี่ห้อ</li>
+                            <li>เงื่อนไขยืดหยุ่นตามการใช้งาน</li>
+                        </ul>
                         <a href="register_hire_purchase.php?type=pickup" class="btn btn-primary"
-                            style="width: 100%; text-align: center;">สนใจสมัคร</a>
+                            style="width: 100%; text-align: center;">สมัครสินเชื่อรถกระบะ</a>
                     </div>
                 </div>
 
@@ -404,13 +309,14 @@ try {
                         <i class="fa-solid fa-truck"></i>
                     </div>
                     <div class="service-content">
-                        <h3>รถบรรทุก (Truck)</h3>
-                        <p style="color: #666; line-height: 1.6; margin-bottom: 20px;">
-                            สินเชื่อเพื่อธุรกิจขนส่ง ขยายกองรถของคุณด้วยสินเชื่อรถบรรทุก 6 ล้อ 10 ล้อ หัวลาก
-                            วงเงินสูง ยืดหยุ่นตามความต้องการของธุรกิจคุณ
-                        </p>
+                        <h3>รถบรรทุก</h3>
+                        <ul class="service-card-points">
+                            <li>สำหรับธุรกิจขนส่งและพาณิชย์</li>
+                            <li>รองรับรถ 6 ล้อ 10 ล้อ และหัวลาก</li>
+                            <li>วางแผนผ่อนให้เหมาะกับธุรกิจ</li>
+                        </ul>
                         <a href="register_hire_purchase.php?type=truck" class="btn btn-primary"
-                            style="width: 100%; text-align: center;">สนใจสมัคร</a>
+                            style="width: 100%; text-align: center;">สมัครสินเชื่อรถบรรทุก</a>
                     </div>
                 </div>
 
@@ -422,17 +328,13 @@ try {
     <section class="section doc-section">
         <div class="container">
             <div class="section-title">
-                <h2>เอกสารประกอบการสมัคร</h2>
-                <p>เตรียมเอกสารให้พร้อม เพื่อความรวดเร็วในการอนุมัติ</p>
+                <h2>เอกสารที่ควรเตรียม</h2>
+                <p>เตรียมข้อมูลพื้นฐานไว้ล่วงหน้า เพื่อให้เจ้าหน้าที่ประเมินและติดต่อกลับได้เร็วขึ้น</p>
             </div>
 
             <div class="doc-grid">
-                <div
-                    style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
-                    <h3
-                        style="color: var(--primary-blue); margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 15px;">
-                        <i class="fa-solid fa-user"></i> บุคคลธรรมดา
-                    </h3>
+                <div class="doc-card">
+                    <h3><i class="fa-solid fa-user"></i> บุคคลธรรมดา</h3>
                     <ul class="doc-list">
                         <li>สำเนาบัตรประชาชน</li>
                         <li>สำเนาทะเบียนบ้าน</li>
@@ -442,12 +344,8 @@ try {
                     </ul>
                 </div>
 
-                <div
-                    style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
-                    <h3
-                        style="color: var(--primary-blue); margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 15px;">
-                        <i class="fa-solid fa-briefcase"></i> นิติบุคคล
-                    </h3>
+                <div class="doc-card">
+                    <h3><i class="fa-solid fa-briefcase"></i> นิติบุคคล</h3>
                     <ul class="doc-list">
                         <li>หนังสือรับรองบริษัท (อายุไม่เกิน 3 เดือน)</li>
                         <li>สำเนาบัตรประชาชนกรรมการผู้มีอำนาจ</li>
@@ -460,22 +358,21 @@ try {
         </div>
     </section>
 
-    <!-- GTA Section -->
+    <!-- CTA Section -->
     <section class="section cta-section">
         <div class="container">
-            <h2 style="margin-bottom: 20px; color: white;">สนใจสินเชื่อ หรือต้องการคำปรึกษา?</h2>
-            <p style="margin-bottom: 30px; font-size: 1.1rem;">
-                เจ้าหน้าที่ของเราพร้อมให้คำแนะนำและข้อเสนอที่ดีที่สุดสำหรับคุณ</p>
-            <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-                <a href="#" class="btn"
-                    style="background: white; color: var(--primary-blue); min-width: 180px;">ติดต่อเรา</a>
+            <h2 style="margin-bottom: 16px; color: white;">สนใจสินเชื่อเช่าซื้อรถยนต์?</h2>
+            <p style="margin-bottom: 28px; font-size: 1.05rem;">
+                ส่งข้อมูลสั้น ๆ แล้วให้เจ้าหน้าที่ไมด้าติดต่อกลับเพื่อแนะนำขั้นตอนที่เหมาะกับคุณ</p>
+            <div class="cta-actions">
                 <a href="register_hire_purchase.php" class="btn"
-                    style="background: var(--accent-gold); color: white; min-width: 180px;">สมัครสินเชื่อออนไลน์</a>
+                    style="background: var(--accent-gold); color: white; min-width: 220px;">ส่งข้อมูลให้ติดต่อกลับ</a>
+                <a href="contact_us.php" class="btn btn-secondary-light" style="min-width: 220px;">ติดต่อเจ้าหน้าที่</a>
             </div>
-            <p style="margin-top: 30px;font-size: 0.9rem; color: #ccc;"><i class="fa-solid fa-triangle-exclamation"
+            <p class="loan-note"><i class="fa-solid fa-triangle-exclamation"
                     style="margin-right: 8px;"></i>กู้เท่าที่จำเป็นและชำระคืนไหว</p>
-            <p style="font-size: 0.9rem; color: #ccc;">อัตราดอกเบี้ย 11.99% - 23.99% ต่อปี
-                เงื่อนไขเป็นไปตามที่บริษัทฯกำหนด</p>
+            <p style="font-size: 0.9rem; color: rgba(255,255,255,0.72);">อัตราดอกเบี้ย 11.99% - 23.99% ต่อปี
+                เงื่อนไขเป็นไปตามที่บริษัทฯ กำหนด</p>
         </div>
     </section>
 

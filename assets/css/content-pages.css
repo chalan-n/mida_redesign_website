@@ -9,11 +9,12 @@ body.service-page {
 .service-page .page-header,
 .service-page .service-hero {
     background:
-        radial-gradient(circle at 16% 0%, rgba(255, 199, 44, 0.32), transparent 30%),
-        radial-gradient(circle at 86% 18%, rgba(255, 255, 255, 0.18), transparent 24%),
-        linear-gradient(135deg, #17458f 0%, #2f6bc6 100%) !important;
+        radial-gradient(circle at 18% 8%, rgba(116, 169, 255, 0.24), transparent 34%),
+        radial-gradient(circle at 86% 18%, rgba(255, 255, 255, 0.12), transparent 28%),
+        linear-gradient(135deg, #0f356f 0%, #174b99 44%, #2b68c8 100%) !important;
     border-bottom-left-radius: 44px;
     border-bottom-right-radius: 44px;
+    box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .content-page .page-header h1,
@@ -84,8 +85,95 @@ body.service-page {
 
 .service-page .cta-section {
     background:
-        radial-gradient(circle at 18% 0%, rgba(255, 199, 44, 0.28), transparent 30%),
-        linear-gradient(135deg, #17458f 0%, #2f6bc6 100%) !important;
+        radial-gradient(circle at 12% 0%, rgba(116, 169, 255, 0.2), transparent 32%),
+        radial-gradient(circle at 88% 18%, rgba(255, 255, 255, 0.1), transparent 30%),
+        linear-gradient(135deg, #0f356f 0%, #184f9f 52%, #2a64c2 100%) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.service-page .cta-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    opacity: 0.22;
+}
+
+.service-page .cta-section .container {
+    position: relative;
+    z-index: 1;
+}
+
+.service-page .service-lead {
+    font-size: 1.18rem;
+    font-weight: 400;
+    max-width: 760px;
+    margin: 0 auto;
+    color: rgba(255, 255, 255, 0.92);
+}
+
+.service-page .service-card-points {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 22px;
+    color: #53627a;
+    line-height: 1.75;
+    flex-grow: 1;
+}
+
+.service-page .service-card-points li {
+    position: relative;
+    padding-left: 24px;
+    margin-bottom: 6px;
+}
+
+.service-page .service-card-points li::before {
+    content: '\f00c';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    left: 0;
+    top: 0.08em;
+    color: var(--accent-gold);
+}
+
+.service-page .doc-card {
+    background: white;
+    padding: 28px;
+    border-radius: 22px;
+    border: 1px solid rgba(23, 69, 143, 0.1);
+    box-shadow: 0 18px 44px rgba(23, 69, 143, 0.1);
+}
+
+.service-page .doc-card h3 {
+    color: var(--primary-blue);
+    margin-bottom: 18px;
+    border-bottom: 2px solid rgba(23, 69, 143, 0.08);
+    padding-bottom: 14px;
+}
+
+.service-page .cta-actions {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.service-page .cta-section .btn-secondary-light {
+    background: white !important;
+    color: var(--primary-blue) !important;
+    box-shadow: 0 12px 24px rgba(15, 45, 92, 0.15);
+}
+
+.service-page .loan-note {
+    margin-top: 28px;
+    font-size: 0.92rem;
+    color: rgba(255, 255, 255, 0.78);
 }
 
 @media (max-width: 768px) {
@@ -111,5 +199,19 @@ body.service-page {
     .service-page .service-img {
         height: 148px;
         font-size: 3rem;
+    }
+
+    .service-page .service-lead {
+        font-size: 1rem;
+    }
+
+    .service-page .doc-card {
+        padding: 22px;
+        border-radius: 18px;
+    }
+
+    .service-page .cta-actions .btn {
+        width: 100%;
+        max-width: 320px;
     }
 }

@@ -7,7 +7,7 @@ $db = $database->getConnection();
 @include_once 'track_visitor.php';
 
 // Fetch Settings
-$settings = [];
+$settings = array();
 try {
     $stmt = $db->query("SELECT * FROM settings WHERE id = 1");
     $settings = $stmt->fetch();
@@ -15,7 +15,7 @@ try {
 }
 
 // Fetch Auction Schedules with actual car count
-$schedules = [];
+$schedules = array();
 try {
     $stmt = $db->query("
         SELECT s.*, 
@@ -29,7 +29,7 @@ try {
 }
 
 // Fetch Featured Cars (is_featured=1, fallback to random if less than 4)
-$highlight_cars = [];
+$highlight_cars = array();
 try {
     // First, try to get featured cars
     $stmt = $db->query("
@@ -44,9 +44,10 @@ try {
 
     // If less than 4 featured, fill with random cars
     if (count($highlight_cars) < 4) {
-        $featured_ids = array_map(function ($c) {
-            return $c['id'];
-        }, $highlight_cars);
+        $featured_ids = array();
+        foreach ($highlight_cars as $featured_car) {
+            $featured_ids[] = (int) $featured_car['id'];
+        }
         $exclude = !empty($featured_ids) ? "AND c.id NOT IN (" . implode(',', $featured_ids) . ")" : "";
         $remaining = 4 - count($highlight_cars);
 
@@ -71,7 +72,7 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ประมูลรถยนต์ - MIDA LEASING</title>
     <meta name="description"
-        content="เลือกซื้อรถมือสองสภาพดี บ้าน คอนโด และที่ดินราคาพิเศษจาก ไมด้า ลิสซิ่ง มั่นใจในคุณภาพและราคาที่ยุติธรรม พร้อมบริการสินเชื่อรองรับครบจบในที่เดียว">
+        content="ศูนย์ประมูลรถยนต์มาตรฐานจาก ไมด้า ลิสซิ่ง รถมือสองสภาพดี มีรอบประมูลชัดเจน ราคาเปิดเผย และตรวจสอบรายการรถได้ก่อนเข้าร่วมประมูล">
     <meta name="keywords"
         content="รถประมูล, บ้านมือสองหลุดจำนำ, ทรัพย์สินรอการขาย">
 
@@ -111,7 +112,10 @@ try {
 
     <style>
         .auction-hero {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            background:
+                radial-gradient(circle at 18% 8%, rgba(116, 169, 255, 0.22), transparent 34%),
+                radial-gradient(circle at 86% 18%, rgba(255, 255, 255, 0.12), transparent 28%),
+                linear-gradient(135deg, #0f356f 0%, #174b99 46%, #2b68c8 100%);
             color: white;
             padding: 140px 0 50px;
             text-align: center;
@@ -126,7 +130,11 @@ try {
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: radial-gradient(circle at 20% 50%, rgba(254, 196, 53, 0.1) 0%, transparent 50%);
+            background:
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+            background-size: 48px 48px;
+            opacity: 0.22;
             pointer-events: none;
         }
 

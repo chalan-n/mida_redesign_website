@@ -23,7 +23,18 @@ $nav_logo_src = !empty($settings['site_logo']) ? $settings['site_logo'] : 'img/m
 
         <ul class="nav-menu" id="site-navigation">
             <li><a href="index.php" class="nav-link <?php echo $active_page == 'home' ? 'active' : ''; ?>">หน้าแรก</a></li>
-            <li><a href="service_hire_purchase.php" class="nav-link <?php echo $active_page == 'services' ? 'active' : ''; ?>">บริการสินเชื่อ</a></li>
+            <li class="nav-dropdown">
+                <a href="service_hire_purchase.php"
+                    class="nav-link nav-dropdown-toggle <?php echo $active_page == 'services' ? 'active' : ''; ?>"
+                    aria-haspopup="true">
+                    บริการสินเชื่อ <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                </a>
+                <ul class="nav-submenu" aria-label="เมนูบริการสินเชื่อ">
+                    <li><a href="service_hire_purchase.php">สินเชื่อเช่าซื้อ</a></li>
+                    <li><a href="service_title_loan.php">สินเชื่อจำนำทะเบียน</a></li>
+                    <li><a href="service_personal_loan.php">สินเชื่อส่วนบุคคล</a></li>
+                </ul>
+            </li>
             <li><a href="used_cars.php" class="nav-link <?php echo $active_page == 'used_cars' ? 'active' : ''; ?>">รถสวยพร้อมขาย</a></li>
             <li><a href="properties.php" class="nav-link <?php echo $active_page == 'properties' ? 'active' : ''; ?>">บ้าน คอนโด ที่ดิน</a></li>
             <li><a href="auction.php" class="nav-link <?php echo $active_page == 'auction' ? 'active' : ''; ?>">ประมูลรถยนต์</a></li>
