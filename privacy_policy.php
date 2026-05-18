@@ -92,9 +92,10 @@ try {
             color: #555;
         }
     </style>
+    <link rel="stylesheet" href="assets/css/content-pages.css">
 </head>
 
-<body>
+<body class="content-page">
 
     <!-- Header -->
     <?php include 'includes/nav.php'; ?>

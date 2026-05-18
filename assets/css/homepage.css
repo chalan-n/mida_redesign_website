@@ -1429,6 +1429,10 @@
         backdrop-filter: blur(16px);
     }
 
+    .cookie-consent-banner.show {
+        bottom: 92px;
+    }
+
     .mobile-quick-link {
         display: inline-flex;
         align-items: center;

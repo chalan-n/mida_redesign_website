@@ -289,9 +289,10 @@ foreach ($branches as $branch) {
             }
         }
     </style>
+    <link rel="stylesheet" href="assets/css/content-pages.css">
 </head>
 
-<body>
+<body class="content-page">
 
     <!-- Header -->
     <?php $active_page = 'branches'; include 'includes/nav.php'; ?>

@@ -283,9 +283,10 @@ try {
             }
         }
     </style>
+    <link rel="stylesheet" href="assets/css/content-pages.css">
 </head>
 
-<body>
+<body class="service-page">
 
     <!-- Header -->
     <?php $active_page = 'services'; include 'includes/nav.php'; ?>

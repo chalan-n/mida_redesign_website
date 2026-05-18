@@ -163,9 +163,10 @@ $thai_n2 = $thaiNumbers[$math_n2];
             transform: translateY(-3px);
         }
     </style>
+    <link rel="stylesheet" href="assets/css/content-pages.css">
 </head>
 
-<body>
+<body class="content-page">
 
     <!-- Header -->
     <?php include 'includes/nav.php'; ?>

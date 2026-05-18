@@ -1,0 +1,198 @@
+body.register-page {
+    background:
+        radial-gradient(circle at 8% 0%, rgba(255, 199, 44, 0.12), transparent 26%),
+        linear-gradient(180deg, #ffffff 0%, var(--bg-light) 100%);
+}
+
+.register-page .register-header {
+    background:
+        radial-gradient(circle at 18% 0%, rgba(255, 199, 44, 0.3), transparent 28%),
+        radial-gradient(circle at 84% 20%, rgba(255, 255, 255, 0.18), transparent 24%),
+        linear-gradient(135deg, #17458f 0%, #2f6bc6 100%);
+    padding: 120px 0 76px;
+    text-align: center;
+    color: white;
+    clip-path: none;
+    border-bottom-left-radius: 44px;
+    border-bottom-right-radius: 44px;
+}
+
+.register-page .register-header h1 {
+    color: var(--accent-gold) !important;
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: -0.03em;
+}
+
+.register-page .register-header p {
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 1.05rem;
+}
+
+.register-page .register-card {
+    position: relative;
+    z-index: 2;
+    margin-top: -40px;
+    margin-bottom: 60px;
+    padding: 40px;
+    border: 1px solid rgba(23, 69, 143, 0.08);
+    border-radius: 30px;
+    background:
+        radial-gradient(circle at 96% 0%, rgba(255, 199, 44, 0.16), transparent 28%),
+        #fff;
+    box-shadow: 0 26px 70px rgba(23, 69, 143, 0.16);
+}
+
+.register-page .register-card > a {
+    color: var(--primary-blue) !important;
+    font-weight: 700;
+}
+
+.register-page .register-card h3 {
+    color: var(--primary-blue) !important;
+    border-bottom-color: rgba(23, 69, 143, 0.1) !important;
+}
+
+.register-page .form-group {
+    margin-bottom: 25px;
+}
+
+.register-page .form-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #24364d;
+    font-weight: 700;
+}
+
+.register-page .form-control {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 15px;
+    border: 1px solid rgba(23, 69, 143, 0.14);
+    border-radius: 15px;
+    background: #f8fbff;
+    font-family: 'Prompt', sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.register-page .form-control:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(23, 69, 143, 0.1);
+}
+
+.register-page .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.register-page .radio-group {
+    display: flex;
+    gap: 12px;
+}
+
+.register-page .radio-option {
+    flex: 1;
+}
+
+.register-page .radio-input {
+    display: none;
+}
+
+.register-page .radio-label {
+    display: flex;
+    height: 100%;
+    padding: 15px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 2px solid rgba(23, 69, 143, 0.12);
+    border-radius: 18px;
+    background: linear-gradient(180deg, #ffffff 0%, #f9fbff 100%);
+    color: #24364d;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.register-page .radio-label i {
+    margin-bottom: 10px;
+    color: #ccc;
+    font-size: 1.5rem;
+}
+
+.register-page .radio-input:checked + .radio-label {
+    border-color: rgba(255, 199, 44, 0.95);
+    background: linear-gradient(135deg, var(--accent-gold) 0%, #ffe07a 100%);
+    color: #0f2d5c;
+    box-shadow: 0 12px 28px rgba(255, 199, 44, 0.28);
+}
+
+.register-page .radio-input:checked + .radio-label i {
+    color: var(--primary-blue);
+}
+
+.register-page .register-privacy-note {
+    margin: 25px 0;
+    padding: 16px 18px;
+    border: 1px solid rgba(23, 69, 143, 0.1);
+    border-radius: 18px;
+    background: #f8fbff;
+    color: #536274;
+    font-size: 0.9rem;
+    line-height: 1.65;
+}
+
+.register-page .register-privacy-note a {
+    color: var(--primary-blue);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.register-page #submitBtn {
+    width: 100%;
+    padding: 15px;
+    border-radius: 999px !important;
+    background: linear-gradient(135deg, var(--accent-gold) 0%, #ffe07a 100%) !important;
+    color: #0f2d5c !important;
+    font-size: 1.1rem;
+    font-weight: 800;
+    box-shadow: 0 16px 34px rgba(255, 199, 44, 0.34) !important;
+}
+
+@media (max-width: 768px) {
+    .register-page .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .register-page .register-header {
+        padding: 106px 0 56px;
+        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 30px;
+    }
+
+    .register-page .register-card {
+        padding: 24px;
+        border-radius: 24px;
+        margin-bottom: 40px;
+    }
+
+    .register-page .radio-group {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .register-page .radio-label {
+        padding: 12px 8px;
+        font-size: 0.85rem;
+    }
+
+    .register-page .radio-label i {
+        margin-bottom: 6px;
+        font-size: 1.15rem;
+    }
+}

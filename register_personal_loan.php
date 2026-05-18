@@ -253,9 +253,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     </style>
+    <link rel="stylesheet" href="assets/css/register.css">
 </head>
 
-<body>
+<body class="register-page">
 
     <!-- Header -->
     <?php $active_page = 'services'; include 'includes/nav.php'; ?>
@@ -336,25 +337,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="form-group">
                     <label class="form-label">วงเงินที่ต้องการ (บาท)</label>
                     <input type="number" name="loan_amount" class="form-control" placeholder="ระบุจำนวนเงินที่ต้องการ">
-                </div>
+                </div>                    <!-- PDPA Privacy Notice -->
+                    <div class="register-privacy-note">
+                        <p>
+                            การกดส่งข้อมูล แสดงว่าคุณอ่านและรับทราบ
+                            <a href="privacy_policy.php" target="_blank">นโยบายความเป็นส่วนตัว</a>
+                            เรียบร้อยแล้ว
+                        </p>
+                        <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer; margin-top: 10px;">
+                            <input type="checkbox" name="privacy_consent" required style="margin-top: 4px;">
+                            <span style="color: #24364d; font-weight: 700;">ยอมรับเงื่อนไขและนโยบายความเป็นส่วนตัว</span>
+                        </label>
+                    </div>
 
-                <!-- PDPA Privacy Notice -->
-                <div style="background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 8px; padding: 20px; margin: 25px 0;">
-                    <p style="font-size: 0.9rem; line-height: 1.6; color: #555; margin-bottom: 15px;">
-                        ข้าพเจ้ายินยอมให้ บริษัท ไมด้า ลิสซิ่ง จำกัด (มหาชน) เก็บรวมรวม ใช้ และเปิดเผยข้อมูลส่วนบุคคลที่ข้าพเจ้าให้ไว้ในแบบฟอร์มนี้ 
-                        เพื่อวัตถุประสงค์ในการติดต่อกลับ นำเสนอรายละเอียดผลิตภัณฑ์สินเชื่อ ประเมินวงเงินเบื้องต้น และดำเนินการตามขั้นตอนที่จำเป็นในการพิจารณาสินเชื่อ 
-                        ทั้งนี้ ท่านสามารถศึกษารายละเอียดเพิ่มเติมเกี่ยวกับสิทธิของเจ้าของข้อมูลและวิธีการคุ้มครองข้อมูลได้ที่ 
-                        <a href="privacy_policy.php" target="_blank" style="color: var(--primary-blue); text-decoration: underline;">นโยบายความเป็นส่วนตัวของบริษัท</a>
-                    </p>
-                    <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer;">
-                        <input type="checkbox" name="privacy_consent" required style="margin-top: 2px;">
-                        <span style="font-size: 0.9rem; color: #333; font-weight: 500;">
-                            ยอมรับเงื่อนไขและนโยบายความเป็นส่วนตัว
-                        </span>
-                    </label>
-                </div>
-
-                <button type="submit" class="btn btn-primary" id="submitBtn"
+                    <button type="submit" class="btn btn-primary" id="submitBtn"
                     style="width: 100%; padding: 15px; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(28, 69, 135, 0.3);"
                     disabled>
                     ส่งข้อมูลสมัครสินเชื่อ
