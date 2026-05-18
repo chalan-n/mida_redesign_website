@@ -84,6 +84,22 @@
     backdrop-filter: blur(12px);
 }
 
+.hero-slider .slider-btn {
+    width: 54px;
+    height: 54px;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(15, 45, 92, 0.08);
+    color: #0f2d5c;
+    box-shadow: 0 14px 32px rgba(15, 45, 92, 0.22);
+    backdrop-filter: blur(10px);
+}
+
+.hero-slider .slider-btn:hover {
+    background: #fff;
+    color: var(--primary-blue);
+    transform: translateY(-50%) scale(1.04);
+}
+
 .campaign-slider .slider-btn:hover {
     background: rgba(15, 45, 92, 0.76);
 }
@@ -96,6 +112,14 @@
     right: 18px;
 }
 
+.hero-slider .prev-btn {
+    left: -28px;
+}
+
+.hero-slider .next-btn {
+    right: -28px;
+}
+
 .campaign-slider .slider-dots {
     bottom: 16px;
     gap: 8px;
@@ -105,16 +129,42 @@
     backdrop-filter: blur(12px);
 }
 
+.hero-slider .slider-dots {
+    bottom: -38px;
+    gap: 10px;
+    padding: 7px 10px;
+    background: rgba(79, 91, 110, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.32);
+    border-radius: 999px;
+    box-shadow: 0 10px 24px rgba(15, 45, 92, 0.18);
+    backdrop-filter: blur(10px);
+}
+
 .campaign-slider .dot {
     width: 9px;
     height: 9px;
     background: rgba(255, 255, 255, 0.72);
 }
 
+.hero-slider .dot {
+    width: 10px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.78);
+    box-shadow: none;
+}
+
 .campaign-slider .dot.active {
     width: 22px;
     border-radius: 999px;
     background: var(--accent-gold);
+    transform: none;
+}
+
+.hero-slider .dot.active {
+    width: 36px;
+    border-radius: 999px;
+    background: var(--accent-gold);
+    box-shadow: 0 6px 16px rgba(255, 199, 44, 0.36);
     transform: none;
 }
 
@@ -228,7 +278,19 @@
     border-radius: 32px;
     background: rgba(255, 255, 255, 0.14);
     box-shadow: 0 30px 70px rgba(2, 14, 36, 0.22);
+    overflow: visible;
+    margin-bottom: 46px;
+}
+
+.hero-slider-viewport {
+    width: 100%;
+    height: 100%;
     overflow: hidden;
+    border-radius: calc(32px - 8px);
+}
+
+.hero-slider .slider-wrapper {
+    height: 100%;
 }
 
 .hero-slider .slider-image {
@@ -1307,6 +1369,12 @@
         font-size: 0.95rem;
     }
 
+    .hero-slider .slider-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 0.9rem;
+    }
+
     .campaign-slider .prev-btn {
         left: 10px;
     }
@@ -1315,9 +1383,22 @@
         right: 10px;
     }
 
+    .hero-slider .prev-btn {
+        left: -18px;
+    }
+
+    .hero-slider .next-btn {
+        right: -18px;
+    }
+
     .campaign-slider .slider-dots {
         bottom: 10px;
         padding: 6px 8px;
+    }
+
+    .hero-slider .slider-dots {
+        bottom: -30px;
+        padding: 6px 9px;
     }
 
     .hero-bg-shape {
@@ -1432,6 +1513,11 @@
         max-height: 190px;
         border-width: 5px;
         border-radius: 22px;
+        margin-bottom: 38px;
+    }
+
+    .hero-slider-viewport {
+        border-radius: calc(22px - 5px);
     }
 
     .hero-form-links {

@@ -156,64 +156,66 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                 </div>
 
                 <div class="slider-container campaign-slider hero-slider">
-                    <div class="slider-wrapper">
-                        <?php if (count($banners) > 0): ?>
-                            <?php foreach ($banners as $index => $banner): ?>
-                                <div class="slide">
-                                    <a href="<?php echo htmlspecialchars($banner['link']); ?>">
-                                        <picture>
-                                            <?php
-                                            $original_path = $banner['image_path'];
-                                            $original_ext = strtolower(pathinfo($original_path, PATHINFO_EXTENSION));
-                                            $image_type = $original_ext === 'jpg' ? 'jpeg' : $original_ext;
-                                            $webp_path = preg_replace('/\.(jpe?g|png)$/i', '.webp', $original_path);
-                                            $webp_file = __DIR__ . DIRECTORY_SEPARATOR . str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $webp_path);
-                                            $has_webp = $webp_path !== $original_path && file_exists($webp_file);
-                                            ?>
-                                            <?php if ($has_webp): ?>
+                    <div class="hero-slider-viewport">
+                        <div class="slider-wrapper">
+                            <?php if (count($banners) > 0): ?>
+                                <?php foreach ($banners as $index => $banner): ?>
+                                    <div class="slide">
+                                        <a href="<?php echo htmlspecialchars($banner['link']); ?>">
+                                            <picture>
+                                                <?php
+                                                $original_path = $banner['image_path'];
+                                                $original_ext = strtolower(pathinfo($original_path, PATHINFO_EXTENSION));
+                                                $image_type = $original_ext === 'jpg' ? 'jpeg' : $original_ext;
+                                                $webp_path = preg_replace('/\.(jpe?g|png)$/i', '.webp', $original_path);
+                                                $webp_file = __DIR__ . DIRECTORY_SEPARATOR . str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $webp_path);
+                                                $has_webp = $webp_path !== $original_path && file_exists($webp_file);
+                                                ?>
+                                                <?php if ($has_webp): ?>
+                                                    <source
+                                                        srcset="<?php echo htmlspecialchars($webp_path); ?>"
+                                                        type="image/webp">
+                                                <?php endif; ?>
                                                 <source
-                                                    srcset="<?php echo htmlspecialchars($webp_path); ?>"
-                                                    type="image/webp">
-                                            <?php endif; ?>
-                                            <source
-                                                srcset="<?php echo htmlspecialchars($original_path); ?>"
-                                                type="image/<?php echo htmlspecialchars($image_type); ?>">
-                                            <img
-                                                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 375'%3E%3C/svg%3E"
-                                                data-src="<?php echo htmlspecialchars($original_path); ?>"
-                                                alt="<?php echo htmlspecialchars($banner['title']); ?>"
-                                                loading="<?php echo $index === 0 ? 'eager' : 'lazy'; ?>"
-                                                fetchpriority="<?php echo $index === 0 ? 'high' : 'auto'; ?>"
-                                                decoding="async"
-                                                width="1200"
-                                                height="375"
-                                                class="slider-image">
-                                        </picture>
-                                    </a>
+                                                    srcset="<?php echo htmlspecialchars($original_path); ?>"
+                                                    type="image/<?php echo htmlspecialchars($image_type); ?>">
+                                                <img
+                                                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 375'%3E%3C/svg%3E"
+                                                    data-src="<?php echo htmlspecialchars($original_path); ?>"
+                                                    alt="<?php echo htmlspecialchars($banner['title']); ?>"
+                                                    loading="<?php echo $index === 0 ? 'eager' : 'lazy'; ?>"
+                                                    fetchpriority="<?php echo $index === 0 ? 'high' : 'auto'; ?>"
+                                                    decoding="async"
+                                                    width="1200"
+                                                    height="375"
+                                                    class="slider-image">
+                                            </picture>
+                                        </a>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <div class="slide">
+                                    <picture>
+                                        <source
+                                            srcset="img/hire_purchase.webp"
+                                            type="image/webp">
+                                        <source
+                                            srcset="img/hire_purchase.jpg"
+                                            type="image/jpeg">
+                                        <img
+                                            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 375'%3E%3C/svg%3E"
+                                            data-src="img/hire_purchase.jpg"
+                                            alt="สมัครสินเชื่อไมด้า ลิสซิ่ง"
+                                            loading="eager"
+                                            fetchpriority="high"
+                                            decoding="async"
+                                            width="1200"
+                                            height="375"
+                                            class="slider-image">
+                                    </picture>
                                 </div>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <div class="slide">
-                                <picture>
-                                    <source
-                                        srcset="img/hire_purchase.webp"
-                                        type="image/webp">
-                                    <source
-                                        srcset="img/hire_purchase.jpg"
-                                        type="image/jpeg">
-                                    <img
-                                        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 375'%3E%3C/svg%3E"
-                                        data-src="img/hire_purchase.jpg"
-                                        alt="สมัครสินเชื่อไมด้า ลิสซิ่ง"
-                                        loading="eager"
-                                        fetchpriority="high"
-                                        decoding="async"
-                                        width="1200"
-                                        height="375"
-                                        class="slider-image">
-                                </picture>
-                            </div>
-                        <?php endif; ?>
+                            <?php endif; ?>
+                        </div>
                     </div>
 
                     <button class="slider-btn prev-btn" type="button" aria-label="Previous campaign slide"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>

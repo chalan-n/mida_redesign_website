@@ -11,6 +11,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const slideCount = slides.length;
     let autoPlayInterval;
 
+    function loadSlideImage(index) {
+        const slide = slides[index];
+        if (!slide) return;
+
+        const images = slide.querySelectorAll('img[data-src]');
+        images.forEach((img) => {
+            const src = img.getAttribute('data-src');
+            if (!src) return;
+
+            img.src = src;
+            img.removeAttribute('data-src');
+            img.classList.add('loaded');
+        });
+    }
+
+    function preloadNearbySlides(index) {
+        loadSlideImage(index);
+        loadSlideImage((index + 1) % slideCount);
+    }
+
     // Create Dots
     slides.forEach((_, index) => {
         const dot = document.createElement('button');
@@ -39,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (index >= slideCount) index = 0;
 
         currentIndex = index;
+        preloadNearbySlides(currentIndex);
         sliderWrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
         updateDots();
         resetTimer();
@@ -83,6 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
     sliderWrapper.setAttribute('role', 'region');
 
     // Initial Start
+    preloadNearbySlides(currentIndex);
     updateDots();
     startTimer();
 });
