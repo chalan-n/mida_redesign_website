@@ -162,13 +162,94 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             color: var(--primary-blue);
         }
 
+        body {
+            background:
+                radial-gradient(circle at 8% 0%, rgba(255, 199, 44, 0.12), transparent 26%),
+                linear-gradient(180deg, #ffffff 0%, var(--bg-light) 100%);
+        }
+
+        .register-header {
+            background:
+                radial-gradient(circle at 18% 0%, rgba(255, 199, 44, 0.3), transparent 28%),
+                radial-gradient(circle at 84% 20%, rgba(255, 255, 255, 0.18), transparent 24%),
+                linear-gradient(135deg, #17458f 0%, #2f6bc6 100%);
+            padding: 120px 0 76px;
+            clip-path: none;
+            border-bottom-left-radius: 44px;
+            border-bottom-right-radius: 44px;
+        }
+
+        .register-header h1 {
+            color: var(--accent-gold) !important;
+            font-size: clamp(2rem, 4vw, 3rem);
+            letter-spacing: -0.03em;
+        }
+
+        .register-header p {
+            color: rgba(255, 255, 255, 0.88);
+            font-size: 1.05rem;
+        }
+
+        .register-card {
+            border: 1px solid rgba(23, 69, 143, 0.08);
+            border-radius: 30px;
+            background:
+                radial-gradient(circle at 96% 0%, rgba(255, 199, 44, 0.16), transparent 28%),
+                #fff;
+            box-shadow: 0 26px 70px rgba(23, 69, 143, 0.16);
+        }
+
+        .register-card > a {
+            color: var(--primary-blue) !important;
+            font-weight: 700;
+        }
+
+        .register-card h3 {
+            border-bottom-color: rgba(23, 69, 143, 0.1) !important;
+            color: var(--primary-blue) !important;
+        }
+
+        .form-label {
+            color: #24364d;
+            font-weight: 700;
+        }
+
+        .form-control {
+            min-height: 48px;
+            border-color: rgba(23, 69, 143, 0.14);
+            border-radius: 15px;
+            background: #f8fbff;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-blue);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(23, 69, 143, 0.1);
+        }
+
+        #submitBtn {
+            border-radius: 999px !important;
+            background: linear-gradient(135deg, var(--accent-gold) 0%, #ffe07a 100%) !important;
+            color: #0f2d5c !important;
+            font-weight: 800;
+            box-shadow: 0 16px 34px rgba(255, 199, 44, 0.34) !important;
+        }
+
         @media (max-width: 768px) {
             .form-row {
                 grid-template-columns: 1fr;
             }
 
+            .register-header {
+                padding: 106px 0 56px;
+                border-bottom-left-radius: 30px;
+                border-bottom-right-radius: 30px;
+            }
+
             .register-card {
-                padding: 25px;
+                padding: 24px;
+                border-radius: 24px;
+                margin-bottom: 40px;
             }
         }
     </style>

@@ -173,13 +173,133 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             color: var(--primary-blue);
         }
 
+        body {
+            background:
+                radial-gradient(circle at 8% 0%, rgba(255, 199, 44, 0.12), transparent 26%),
+                linear-gradient(180deg, #ffffff 0%, var(--bg-light) 100%);
+        }
+
+        .register-header {
+            background:
+                radial-gradient(circle at 18% 0%, rgba(255, 199, 44, 0.3), transparent 28%),
+                radial-gradient(circle at 84% 20%, rgba(255, 255, 255, 0.18), transparent 24%),
+                linear-gradient(135deg, #17458f 0%, #2f6bc6 100%);
+            padding: 120px 0 76px;
+            clip-path: none;
+            border-bottom-left-radius: 44px;
+            border-bottom-right-radius: 44px;
+        }
+
+        .register-header h1 {
+            color: var(--accent-gold) !important;
+            font-size: clamp(2rem, 4vw, 3rem);
+            letter-spacing: -0.03em;
+        }
+
+        .register-header p {
+            color: rgba(255, 255, 255, 0.88);
+            font-size: 1.05rem;
+        }
+
+        .register-card {
+            border: 1px solid rgba(23, 69, 143, 0.08);
+            border-radius: 30px;
+            background:
+                radial-gradient(circle at 96% 0%, rgba(255, 199, 44, 0.16), transparent 28%),
+                #fff;
+            box-shadow: 0 26px 70px rgba(23, 69, 143, 0.16);
+        }
+
+        .register-card > a {
+            color: var(--primary-blue) !important;
+            font-weight: 700;
+        }
+
+        .register-card h3 {
+            border-bottom-color: rgba(23, 69, 143, 0.1) !important;
+            color: var(--primary-blue) !important;
+        }
+
+        .form-label {
+            color: #24364d;
+            font-weight: 700;
+        }
+
+        .form-control {
+            min-height: 48px;
+            border-color: rgba(23, 69, 143, 0.14);
+            border-radius: 15px;
+            background: #f8fbff;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-blue);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(23, 69, 143, 0.1);
+        }
+
+        .radio-group {
+            gap: 12px;
+        }
+
+        .radio-label {
+            border-color: rgba(23, 69, 143, 0.12);
+            border-radius: 18px;
+            background: linear-gradient(180deg, #ffffff 0%, #f9fbff 100%);
+            color: #24364d;
+            font-weight: 700;
+        }
+
+        .radio-input:checked+.radio-label {
+            border-color: rgba(255, 199, 44, 0.95);
+            background: linear-gradient(135deg, var(--accent-gold) 0%, #ffe07a 100%);
+            color: #0f2d5c;
+            box-shadow: 0 12px 28px rgba(255, 199, 44, 0.28);
+        }
+
+        .radio-input:checked+.radio-label i {
+            color: var(--primary-blue);
+        }
+
+        #submitBtn {
+            border-radius: 999px !important;
+            background: linear-gradient(135deg, var(--accent-gold) 0%, #ffe07a 100%) !important;
+            color: #0f2d5c !important;
+            font-weight: 800;
+            box-shadow: 0 16px 34px rgba(255, 199, 44, 0.34) !important;
+        }
+
         @media (max-width: 768px) {
             .form-row {
                 grid-template-columns: 1fr;
             }
 
+            .register-header {
+                padding: 106px 0 56px;
+                border-bottom-left-radius: 30px;
+                border-bottom-right-radius: 30px;
+            }
+
             .register-card {
-                padding: 25px;
+                padding: 24px;
+                border-radius: 24px;
+                margin-bottom: 40px;
+            }
+
+            .radio-group {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 8px;
+            }
+
+            .radio-label {
+                padding: 12px 8px;
+                font-size: 0.85rem;
+            }
+
+            .radio-label i {
+                font-size: 1.15rem;
+                margin-bottom: 6px;
             }
         }
     </style>
@@ -197,102 +317,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <p style="opacity: 0.9;">รถแลกเงิน ไม่ต้องโอนเล่ม รับเงินก้อนไว (ประเมินฟรี)</p>
         </div>
     </div>
-
-    <!-- Registration Form -->
-    <div class="container" style="max-width: 800px;">
-        <div class="register-card">
-            <a href="service_title_loan.php"
-                style="display: inline-flex; align-items: center; text-decoration: none; color: #666; margin-bottom: 20px; font-size: 0.9rem; transition: color 0.3s;">
-                <i class="fa-solid fa-arrow-left" style="margin-right: 8px;"></i> กลับหน้าหลัก
-            </a>
-            <form action="" method="POST">
-                <?php if ($success_msg): ?>
-                    <div
-                        style="background: #d4edda; color: #155724; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
-                        <i class="fa-solid fa-check-circle" style="margin-right: 5px;"></i> <?php echo $success_msg; ?>
-                    </div>
-                <?php endif; ?>
-
-                <?php if ($error_msg): ?>
-                    <div
-                        style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
-                        <i class="fa-solid fa-exclamation-circle" style="margin-right: 5px;"></i> <?php echo $error_msg; ?>
-                    </div>
-                <?php endif; ?>
-                <h3
-                    style="color: var(--primary-blue); margin-bottom: 25px; border-bottom: 2px solid #f0f0f0; padding-bottom: 15px;">
-                    <i class="fa-solid fa-user-pen"></i> ข้อมูลผู้สมัคร
-                </h3>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">ชื่อ - นามสกุล <span style="color: red;">*</span></label>
-                        <input type="text" name="fullname" class="form-control" placeholder="ระบุชื่อและนามสกุล"
-                            required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">เบอร์โทรศัพท์มือถือ <span style="color: red;">*</span></label>
-                        <input type="tel" name="phone" class="form-control" placeholder="08x-xxx-xxxx" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">LINE ID (ถ้ามี)</label>
-                    <input type="text" name="line_id" class="form-control" placeholder="ไอดีไลน์">
-                </div>
-
-                <h3
-                    style="color: var(--primary-blue); margin: 35px 0 25px; border-bottom: 2px solid #f0f0f0; padding-bottom: 15px;">
-                    <i class="fa-solid fa-car"></i> ข้อมูลรถที่นำมาจำนำทะเบียน
-                </h3>
-
-                <div class="form-group">
-                    <label class="form-label">ประเภทรถ <span style="color: red;">*</span></label>
-                    <div class="radio-group">
-                        <div class="radio-option">
-                            <input type="radio" name="car_type" id="car_sedan" value="รถเก๋ง" class="radio-input" <?php echo $default_checked_value == 'รถเก๋ง' ? 'checked' : ''; ?>>
-                            <label for="car_sedan" class="radio-label">
-                                <i class="fa-solid fa-car-side"></i>
-                                <span>รถเก๋ง</span>
-                            </label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" name="car_type" id="car_pickup" value="รถกระบะ" class="radio-input"
-                                <?php echo $default_checked_value == 'รถกระบะ' ? 'checked' : ''; ?>>
-                            <label for="car_pickup" class="radio-label">
-                                <i class="fa-solid fa-truck-pickup"></i>
-                                <span>รถกระบะ</span>
-                            </label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" name="car_type" id="car_truck" value="รถบรรทุก" class="radio-input"
-                                <?php echo $default_checked_value == 'รถบรรทุก' ? 'checked' : ''; ?>>
-                            <label for="car_truck" class="radio-label">
-                                <i class="fa-solid fa-truck"></i>
-                                <span>รถบรรทุก</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">ยี่ห้อรถ</label>
-                        <input type="text" name="car_brand" class="form-control" placeholder="เช่น Toyota, Isuzu">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">รุ่นรถ / ปี</label>
-                        <input type="text" name="car_model_year" class="form-control" placeholder="เช่น Vigo ปี 2018">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">ภาระหนี้ปัจจุบัน (ถ้ามี)</label>
-                    <select name="debt_status" class="form-control">
-                        <option value="none">ปลอดภาระ (เล่มอยู่กับตัว)</option>
-                        <option value="finance">ติดไฟแนนซ์อื่น (ต้องการรีไฟแนนซ์)</option>
-                    </select>
-                </div>
 
         <!-- Registration Form -->
         <div class="container" style="max-width: 800px;">
@@ -420,63 +444,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         * เจ้าหน้าที่จะติดต่อกลับภายใน 1 วันทำการ
                     </p>
                 </form>
-                <p style="text-align: center; margin-top: 15px; font-size: 0.9rem; color: #888;">
-                    * เจ้าหน้าที่จะติดต่อกลับภายใน 1 วันทำการ
-                </p>
-            </form>
         </div>
     </div>
-
-    <!-- Footer -->
-    <footer id="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div>
-                    <div class="footer-logo">MIDA LEASING</div>
-                    <p style="color: #ccc; margin-bottom: 10px;">บริษัท ไมด้าลิสซิ่ง จำกัด (มหาชน)</p>
-                    <p style="color: #ccc; margin-bottom: 10px; font-size: 1rem;">48/1-5 ซอยแจ้งวัฒนะ 14
-                        ถนนแจ้งวัฒนะ
-                        แขวงทุ่งสองห้อง
-                        เขตหลักสี่ กรุงเทพฯ 10210</p>
-                    <p style="color: #ccc; margin-bottom: 20px; font-size: 1rem;"><i class="fa-solid fa-phone"
-                            style="margin-right: 10px;"></i>02-574-6901</p>
-                    <div style="display: flex; gap: 15px;">
-                        <a href="https://www.facebook.com/midaleasing.th" target="_blank"
-                            style="text-decoration: none;">
-                            <i class="fa-brands fa-facebook" style="font-size: 2rem; color: #1877F2;"></i>
-                        </a>
-                        <a href="https://line.me/R/ti/p/@midaleasing" target="_blank" style="text-decoration: none;">
-                            <i class="fa-brands fa-line" style="font-size: 2rem; color: #00B900;"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="footer-links">
-                    <h4>บริการของเรา</h4>
-                    <ul>
-                        <li><a href="service_hire_purchase.php">สินเชื่อเช่าซื้อ</a></li>
-                        <li><a href="service_title_loan.php">สินเชื่อจำนำทะเบียน</a></li>
-                        <li><a href="service_personal_loan.php">สินเชื่อส่วนบุคคล</a></li>
-                        <li><a href="service_insurance.php">ต่อภาษีและประกันภัย</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-links">
-                    <h4>นักลงทุนสัมพันธ์</h4>
-                    <ul>
-                        <li><a href="investor_business.php">วิสัยทัศน์และพันธกิจ</a></li>
-                        <li><a href="investor_financial.php">ข้อมูลทางการเงิน</a></li>
-                        <li><a href="investor_publications.php">เอกสารเผยแพร่</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-links">
-                    <h4>ติดต่อเรา</h4>
-                    <ul>
-                        <li><a href="contact_branches.php">แผนที่สาขา</a></li>
-                        <li><a href="contact_career.php">ร่วมงานกับเรา</a></li>
-            </div>
-        </div>
 
         <!-- Footer -->
         <footer id="footer">

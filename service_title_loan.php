@@ -189,6 +189,101 @@ try {
                 padding: 40px 0;
             }
         }
+
+        body {
+            background:
+                radial-gradient(circle at 8% 0%, rgba(255, 199, 44, 0.12), transparent 26%),
+                linear-gradient(180deg, #ffffff 0%, var(--bg-light) 100%);
+        }
+
+        .service-hero {
+            background:
+                radial-gradient(circle at 16% 0%, rgba(255, 199, 44, 0.32), transparent 30%),
+                radial-gradient(circle at 86% 18%, rgba(255, 255, 255, 0.18), transparent 24%),
+                linear-gradient(135deg, #17458f 0%, #2f6bc6 100%);
+            border-bottom-left-radius: 44px;
+            border-bottom-right-radius: 44px;
+            padding: 128px 0 68px;
+        }
+
+        .service-hero h1 {
+            color: var(--accent-gold) !important;
+            letter-spacing: -0.03em;
+        }
+
+        .section[style*="#f4f6f9"],
+        .doc-section {
+            background:
+                radial-gradient(circle at 10% 0%, rgba(255, 199, 44, 0.1), transparent 24%),
+                #f4f8ff !important;
+        }
+
+        .service-card,
+        .feature-box {
+            border: 1px solid rgba(23, 69, 143, 0.1);
+            border-radius: 24px;
+            box-shadow: 0 18px 44px rgba(23, 69, 143, 0.1);
+        }
+
+        .service-card:hover,
+        .feature-box:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 24px 58px rgba(23, 69, 143, 0.16);
+        }
+
+        .service-img {
+            background:
+                radial-gradient(circle at 50% 10%, rgba(255, 199, 44, 0.28), transparent 40%),
+                linear-gradient(180deg, #ffffff 0%, #eef5ff 100%);
+            color: var(--primary-blue);
+        }
+
+        .service-content h3,
+        .feature-box h4 {
+            color: var(--primary-blue);
+            font-weight: 800;
+        }
+
+        .service-content .btn,
+        .cta-section .btn {
+            border-radius: 999px;
+            font-weight: 800;
+        }
+
+        .service-content .btn-primary,
+        .cta-section .btn[style*="background"] {
+            background: linear-gradient(135deg, var(--accent-gold) 0%, #ffe07a 100%) !important;
+            color: #0f2d5c !important;
+            box-shadow: 0 14px 28px rgba(255, 199, 44, 0.3);
+        }
+
+        .cta-section {
+            background:
+                radial-gradient(circle at 18% 0%, rgba(255, 199, 44, 0.28), transparent 30%),
+                linear-gradient(135deg, #17458f 0%, #2f6bc6 100%) !important;
+        }
+
+        @media (max-width: 768px) {
+            .service-hero {
+                padding: 104px 0 48px;
+                border-bottom-left-radius: 30px;
+                border-bottom-right-radius: 30px;
+            }
+
+            .service-card,
+            .feature-box {
+                border-radius: 20px;
+            }
+
+            .service-img {
+                height: 148px;
+                font-size: 3rem;
+            }
+
+            .service-content {
+                padding: 22px;
+            }
+        }
     </style>
 </head>
 

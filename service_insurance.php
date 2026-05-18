@@ -100,6 +100,93 @@ try {
             border: 1px solid #d0e3ff;
             margin-top: 40px;
         }
+
+        body {
+            background:
+                radial-gradient(circle at 8% 0%, rgba(255, 199, 44, 0.12), transparent 26%),
+                linear-gradient(180deg, #ffffff 0%, var(--bg-light) 100%);
+        }
+
+        .page-header {
+            background:
+                radial-gradient(circle at 16% 0%, rgba(255, 199, 44, 0.32), transparent 30%),
+                radial-gradient(circle at 86% 18%, rgba(255, 255, 255, 0.18), transparent 24%),
+                linear-gradient(135deg, #17458f 0%, #2f6bc6 100%);
+            border-bottom-left-radius: 44px;
+            border-bottom-right-radius: 44px;
+            padding: 128px 0 68px;
+        }
+
+        .page-header h1 {
+            color: var(--accent-gold) !important;
+            letter-spacing: -0.03em;
+        }
+
+        .section[style*="#f8f9fa"] {
+            background:
+                radial-gradient(circle at 10% 0%, rgba(255, 199, 44, 0.1), transparent 24%),
+                #f4f8ff !important;
+        }
+
+        .service-card {
+            border: 1px solid rgba(23, 69, 143, 0.1);
+            border-radius: 24px;
+            box-shadow: 0 18px 44px rgba(23, 69, 143, 0.1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 24px 58px rgba(23, 69, 143, 0.16);
+        }
+
+        .service-icon {
+            width: 72px;
+            height: 72px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 22px;
+            background: linear-gradient(135deg, rgba(255, 199, 44, 0.25), rgba(238, 245, 255, 0.95));
+            color: var(--primary-blue);
+        }
+
+        .contact-box {
+            background:
+                radial-gradient(circle at 96% 0%, rgba(255, 199, 44, 0.18), transparent 30%),
+                #ffffff;
+            border-color: rgba(23, 69, 143, 0.12);
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(23, 69, 143, 0.12);
+        }
+
+        .contact-box .btn {
+            border-radius: 999px;
+            font-weight: 800;
+        }
+
+        .contact-box .btn-primary,
+        .contact-box .btn-accent {
+            background: linear-gradient(135deg, var(--accent-gold) 0%, #ffe07a 100%) !important;
+            color: #0f2d5c !important;
+            box-shadow: 0 14px 28px rgba(255, 199, 44, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .page-header {
+                padding: 104px 0 48px;
+                border-bottom-left-radius: 30px;
+                border-bottom-right-radius: 30px;
+            }
+
+            .service-card {
+                border-radius: 20px;
+            }
+
+            .contact-box {
+                padding: 26px;
+                border-radius: 24px;
+            }
+        }
     </style>
 </head>
 
