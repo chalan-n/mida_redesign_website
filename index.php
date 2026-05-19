@@ -340,17 +340,17 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                             'service_title_loan.php' => array(
                                 'title' => 'สินเชื่อจำนำทะเบียน',
                                 'description' => 'ใช้เล่มทะเบียนต่อยอดสภาพคล่อง รถยังมีขับตามปกติ',
-                                'cta' => 'ดูเงื่อนไข'
+                                'cta' => 'ดูรายละเอียด'
                             ),
                             'service_personal_loan.php' => array(
                                 'title' => 'สินเชื่อส่วนบุคคล',
                                 'description' => 'เงินก้อนพร้อมใช้ ช่วยเสริมสภาพคล่องในชีวิตประจำวัน',
-                                'cta' => 'ดูบริการ'
+                                'cta' => 'ดูรายละเอียด'
                             ),
                             'service_insurance.php' => array(
                                 'title' => 'ต่อภาษีและประกันภัย',
                                 'description' => 'บริการต่อภาษี พ.ร.บ. และประกันรถยนต์ ครบในที่เดียว',
-                                'cta' => 'ดูบริการ'
+                                'cta' => 'ดูรายละเอียด'
                             ),
                         );
                         $service_display = isset($service_copy[$service_link]) ? $service_copy[$service_link] : array(
@@ -574,6 +574,87 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                 </div>
             </div>
         </section>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const testimonialSets = [
+                [
+                    {
+                        text: '"เจ้าหน้าที่อธิบายขั้นตอนชัดเจนมากครับ รู้ว่าต้องเตรียมเอกสารอะไรบ้าง และมีคนคอยติดตามเรื่องให้จนจบ ทำให้ไม่กังวลเหมือนตอนแรก"',
+                        name: 'คุณสมชาย',
+                        role: 'เจ้าของธุรกิจส่วนตัว'
+                    },
+                    {
+                        text: '"สมัครออนไลน์ไว้ก่อน แล้วมีเจ้าหน้าที่ติดต่อกลับเร็วดีค่ะ คุยง่าย ให้ข้อมูลครบ และช่วยแนะนำตัวเลือกที่เหมาะกับรายได้"',
+                        name: 'คุณนิตยา',
+                        role: 'พนักงานบริษัท'
+                    },
+                    {
+                        text: '"ใช้รถทำงานทุกวัน เลยอยากได้บริการที่ไม่ยุ่งยาก ที่นี่ให้คำแนะนำดี รถยังมีใช้ต่อ และได้เงินไปหมุนธุรกิจทันเวลา"',
+                        name: 'คุณประเสริฐ',
+                        role: 'ผู้ประกอบอาชีพอิสระ'
+                    }
+                ],
+                [
+                    {
+                        text: '"ประทับใจตรงที่คุยแล้วเข้าใจง่าย ไม่ใช้ศัพท์ยาก เจ้าหน้าที่แจ้งเงื่อนไขตรงไปตรงมา ทำให้ตัดสินใจได้สบายใจขึ้น"',
+                        name: 'คุณวราภรณ์',
+                        role: 'ค้าขายออนไลน์'
+                    },
+                    {
+                        text: '"ต้องการเงินก้อนมาจัดการค่าใช้จ่ายด่วน ๆ กรอกข้อมูลไม่นานก็มีเจ้าหน้าที่โทรกลับ ขั้นตอนไม่ซับซ้อนอย่างที่คิด"',
+                        name: 'คุณธีรพงศ์',
+                        role: 'พนักงานเอกชน'
+                    },
+                    {
+                        text: '"ลองสอบถามก่อน ยังไม่ได้ตัดสินใจทันที แต่เจ้าหน้าที่ให้ข้อมูลครบและไม่เร่ง ทำให้รู้สึกดีและมั่นใจในบริการมากขึ้น"',
+                        name: 'คุณกานดา',
+                        role: 'แม่ค้า'
+                    }
+                ],
+                [
+                    {
+                        text: '"ชอบที่มีหลายช่องทางให้ติดต่อ ทั้งสมัครออนไลน์และคุยกับเจ้าหน้าที่ เหมาะกับคนที่อยากถามรายละเอียดก่อนเริ่มทำเรื่อง"',
+                        name: 'คุณอภิวัฒน์',
+                        role: 'เจ้าของรถกระบะ'
+                    },
+                    {
+                        text: '"เอกสารที่ต้องใช้ไม่เยอะเกินไป เจ้าหน้าที่ช่วยเช็คให้ว่าขาดอะไรบ้าง ทำให้เตรียมตัวได้ง่ายและไม่เสียเวลา"',
+                        name: 'คุณศิริพร',
+                        role: 'พนักงานประจำ'
+                    },
+                    {
+                        text: '"ตอนแรกแค่เข้ามาดูข้อมูลในเว็บ พอฝากเบอร์ไว้ก็มีคนติดต่อกลับและอธิบายครบทั้งวงเงิน เงื่อนไข และขั้นตอนถัดไป"',
+                        name: 'คุณจักรินทร์',
+                        role: 'ธุรกิจส่วนตัว'
+                    }
+                ]
+            ];
+
+            const bangkokDate = new Intl.DateTimeFormat('en-CA', {
+                timeZone: 'Asia/Bangkok',
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            }).format(new Date());
+            const daySeed = Math.floor(Date.parse(bangkokDate + 'T00:00:00Z') / 86400000);
+            const todaysTestimonials = testimonialSets[daySeed % testimonialSets.length];
+            const cards = document.querySelectorAll('.testimonial-section .testimonial-card');
+
+            cards.forEach(function(card, index) {
+                const review = todaysTestimonials[index];
+                if (!review) return;
+
+                const text = card.querySelector('.review-text');
+                const name = card.querySelector('.reviewer-meta h4');
+                const role = card.querySelector('.reviewer-role');
+
+                if (text) text.textContent = review.text;
+                if (name) name.textContent = review.name;
+                if (role) role.textContent = review.role;
+            });
+        });
+        </script>
 
         <!-- Steps Section (New) -->
         <section class="section section-plain" id="steps">
