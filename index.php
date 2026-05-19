@@ -225,7 +225,7 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
             </div>
 
             <div class="hero-form-card" id="heroLoanFormCard">
-                <h2 class="hero-form-title">เลือกสินเชื่อที่ต้องการ</h2>
+                <h2 class="hero-form-title">เลือกสินเชื่อที่สนใจ</h2>
 
                 <form id="heroLoanForm" class="hero-loan-form" action="register_hire_purchase.php?type=sedan" method="POST" novalidate>
                     <input type="hidden" name="car_type" id="heroCarType" value="รถเก๋ง">

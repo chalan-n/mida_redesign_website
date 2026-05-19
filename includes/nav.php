@@ -27,7 +27,7 @@ $nav_logo_src = !empty($settings['site_logo']) ? $settings['site_logo'] : 'img/m
                 <a href="service_hire_purchase.php"
                     class="nav-link nav-dropdown-toggle <?php echo $active_page == 'services' ? 'active' : ''; ?>"
                     aria-haspopup="true">
-                    บริการสินเชื่อ <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                    ขอสินเชื่อ <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
                 </a>
                 <ul class="nav-submenu" aria-label="เมนูบริการสินเชื่อ">
                     <li><a href="service_hire_purchase.php">สินเชื่อเช่าซื้อ</a></li>
