@@ -38,6 +38,14 @@ try {
 } catch (PDOException $e) {
 }
 
+// Fetch active auction maps managed from admin.
+$auction_maps = array();
+try {
+    $stmt_maps = $db->query("SELECT * FROM auction_maps WHERE is_active = 1 ORDER BY sort_order ASC, id DESC");
+    $auction_maps = $stmt_maps->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+}
+
 // Fetch Auction Schedules with actual car count
 $schedules = array();
 try {
@@ -101,6 +109,18 @@ function auction_extract_date_parts($date_text)
 function auction_branch_label($branch_name)
 {
     return trim(preg_replace('/^สาขา\s*/u', '', (string) $branch_name));
+}
+
+function auction_map_embed_src($value)
+{
+    $value = trim((string) $value);
+    if ($value === '') {
+        return '';
+    }
+    if (preg_match('/src=["\']([^"\']+)["\']/i', $value, $matches)) {
+        return html_entity_decode($matches[1], ENT_QUOTES, 'UTF-8');
+    }
+    return $value;
 }
 
 $calendar_month = (int) date('n');
@@ -173,41 +193,6 @@ foreach ($schedules as $schedule) {
     );
 }
 
-// Fetch Featured Cars (is_featured=1, fallback to random if less than 4)
-$highlight_cars = array();
-try {
-    // First, try to get featured cars
-    $stmt = $db->query("
-        SELECT c.*, s.branch_name as schedule_name, s.auction_date as schedule_date
-        FROM auction_cars c
-        LEFT JOIN auction_schedules s ON c.schedule_id = s.id
-        WHERE c.is_featured = 1 AND c.schedule_id IS NOT NULL
-        ORDER BY CAST(c.queue_number AS UNSIGNED) ASC
-        LIMIT 4
-    ");
-    $highlight_cars = $stmt->fetchAll();
-
-    // If less than 4 featured, fill with random cars
-    if (count($highlight_cars) < 4) {
-        $featured_ids = array();
-        foreach ($highlight_cars as $featured_car) {
-            $featured_ids[] = (int) $featured_car['id'];
-        }
-        $exclude = !empty($featured_ids) ? "AND c.id NOT IN (" . implode(',', $featured_ids) . ")" : "";
-        $remaining = 4 - count($highlight_cars);
-
-        $stmt = $db->query("
-            SELECT c.*, s.branch_name as schedule_name, s.auction_date as schedule_date
-            FROM auction_cars c
-            LEFT JOIN auction_schedules s ON c.schedule_id = s.id
-            WHERE c.schedule_id IS NOT NULL $exclude
-            ORDER BY RAND()
-            LIMIT $remaining
-        ");
-        $highlight_cars = array_merge($highlight_cars, $stmt->fetchAll());
-    }
-} catch (PDOException $e) {
-}
 ?>
 <!DOCTYPE html>
 <html lang="th">
@@ -520,6 +505,125 @@ try {
 
         .auction-channel-card a.is-line {
             background: #00b900;
+        }
+
+        .auction-map-section {
+            background:
+                radial-gradient(circle at 88% 12%, rgba(255, 199, 44, 0.16), transparent 26%),
+                linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+        }
+
+        .auction-map-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+            gap: 26px;
+            align-items: stretch;
+        }
+
+        .auction-map-stack {
+            display: grid;
+            gap: 26px;
+        }
+
+        .auction-map-frame,
+        .auction-map-info {
+            border: 1px solid rgba(23, 69, 143, 0.1);
+            border-radius: 26px;
+            background: #ffffff;
+            box-shadow: 0 18px 42px rgba(23, 69, 143, 0.08);
+            overflow: hidden;
+        }
+
+        .auction-map-frame iframe {
+            display: block;
+            width: 100%;
+            min-height: 430px;
+            border: 0;
+        }
+
+        .auction-map-placeholder {
+            min-height: 430px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 32px;
+            color: #536274;
+            background: linear-gradient(135deg, #eef5ff 0%, #ffffff 100%);
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .auction-map-info {
+            padding: 26px;
+        }
+
+        .auction-map-info .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            color: #b98500;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .auction-map-info h2 {
+            margin: 0 0 12px;
+            color: var(--primary-blue);
+            font-size: clamp(1.7rem, 2.8vw, 2.55rem);
+            line-height: 1.15;
+        }
+
+        .auction-map-info p {
+            margin: 0 0 14px;
+            color: #536274;
+            line-height: 1.75;
+        }
+
+        .auction-map-address {
+            display: flex;
+            gap: 12px;
+            margin: 16px 0;
+            padding: 16px;
+            border-radius: 18px;
+            background: #f7fbff;
+            color: #24364d;
+            font-weight: 700;
+            line-height: 1.65;
+        }
+
+        .auction-map-address i {
+            color: var(--primary-blue);
+            margin-top: 4px;
+        }
+
+        .auction-map-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .auction-map-actions a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 44px;
+            padding: 0 18px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, var(--accent-gold) 0%, #ffe07a 100%);
+            color: #0f2d5c;
+            font-weight: 900;
+            text-decoration: none;
+            box-shadow: 0 10px 22px rgba(255, 199, 44, 0.24);
+        }
+
+        .auction-map-actions a.is-secondary {
+            background: #eef5ff;
+            color: var(--primary-blue);
+            box-shadow: inset 0 0 0 1px rgba(23, 69, 143, 0.12);
         }
 
         .schedule-card {
@@ -938,6 +1042,7 @@ try {
 
         @media (max-width: 900px) {
             .auction-brochure-grid,
+            .auction-map-grid,
             .auction-calendar-wrap {
                 grid-template-columns: 1fr;
             }
@@ -948,6 +1053,11 @@ try {
 
             .auction-brochure-frame img {
                 max-height: none;
+            }
+
+            .auction-map-frame iframe,
+            .auction-map-placeholder {
+                min-height: 320px;
             }
 
             .calendar-day,
@@ -976,6 +1086,9 @@ try {
             <div class="auction-hero-actions">
                 <a href="#auction-brochure" class="is-gold"><i class="fa-solid fa-image"></i> ดูโบรชัวร์รอบล่าสุด</a>
                 <a href="#auction-calendar-section"><i class="fa-solid fa-calendar-days"></i> ดูปฏิทินประมูล</a>
+                <?php if (count($auction_maps) > 0): ?>
+                    <a href="#auction-map-section"><i class="fa-solid fa-map-location-dot"></i> ดูแผนที่งานประมูล</a>
+                <?php endif; ?>
             </div>
         </div>
     </section>
@@ -1173,6 +1286,105 @@ try {
         </div>
     </section>
 
+    <!-- How to -->
+    <section class="section" style="background-color: #f0f4f8;">
+        <div class="container">
+            <div class="section-title">
+                <h2>ขั้นตอนการประมูล</h2>
+                <p>ง่ายๆ ใครก็ประมูลได้</p>
+            </div>
+
+            <div class="auction-steps-grid">
+                <div>
+                    <div class="step-circle">1</div>
+                    <h4 style="margin-bottom: 10px;">ลงทะเบียน</h4>
+                    <p class="text-secondary">นำบัตรประชาชนมาลงทะเบียน<br>และวางเงินมัดจำป้าย</p>
+                </div>
+                <div>
+                    <div class="step-circle">2</div>
+                    <h4 style="margin-bottom: 10px;">ตรวจดูสภาพรถ</h4>
+                    <p class="text-secondary">เดินชมรถที่ลานประมูล<br>สตาร์ทเครื่องยนต์ ตรวจสอบสภาพ</p>
+                </div>
+                <div>
+                    <div class="step-circle">3</div>
+                    <h4 style="margin-bottom: 10px;">ยกป้ายสู้ราคา</h4>
+                    <p class="text-secondary">เมื่อถึงคิวรถที่ชอบ<br>ยกป้ายเสนอราคาแข่งกัน</p>
+                </div>
+                <div>
+                    <div class="step-circle">4</div>
+                    <h4 style="margin-bottom: 10px;">ชำระเงินและรับรถ</h4>
+                    <p class="text-secondary">ชนะประมูล ชำระเงินส่วนที่เหลือ<br>และรับรถกลับบ้านได้เลย</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <?php if (count($auction_maps) > 0): ?>
+    <!-- Auction Map Section -->
+    <section class="section auction-map-section" id="auction-map-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>แผนที่งานประมูล</h2>
+                <p>เลือกดูตำแหน่งงานประมูลแต่ละสาขา และกดเปิดแผนที่เพื่อนำทางก่อนเดินทาง</p>
+            </div>
+
+            <div class="auction-map-stack">
+                <?php foreach ($auction_maps as $map):
+                    $map_embed_src = auction_map_embed_src($map['map_embed_url']);
+                    $map_link = !empty($map['map_link']) ? $map['map_link'] : $map_embed_src;
+                    ?>
+                    <div class="auction-map-grid">
+                        <div class="auction-map-frame">
+                            <?php if (!empty($map_embed_src)): ?>
+                                <iframe src="<?php echo htmlspecialchars($map_embed_src); ?>" loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade"
+                                    title="<?php echo htmlspecialchars($map['title']); ?>"></iframe>
+                            <?php else: ?>
+                                <div class="auction-map-placeholder">
+                                    <div>
+                                        <i class="fa-solid fa-map-location-dot" style="font-size: 2.4rem; color: var(--primary-blue); margin-bottom: 14px;"></i>
+                                        <div>ยังไม่ได้เพิ่มแผนที่แบบฝัง<br>สามารถกดเปิดแผนที่จากลิงก์ด้านขวาได้</div>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+
+                        <div class="auction-map-info">
+                            <span class="eyebrow"><i class="fa-solid fa-location-dot"></i> แผนที่งานประมูล</span>
+                            <h2><?php echo htmlspecialchars($map['title']); ?></h2>
+                            <?php if (!empty($map['venue_name'])): ?>
+                                <p><strong><?php echo htmlspecialchars($map['venue_name']); ?></strong></p>
+                            <?php endif; ?>
+                            <?php if (!empty($map['address'])): ?>
+                                <div class="auction-map-address">
+                                    <i class="fa-solid fa-map-pin"></i>
+                                    <div><?php echo nl2br(htmlspecialchars($map['address'])); ?></div>
+                                </div>
+                            <?php endif; ?>
+                            <?php if (!empty($map['contact_note'])): ?>
+                                <p><?php echo nl2br(htmlspecialchars($map['contact_note'])); ?></p>
+                            <?php else: ?>
+                                <p>ตรวจสอบตำแหน่งงานประมูลก่อนเดินทาง และแนะนำให้มาถึงก่อนเวลาเริ่มประมูลเพื่อเตรียมเอกสารและลงทะเบียน</p>
+                            <?php endif; ?>
+
+                            <div class="auction-map-actions">
+                                <?php if (!empty($map_link)): ?>
+                                    <a href="<?php echo htmlspecialchars($map_link); ?>" target="_blank" rel="noopener">
+                                        <i class="fa-solid fa-diamond-turn-right"></i> เปิดแผนที่นำทาง
+                                    </a>
+                                <?php endif; ?>
+                                <a href="#auction-calendar-section" class="is-secondary">
+                                    <i class="fa-solid fa-calendar-days"></i> ดูรอบประมูล
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+    <?php endif; ?>
+
     <!-- Schedule Section -->
     <section class="section auction-legacy-schedule" style="background-color: #f8f9fa;">
         <div class="container">
@@ -1258,71 +1470,6 @@ try {
                         <p style="color: #888;">ยังไม่มีตารางการประมูลในขณะนี้</p>
                     </div>
                 <?php endif; ?>
-            </div>
-        </div>
-    </section>
-
-    <!-- Hightlight Cars -->
-    <section class="section" id="featured-auction-cars">
-        <div class="container">
-            <div class="section-title">
-                <h2>รถเด่นประจำรอบ</h2>
-                <p>รถสวยคัดพิเศษ สภาพพร้อมใช้งาน</p>
-            </div>
-
-            <div class="car-grid">
-                <?php if (count($highlight_cars) > 0): ?>
-                    <?php foreach ($highlight_cars as $car): ?>
-                        <div class="car-card">
-                            <div class="car-img">
-                                <?php if (!empty($car['image_path'])): ?>
-                                    <img src="<?php echo htmlspecialchars($car['image_path']); ?>"
-                                        alt="<?php echo htmlspecialchars($car['title']); ?>"
-                                        style="width: 100%; height: 100%; object-fit: cover;">
-                                <?php else: ?>
-                                    <i class="fa-solid fa-car-side"></i>
-                                <?php endif; ?>
-                                <?php if (!empty($car['queue_number'])): ?>
-                                    <span
-                                        style="position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.7); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;">
-                                        คันที่: <?php echo htmlspecialchars($car['queue_number']); ?>
-                                    </span>
-                                <?php endif; ?>
-                            </div>
-                            <div class="car-info">
-                                <h3 class="car-title"><?php echo htmlspecialchars($car['title']); ?></h3>
-                                <div class="car-details">
-                                    <span><i class="fa-solid fa-gauge"></i>
-                                        <?php echo htmlspecialchars($car['mileage']); ?></span>
-                                    <span><i class="fa-solid fa-gear"></i>
-                                        <?php echo htmlspecialchars($car['transmission']); ?></span>
-                                </div>
-                                <div style="display: flex; justify-content: space-between; align-items: end;">
-                                    <div>
-                                        <div style="font-size: 0.8rem; color: #888;">ราคาเปิดประมูล</div>
-                                        <?php if (!empty($car['no_starting_price']) && $car['no_starting_price'] == 1): ?>
-                                            <div class="car-price" style="color: #e74c3c;">ไม่มีราคาเริ่มต้น</div>
-                                        <?php else: ?>
-                                            <div class="car-price"><?php echo htmlspecialchars($car['price']); ?></div>
-                                        <?php endif; ?>
-                                    </div>
-                                    <a href="auction_detail.php?id=<?php echo $car['id']; ?>" class="btn btn-accent"
-                                        style="padding: 5px 15px; font-size: 0.9rem;">ดูรูป</a>
-                                </div>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <div
-                        style="grid-column: 1/-1; text-align: center; padding: 40px; background: white; border-radius: 10px;">
-                        <p style="color: #888;">ยังไม่มีรถแนะนำในขณะนี้</p>
-                    </div>
-                <?php endif; ?>
-            </div>
-
-            <div style="text-align: center; margin-top: 40px;">
-                <a href="auction_list.php" class="btn btn-primary btn-outline">ดูรายการรถทั้งหมด <i
-                        class="fa-solid fa-arrow-right"></i></a>
             </div>
         </div>
     </section>
@@ -1504,54 +1651,6 @@ try {
         renderCalendar();
     });
     </script>
-
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var featuredTitle = document.querySelector('#featured-auction-cars .section-title h2');
-        var featuredSubtitle = document.querySelector('#featured-auction-cars .section-title p');
-
-        if (featuredTitle) {
-            featuredTitle.textContent = 'รถสวยคัดพิเศษ สภาพพร้อมใช้งาน';
-        }
-
-        if (featuredSubtitle) {
-            featuredSubtitle.textContent = 'คัดจากรายการรถประมูลที่น่าสนใจ พร้อมดูรายละเอียดก่อนเข้าร่วมประมูล';
-        }
-    });
-    </script>
-
-    <!-- How to -->
-    <section class="section" style="background-color: #f0f4f8;">
-        <div class="container">
-            <div class="section-title">
-                <h2>ขั้นตอนการประมูล</h2>
-                <p>ง่ายๆ ใครก็ประมูลได้</p>
-            </div>
-
-            <div class="auction-steps-grid">
-                <div>
-                    <div class="step-circle">1</div>
-                    <h4 style="margin-bottom: 10px;">ลงทะเบียน</h4>
-                    <p class="text-secondary">นำบัตรประชาชนมาลงทะเบียน<br>และวางเงินมัดจำป้าย</p>
-                </div>
-                <div>
-                    <div class="step-circle">2</div>
-                    <h4 style="margin-bottom: 10px;">ตรวจดูสภาพรถ</h4>
-                    <p class="text-secondary">เดินชมรถที่ลานประมูล<br>สตาร์ทเครื่องยนต์ ตรวจสอบสภาพ</p>
-                </div>
-                <div>
-                    <div class="step-circle">3</div>
-                    <h4 style="margin-bottom: 10px;">ยกป้ายสู้ราคา</h4>
-                    <p class="text-secondary">เมื่อถึงคิวรถที่ชอบ<br>ยกป้ายเสนอราคาแข่งกัน</p>
-                </div>
-                <div>
-                    <div class="step-circle">4</div>
-                    <h4 style="margin-bottom: 10px;">ชำระเงินและรับรถ</h4>
-                    <p class="text-secondary">ชนะประมูล ชำระเงินส่วนที่เหลือ<br>และรับรถกลับบ้านได้เลย</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Footer -->
     <footer id="footer">

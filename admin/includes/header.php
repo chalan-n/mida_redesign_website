@@ -29,6 +29,7 @@ $menuStructure = [
         ['module' => 'auction_schedules', 'page' => 'auction_brochures.php', 'form' => 'auction_brochure_form.php', 'icon' => 'fa-images', 'label' => 'โบรชัวร์ประมูล'],
         ['module' => 'auction_schedules', 'page' => 'auction_round_manager.php', 'icon' => 'fa-car-side', 'label' => 'รถเข้ารอบประมูล'],
         ['module' => 'auction_schedules', 'page' => 'auction_featured.php', 'icon' => 'fa-star', 'label' => 'รถเด่นประจำรอบ'],
+        ['module' => 'auction_schedules', 'page' => 'auction_maps.php', 'form' => 'auction_map_form.php', 'icon' => 'fa-map-location-dot', 'label' => 'แผนที่งานประมูล'],
         ['module' => 'used_cars', 'page' => 'used_cars.php', 'form' => 'used_car_form.php', 'icon' => 'fa-car-rear', 'label' => 'รถสวยพร้อมขาย'],
         ['module' => 'properties', 'page' => 'properties.php', 'form' => 'property_form.php', 'icon' => 'fa-house-chimney', 'label' => 'บ้านคอนโดที่ดิน'],
         ['module' => 'property_leads', 'page' => 'property_leads.php', 'icon' => 'fa-address-book', 'label' => 'ผู้สนใจบ้านคอนโดที่ดิน'],
