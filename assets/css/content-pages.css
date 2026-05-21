@@ -177,6 +177,11 @@ body.service-page {
 }
 
 @media (max-width: 768px) {
+    .content-page .section,
+    .service-page .section {
+        padding: 56px 0 !important;
+    }
+
     .content-page .page-header,
     .service-page .page-header,
     .service-page .service-hero {
@@ -194,6 +199,8 @@ body.service-page {
     .service-page .feature-box,
     .service-page .contact-box {
         border-radius: 20px !important;
+        padding-left: 22px !important;
+        padding-right: 22px !important;
     }
 
     .service-page .service-img {

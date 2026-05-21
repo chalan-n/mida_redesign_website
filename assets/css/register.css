@@ -218,6 +218,34 @@ body.register-page {
     box-shadow: 0 16px 34px rgba(255, 199, 44, 0.34) !important;
 }
 
+.register-page .register-trust-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 14px;
+    padding: 10px;
+    border: 1px solid rgba(23, 69, 143, 0.08);
+    border-radius: 18px;
+    background: #f8fbff;
+}
+
+.register-page .register-trust-list span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    color: #38506b;
+    font-size: 0.78rem;
+    font-weight: 800;
+    line-height: 1.35;
+    text-align: center;
+}
+
+.register-page .register-trust-list i {
+    color: var(--accent-gold);
+    font-size: 0.9rem;
+}
+
 @media (max-width: 768px) {
     .register-page .form-row {
         grid-template-columns: 1fr;
@@ -249,5 +277,15 @@ body.register-page {
     .register-page .radio-label i {
         margin-bottom: 6px;
         font-size: 1.15rem;
+    }
+
+    .register-page .register-trust-list {
+        grid-template-columns: 1fr;
+        padding: 10px 12px;
+    }
+
+    .register-page .register-trust-list span {
+        justify-content: flex-start;
+        text-align: left;
     }
 }

@@ -352,11 +352,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <button type="submit" class="btn btn-primary" id="submitBtn"
                     style="width: 100%; padding: 15px; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(28, 69, 135, 0.3);">
-                    ส่งข้อมูลสมัครสินเชื่อ
+                    ส่งข้อมูล
                 </button>
-                <p style="text-align: center; margin-top: 15px; font-size: 0.9rem; color: #888;">
-                    * เจ้าหน้าที่สินเชื่อจะติดต่อกลับภายใน 1 วันทำการ
-                </p>
+                <div class="register-trust-list" aria-label="ความมั่นใจก่อนส่งข้อมูล">
+                    <span><i class="fa-solid fa-phone-volume"></i> เจ้าหน้าที่จะติดต่อกลับภายใน 1 วันทำการ</span>
+                    <span><i class="fa-solid fa-lock"></i> ข้อมูลเป็นความลับ</span>
+                    <span><i class="fa-solid fa-shield-halved"></i> ไม่มีผลต่อเครดิตทันที</span>
+                </div>
             </form>
         </div>
     </div>

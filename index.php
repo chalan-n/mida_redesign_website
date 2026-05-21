@@ -153,6 +153,7 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                 <div class="hero-campaign-copy">
                     <p class="hero-kicker">MIDA LEASING</p>
                     <h1 class="hero-title">สินเชื่อรถ ใช้เงินไว<br>ให้ไมด้าช่วยดูแล</h1>
+                    <p class="hero-subtitle-text">อยากปรึกษาเรื่องสินเชื่อ เริ่มคุยกับไมด้าได้ง่าย ๆ จะสมัครออนไลน์หรือแวะสาขาใกล้บ้านก็สะดวก</p>
                 </div>
 
                 <div class="slider-container campaign-slider hero-slider">
@@ -292,6 +293,12 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                         <br>เรียบร้อยแล้ว
                     </p>
 
+                    <div class="hero-form-trust" aria-label="ความมั่นใจก่อนส่งข้อมูล">
+                        <span><i class="fa-solid fa-lock"></i> ข้อมูลเป็นความลับ</span>
+                        <span><i class="fa-solid fa-phone-volume"></i> เจ้าหน้าที่ติดต่อกลับ</span>
+                        <span><i class="fa-solid fa-shield-halved"></i> ไม่มีผลต่อเครดิตทันที</span>
+                    </div>
+
                     <button type="submit" class="btn btn-accent hero-submit-btn">ส่งข้อมูล</button>
 
                     <div class="hero-form-links">
@@ -306,7 +313,7 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
     <nav class="mobile-quick-cta" aria-label="ทางลัดสำหรับมือถือ">
         <a href="register_hire_purchase.php" class="mobile-quick-link mobile-quick-link-primary">
             <i class="fa-solid fa-file-signature" aria-hidden="true"></i>
-            <span>สมัคร</span>
+            <span>สมัครสินเชื่อ</span>
         </a>
         <a href="<?php echo htmlspecialchars($settings['site_line']); ?>" target="_blank" class="mobile-quick-link">
             <i class="fa-brands fa-line" aria-hidden="true"></i>
@@ -382,7 +389,7 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                     <p class="feature-description">
                         คุยกับเจ้าหน้าที่เพื่อเลือกบริการที่เหมาะกับคุณ หรือสอบถามรายละเอียดก่อนสมัคร
                     </p>
-                    <a href="contact_us.php" class="feature-link">ติดต่อเจ้าหน้าที่ <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="contact_us.php" class="feature-link">คุยกับเจ้าหน้าที่ <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
             </div>
         </div>
@@ -436,7 +443,7 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                         </ul>
                         <div class="property-actions">
                             <a href="properties.php" class="btn btn-outline-white property-primary-link">ดูรายการทรัพย์</a>
-                            <a href="contact_us.php" class="property-secondary-link">ติดต่อเจ้าหน้าที่</a>
+                        <a href="contact_us.php" class="property-secondary-link">คุยกับเจ้าหน้าที่</a>
                         </div>
                     </div>
                 </div>
@@ -723,7 +730,7 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                         </a>
                         <a href="register_hire_purchase.php" class="cta-btn cta-btn-form">
                             <i class="fa-solid fa-file-signature"></i>
-                            <span>ฝากข้อมูลสมัครสินเชื่อ</span>
+                            <span>สมัครสินเชื่อ</span>
                         </a>
                     </div>
 

@@ -39,7 +39,7 @@ $nav_logo_src = !empty($settings['site_logo']) ? $settings['site_logo'] : 'img/m
             <li><a href="properties.php" class="nav-link <?php echo $active_page == 'properties' ? 'active' : ''; ?>">บ้าน คอนโด ที่ดิน</a></li>
             <li><a href="auction.php" class="nav-link <?php echo $active_page == 'auction' ? 'active' : ''; ?>">ประมูลรถยนต์</a></li>
             <li><a href="contact_branches.php" class="nav-link <?php echo $active_page == 'branches' ? 'active' : ''; ?>">ค้นหาสาขา</a></li>
-            <li><a href="contact_us.php" class="btn btn-primary" style="padding: 8px 20px; font-size: 0.9rem;">ติดต่อเรา</a></li>
+            <li><a href="contact_us.php" class="btn btn-primary" style="padding: 8px 20px; font-size: 0.9rem;">คุยกับเจ้าหน้าที่</a></li>
         </ul>
 
         <button type="button"
