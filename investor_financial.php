@@ -7,16 +7,16 @@ $db = $database->getConnection();
 @include_once 'track_visitor.php';
 
 // Fetch Settings
-$settings = [];
+$settings = array();
 try {
     $stmt_settings = $db->query("SELECT * FROM settings WHERE id = 1");
     $settings = $stmt_settings->fetch();
 } catch (PDOException $e) {
 }
 
-$one_reports = [];
-$reports_56_2 = [];
-$financial_statements = [];
+$one_reports = array();
+$reports_56_2 = array();
+$financial_statements = array();
 
 try {
     $stmt = $db->query("SELECT * FROM financial_reports ORDER BY id DESC");
@@ -37,6 +37,38 @@ try {
 } catch (PDOException $e) {
     // Handle error
 }
+
+function renderFinancialReportList($reports, $emptyText, $iconClass, $toneClass)
+{
+    if (count($reports) > 0) {
+        foreach ($reports as $report) {
+            ?>
+            <article class="financial-doc-item">
+                <div class="financial-doc-main">
+                    <span class="financial-doc-icon <?php echo $toneClass; ?>">
+                        <i class="<?php echo $iconClass; ?>"></i>
+                    </span>
+                    <div>
+                        <h3><?php echo htmlspecialchars($report['title']); ?></h3>
+                        <p>เอกสารประกอบข้อมูลทางการเงินของบริษัท</p>
+                    </div>
+                </div>
+                <a href="<?php echo htmlspecialchars($report['file_path']); ?>" target="_blank" class="financial-download">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    ดูเอกสาร
+                </a>
+            </article>
+            <?php
+        }
+    } else {
+        ?>
+        <div class="financial-empty">
+            <i class="fa-regular fa-folder-open"></i>
+            <p><?php echo $emptyText; ?></p>
+        </div>
+        <?php
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="th">
@@ -44,8 +76,8 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ข้อมูลทางการเงิน - MIDA LEASING</title>
-    <meta name="description" content="ข้อมูลทางการเงิน งบการเงิน และรายงานประจำปี บริษัท ไมด้าลิสซิ่ง จำกัด (มหาชน)">
+    <title>ข้อมูลทางการเงินและรายงานสำหรับนักลงทุน - MIDA LEASING</title>
+    <meta name="description" content="ข้อมูลทางการเงิน งบการเงิน ONE REPORT และรายงานประจำปีของบริษัท ไมด้าลิสซิ่ง จำกัด (มหาชน)">
 
     <!-- Favicon -->
     <?php if (!empty($settings['site_favicon'])): ?>
@@ -66,185 +98,571 @@ try {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        .page-header {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            color: white;
-            padding: 140px 0 60px;
-            text-align: center;
+        .investor-financial-page {
+            background: #f6f8fb;
+            color: #183153;
         }
 
-        .document-list {
-            background: white;
-            border-radius: 12px;
+        .ir-financial-hero {
+            position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            border: 1px solid #eee;
+            padding: 132px 0 72px;
+            background:
+                radial-gradient(circle at 16% 20%, rgba(255, 199, 50, 0.24), transparent 28%),
+                linear-gradient(108deg, #f9fbff 0%, #eef5ff 62%, #1f5fb8 62%, #17488f 100%);
         }
 
-        .document-item {
+        .ir-financial-hero::after {
+            content: "";
+            position: absolute;
+            inset: auto -8% -42% 44%;
+            height: 58%;
+            background: rgba(255, 255, 255, 0.12);
+            transform: skewX(-12deg);
+            pointer-events: none;
+        }
+
+        .ir-financial-grid {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: minmax(0, 0.92fr) minmax(360px, 0.78fr);
+            gap: 42px;
+            align-items: center;
+        }
+
+        .ir-financial-grid > div:first-child {
+            max-width: 560px;
+        }
+
+        .ir-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+            color: var(--primary-blue);
+            font-size: 0.88rem;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        .ir-kicker::before {
+            content: "";
+            width: 34px;
+            height: 3px;
+            border-radius: 999px;
+            background: var(--accent-gold);
+        }
+
+        .ir-financial-hero h1 {
+            max-width: 560px;
+            margin: 0 0 18px;
+            color: var(--primary-blue);
+            font-size: clamp(2.25rem, 5vw, 4.4rem);
+            line-height: 0.98;
+            letter-spacing: -0.05em;
+        }
+
+        .ir-financial-hero p {
+            max-width: 520px;
+            margin: 0;
+            color: #56677d;
+            font-size: 1.08rem;
+            line-height: 1.8;
+        }
+
+        .ir-hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 30px;
+        }
+
+        .ir-primary-btn,
+        .ir-secondary-btn,
+        .financial-download {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            min-height: 46px;
+            border-radius: 999px;
+            font-weight: 800;
+            text-decoration: none;
+            transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+        }
+
+        .ir-primary-btn {
+            padding: 0 24px;
+            background: linear-gradient(135deg, #ffc830, #ffd966);
+            color: #0f356d;
+            box-shadow: 0 14px 30px rgba(255, 199, 50, 0.28);
+        }
+
+        .ir-secondary-btn {
+            padding: 0 22px;
+            background: #fff;
+            color: var(--primary-blue);
+            border: 1px solid rgba(24, 49, 83, 0.12);
+            box-shadow: 0 12px 26px rgba(21, 63, 117, 0.08);
+        }
+
+        .ir-primary-btn:hover,
+        .ir-secondary-btn:hover,
+        .financial-download:hover {
+            transform: translateY(-2px);
+        }
+
+        .ir-financial-panel {
+            position: relative;
+            padding: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.45);
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 28px 70px rgba(16, 48, 95, 0.24);
+            backdrop-filter: blur(14px);
+        }
+
+        .ir-financial-panel h2 {
+            margin: 0 0 18px;
+            color: var(--primary-blue);
+            font-size: 1.45rem;
+        }
+
+        .ir-panel-list {
+            display: grid;
+            gap: 14px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .ir-panel-list li {
+            display: grid;
+            grid-template-columns: 42px 1fr;
+            gap: 14px;
+            align-items: start;
+            color: #253b58;
+            line-height: 1.55;
+        }
+
+        .ir-panel-list i {
+            display: inline-flex;
+            width: 42px;
+            height: 42px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            background: #fff4cf;
+            color: #b98600;
+        }
+
+        .ir-financial-main {
+            padding: 64px 0 78px;
+            background:
+                linear-gradient(180deg, #f6f8fb 0%, #fff 52%, #f8fbff 100%);
+        }
+
+        .financial-intro {
+            display: grid;
+            grid-template-columns: minmax(0, 0.95fr) minmax(320px, 1.05fr);
+            gap: 34px;
+            align-items: end;
+            margin-bottom: 36px;
+        }
+
+        .section-eyebrow {
+            display: inline-flex;
+            margin-bottom: 10px;
+            color: #bc8600;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .financial-intro h2 {
+            margin: 0 0 12px;
+            color: var(--primary-blue);
+            font-size: clamp(1.8rem, 3vw, 2.7rem);
+            line-height: 1.15;
+            letter-spacing: -0.03em;
+        }
+
+        .financial-intro p {
+            margin: 0;
+            color: #617187;
+            line-height: 1.75;
+        }
+
+        .financial-summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+
+        .financial-summary {
+            padding: 20px;
+            border: 1px solid #dfe8f3;
+            border-radius: 22px;
+            background: #fff;
+            box-shadow: 0 16px 36px rgba(21, 63, 117, 0.07);
+        }
+
+        .financial-summary strong {
+            display: block;
+            color: var(--primary-blue);
+            font-size: 2rem;
+            line-height: 1;
+        }
+
+        .financial-summary span {
+            display: block;
+            margin-top: 8px;
+            color: #5f6f83;
+            font-weight: 700;
+        }
+
+        .financial-doc-section {
+            margin-top: 24px;
+            border: 1px solid #dfe8f3;
+            border-radius: 28px;
+            background: rgba(255, 255, 255, 0.88);
+            box-shadow: 0 20px 52px rgba(21, 63, 117, 0.08);
+            overflow: hidden;
+        }
+
+        .financial-doc-heading {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 20px 30px;
-            border-bottom: 1px solid #eee;
-            transition: background-color 0.2s;
+            gap: 20px;
+            padding: 24px 28px;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f6ff 100%);
+            border-bottom: 1px solid #dfe8f3;
         }
 
-        .document-item:last-child {
-            border-bottom: none;
-        }
-
-        .document-item:hover {
-            background-color: #f8f9fa;
-        }
-
-        .doc-icon {
-            font-size: 2rem;
-            color: #ff5252;
-            /* PDF color */
-            margin-right: 20px;
-        }
-
-        .doc-info {
-            flex-grow: 1;
-        }
-
-        .doc-title {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: #333;
-            margin-bottom: 5px;
-        }
-
-        .doc-date {
-            font-size: 0.9rem;
-            color: #888;
-        }
-
-        .btn-download {
-            background-color: #f0f7ff;
+        .financial-doc-heading h2 {
+            margin: 0;
             color: var(--primary-blue);
-            padding: 8px 15px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: all 0.2s;
+            font-size: 1.35rem;
         }
 
-        .btn-download:hover {
-            background-color: var(--primary-blue);
-            color: white;
+        .financial-doc-heading p {
+            margin: 6px 0 0;
+            color: #68788e;
+        }
+
+        .financial-doc-count {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 80px;
+            padding: 10px 16px;
+            border-radius: 999px;
+            background: #fff4cf;
+            color: #8a6400;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .financial-doc-list {
+            display: grid;
+        }
+
+        .financial-doc-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 22px;
+            padding: 22px 28px;
+            border-bottom: 1px solid #edf2f7;
+            transition: background 0.18s ease, transform 0.18s ease;
+        }
+
+        .financial-doc-item:last-child {
+            border-bottom: 0;
+        }
+
+        .financial-doc-item:hover {
+            background: #fbfdff;
+            transform: translateX(4px);
+        }
+
+        .financial-doc-main {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            min-width: 0;
+        }
+
+        .financial-doc-icon {
+            display: inline-flex;
+            width: 52px;
+            height: 52px;
+            flex: 0 0 52px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 18px;
+            font-size: 1.25rem;
+        }
+
+        .tone-green {
+            background: #e9f8ef;
+            color: #119047;
+        }
+
+        .tone-red {
+            background: #fff0ed;
+            color: #d94b35;
+        }
+
+        .tone-blue {
+            background: #edf5ff;
+            color: var(--primary-blue);
+        }
+
+        .financial-doc-main h3 {
+            margin: 0;
+            color: #183153;
+            font-size: 1.05rem;
+            line-height: 1.45;
+        }
+
+        .financial-doc-main p {
+            margin: 4px 0 0;
+            color: #718096;
+            font-size: 0.92rem;
+        }
+
+        .financial-download {
+            flex: 0 0 auto;
+            min-width: 128px;
+            padding: 0 18px;
+            background: #f3f7ff;
+            color: var(--primary-blue);
+        }
+
+        .financial-download:hover {
+            background: var(--primary-blue);
+            color: #fff;
+            box-shadow: 0 14px 28px rgba(25, 76, 150, 0.18);
+        }
+
+        .financial-empty {
+            display: grid;
+            place-items: center;
+            gap: 10px;
+            padding: 34px 20px;
+            color: #718096;
+            text-align: center;
+        }
+
+        .financial-empty i {
+            color: #a9b7c8;
+            font-size: 2rem;
+        }
+
+        .financial-cta {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 24px;
+            align-items: center;
+            margin-top: 36px;
+            padding: 28px;
+            border-radius: 28px;
+            background: linear-gradient(135deg, #183f7c, #2668bf);
+            color: #fff;
+            box-shadow: 0 22px 48px rgba(22, 73, 146, 0.2);
+        }
+
+        .financial-cta h2 {
+            margin: 0 0 8px;
+            color: #fff;
+            font-size: 1.55rem;
+        }
+
+        .financial-cta p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.82);
+            line-height: 1.65;
+        }
+
+        @media (max-width: 992px) {
+            .ir-financial-hero {
+                padding: 110px 0 56px;
+                background:
+                    radial-gradient(circle at 18% 12%, rgba(255, 199, 50, 0.26), transparent 34%),
+                    linear-gradient(160deg, #f9fbff 0%, #eef5ff 62%, #dfefff 100%);
+            }
+
+            .ir-financial-grid,
+            .financial-intro,
+            .financial-cta {
+                grid-template-columns: 1fr;
+            }
+
+            .ir-financial-panel {
+                box-shadow: 0 20px 46px rgba(16, 48, 95, 0.14);
+            }
         }
 
         @media (max-width: 768px) {
-            .document-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
+            .ir-financial-hero {
+                padding: 96px 0 42px;
             }
 
-            .btn-download {
+            .ir-financial-hero h1 {
+                font-size: 2.55rem;
+            }
+
+            .financial-summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .financial-doc-heading,
+            .financial-doc-item {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .financial-download {
                 width: 100%;
-                text-align: center;
+            }
+
+            .financial-cta {
+                padding: 24px;
             }
         }
     </style>
 </head>
 
-<body>
+<body class="investor-financial-page">
 
     <!-- Header -->
     <?php include 'includes/nav.php'; ?>
 
     <!-- Page Header -->
-    <div class="page-header">
+    <section class="ir-financial-hero">
         <div class="container">
-            <h1 style="font-size: 2.5rem; margin-bottom: 10px; font-weight: 700; color: var(--accent-gold);">
-                ข้อมูลทางการเงิน</h1>
-            <p style="opacity: 0.8; font-size: 1.1rem;">รายงานงบการเงินและผลการดำเนินงานของบริษัท</p>
+            <div class="ir-financial-grid">
+                <div>
+                    <span class="ir-kicker">MIDA LEASING INVESTOR RELATIONS</span>
+                    <h1>ข้อมูลทางการเงิน</h1>
+                    <p>
+                        ศูนย์รวมข้อมูลทางการเงิน รายงานประจำปี และเอกสารสำคัญของบริษัท สำหรับผู้ถือหุ้น นักลงทุน และผู้สนใจใช้ประกอบการติดตามผลการดำเนินงานอย่างต่อเนื่อง
+                    </p>
+                    <div class="ir-hero-actions">
+                        <a href="#financial-documents" class="ir-primary-btn">
+                            <i class="fa-solid fa-file-arrow-down"></i>
+                            ดูรายงานทางการเงิน
+                        </a>
+                        <a href="investor_business.php" class="ir-secondary-btn">
+                            ข้อมูลธุรกิจ
+                        </a>
+                    </div>
+                </div>
+
+                <aside class="ir-financial-panel">
+                    <h2>ข้อมูลสำหรับนักลงทุน</h2>
+                    <ul class="ir-panel-list">
+                        <li>
+                            <i class="fa-solid fa-chart-line"></i>
+                            <span><strong>งบการเงิน</strong><br>ข้อมูลฐานะการเงินและผลการดำเนินงานตามรอบการรายงาน</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-book-open"></i>
+                            <span><strong>ONE REPORT</strong><br>ภาพรวมธุรกิจ การกำกับดูแลกิจการ และประเด็นสำคัญประจำปี</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-file-shield"></i>
+                            <span><strong>รายงานประจำปี</strong><br>ข้อมูลบริษัท ผลการดำเนินงาน และสาระสำคัญสำหรับผู้ถือหุ้น</span>
+                        </li>
+                    </ul>
+                </aside>
+            </div>
         </div>
-    </div>
+    </section>
 
     <!-- Main Content -->
-    <div class="section" style="padding-top: 60px; background-color: #f8f9fa; min-height: 80vh;">
+    <main id="financial-documents" class="ir-financial-main">
         <div class="container">
-
-            <div style="max-width: 900px; margin: 0 auto;">
-
-                <h2
-                    style="font-size: 1.5rem; margin-bottom: 20px; color: var(--primary-blue); border-left: 4px solid var(--accent-gold); padding-left: 15px;">
-                    งบการเงิน</h2>
-                <div class="document-list" style="margin-bottom: 40px;">
-                    <?php if (count($financial_statements) > 0): ?>
-                        <?php foreach ($financial_statements as $report): ?>
-                            <div class="document-item">
-                                <div style="display: flex; align-items: center;">
-                                    <i class="fa-solid fa-file-lines doc-icon" style="color: #4CAF50;"></i>
-                                    <div class="doc-info">
-                                        <div class="doc-title"><?php echo htmlspecialchars($report['title']); ?></div>
-
-                                    </div>
-                                </div>
-                                <a href="<?php echo htmlspecialchars($report['file_path']); ?>" target="_blank"
-                                    class="btn-download"><i class="fa-solid fa-download"></i> ดาวน์โหลด</a>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <p style="padding: 20px; text-align: center; color: #777;">ไม่พบงบการเงิน</p>
-                    <?php endif; ?>
+            <div class="financial-intro">
+                <div>
+                    <span class="section-eyebrow">Financial Documents</span>
+                    <h2>รายงานและเอกสารทางการเงิน</h2>
+                    <p>
+                        บริษัทเผยแพร่ข้อมูลทางการเงินและรายงานสำคัญ เพื่อสนับสนุนความโปร่งใสและช่วยให้ผู้ลงทุนติดตามพัฒนาการของธุรกิจได้อย่างต่อเนื่อง
+                    </p>
                 </div>
 
-                <h2
-                    style="font-size: 1.5rem; margin-bottom: 20px; color: var(--primary-blue); border-left: 4px solid var(--accent-gold); padding-left: 15px;">
-                    รายการข้อมูลประจำปี ONE REPORT</h2>
-                <div class="document-list" style="margin-bottom: 40px;">
-                    <?php if (count($one_reports) > 0): ?>
-                        <?php foreach ($one_reports as $report): ?>
-                            <div class="document-item">
-                                <div style="display: flex; align-items: center;">
-                                    <i class="fa-solid fa-file-pdf doc-icon"></i>
-                                    <div class="doc-info">
-                                        <div class="doc-title"><?php echo htmlspecialchars($report['title']); ?></div>
-
-                                    </div>
-                                </div>
-                                <a href="<?php echo htmlspecialchars($report['file_path']); ?>" target="_blank"
-                                    class="btn-download"><i class="fa-solid fa-download"></i> ดาวน์โหลด</a>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <p style="padding: 20px; text-align: center; color: #777;">ไม่พบรายงาน</p>
-                    <?php endif; ?>
+                <div class="financial-summary-grid">
+                    <div class="financial-summary">
+                        <strong><?php echo count($financial_statements); ?></strong>
+                        <span>งบการเงิน</span>
+                    </div>
+                    <div class="financial-summary">
+                        <strong><?php echo count($one_reports); ?></strong>
+                        <span>ONE REPORT</span>
+                    </div>
+                    <div class="financial-summary">
+                        <strong><?php echo count($reports_56_2); ?></strong>
+                        <span>รายงานประจำปี</span>
+                    </div>
                 </div>
-
-                <h2
-                    style="font-size: 1.5rem; margin-bottom: 20px; color: var(--primary-blue); border-left: 4px solid var(--accent-gold); padding-left: 15px;">
-                    รายงานประจำปี (แบบ 56-2)</h2>
-                <div class="document-list">
-                    <?php if (count($reports_56_2) > 0): ?>
-                        <?php foreach ($reports_56_2 as $report): ?>
-                            <div class="document-item">
-                                <div style="display: flex; align-items: center;">
-                                    <i class="fa-solid fa-file-contract doc-icon" style="color: #673AB7;"></i>
-                                    <div class="doc-info">
-                                        <div class="doc-title"><?php echo htmlspecialchars($report['title']); ?></div>
-
-                                    </div>
-                                </div>
-                                <a href="<?php echo htmlspecialchars($report['file_path']); ?>" target="_blank"
-                                    class="btn-download"><i class="fa-solid fa-download"></i> ดาวน์โหลด</a>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <p style="padding: 20px; text-align: center; color: #777;">ไม่พบรายงาน</p>
-                    <?php endif; ?>
-                </div>
-
             </div>
 
+            <section class="financial-doc-section">
+                <div class="financial-doc-heading">
+                    <div>
+                        <h2>งบการเงิน</h2>
+                        <p>รายงานฐานะการเงิน ผลการดำเนินงาน และข้อมูลที่เกี่ยวข้องตามรอบระยะเวลาบัญชี</p>
+                    </div>
+                    <span class="financial-doc-count"><?php echo count($financial_statements); ?> รายการ</span>
+                </div>
+                <div class="financial-doc-list">
+                    <?php renderFinancialReportList($financial_statements, 'ไม่พบงบการเงินในขณะนี้', 'fa-solid fa-file-lines', 'tone-green'); ?>
+                </div>
+            </section>
+
+            <section class="financial-doc-section">
+                <div class="financial-doc-heading">
+                    <div>
+                        <h2>ONE REPORT</h2>
+                        <p>รายงานประจำปีแบบบูรณาการ ครอบคลุมธุรกิจ การกำกับดูแลกิจการ และข้อมูลสำคัญของบริษัท</p>
+                    </div>
+                    <span class="financial-doc-count"><?php echo count($one_reports); ?> รายการ</span>
+                </div>
+                <div class="financial-doc-list">
+                    <?php renderFinancialReportList($one_reports, 'ไม่พบ ONE REPORT ในขณะนี้', 'fa-solid fa-file-pdf', 'tone-red'); ?>
+                </div>
+            </section>
+
+            <section class="financial-doc-section">
+                <div class="financial-doc-heading">
+                    <div>
+                        <h2>รายงานประจำปี</h2>
+                        <p>รายงานสรุปข้อมูลบริษัทและผลการดำเนินงาน เพื่อใช้ประกอบการติดตามข้อมูลสำหรับผู้ถือหุ้น</p>
+                    </div>
+                    <span class="financial-doc-count"><?php echo count($reports_56_2); ?> รายการ</span>
+                </div>
+                <div class="financial-doc-list">
+                    <?php renderFinancialReportList($reports_56_2, 'ไม่พบรายงานประจำปีในขณะนี้', 'fa-solid fa-file-contract', 'tone-blue'); ?>
+                </div>
+            </section>
+
+            <section class="financial-cta">
+                <div>
+                    <h2>ศึกษาข้อมูลบริษัทเพิ่มเติม</h2>
+                    <p>ผู้ลงทุนสามารถศึกษาภาพรวมธุรกิจและเอกสารเผยแพร่อื่น ๆ เพื่อประกอบความเข้าใจเกี่ยวกับทิศทางและการดำเนินงานของไมด้าลิสซิ่ง</p>
+                </div>
+                <div class="ir-hero-actions" style="margin-top: 0;">
+                    <a href="investor_business.php" class="ir-primary-btn">ข้อมูลธุรกิจ</a>
+                    <a href="investor_publications.php" class="ir-secondary-btn">เอกสารเผยแพร่</a>
+                </div>
+            </section>
         </div>
-    </div>
+    </main>
 
 
     <!-- Footer -->

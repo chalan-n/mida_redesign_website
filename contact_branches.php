@@ -324,7 +324,7 @@ foreach ($branches as $branch) {
                                 <i class="fa-solid fa-magnifying-glass" style="color: #C5A059; margin-right: 8px;"></i>
                                 ค้นหาสาขา
                             </label>
-                            <input type="text" name="q" placeholder="พิมพ์ชื่อสาขา, จังหวัด หรือเขต..."
+                            <input type="text" name="q" placeholder="พิมพ์ชื่อสาขา, จังหวัด หรืออำเภอ"
                                 value="<?php echo htmlspecialchars($search_q); ?>"
                                 style="width: 100%; padding: 14px 18px; border: 2px solid #e8e8e8; border-radius: 10px; font-size: 1rem; transition: border 0.2s;"
                                 onfocus="this.style.borderColor='#002D62'" onblur="this.style.borderColor='#e8e8e8'">

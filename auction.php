@@ -14,6 +14,30 @@ try {
 } catch (PDOException $e) {
 }
 
+// Fetch active auction brochure. Fallback keeps the page usable before admin adds data.
+$auction_brochure = array(
+    'title' => 'ดูรอบประมูลและเตรียมเข้าร่วมได้ในที่เดียว',
+    'round_label' => 'รอบประมูลล่าสุด',
+    'description' => 'ไมด้าลิสซิ่งรวบรวมข้อมูลรอบประมูล รถที่เปิดให้เข้าร่วม และช่องทางลงทะเบียน เพื่อให้ลูกค้าวางแผนดูรถและเข้าร่วมประมูลได้สะดวกขึ้น',
+    'image_path' => 'assets/img/banners/auction-brochure-nakhon-pathom-25690520.jpg',
+    'registration_link' => 'https://auction.mida-leasing.com',
+    'line_link' => !empty($settings['site_line']) ? $settings['site_line'] : 'https://line.me/R/ti/p/@midaleasing'
+);
+try {
+    $stmt_brochure = $db->query("SELECT * FROM auction_brochures WHERE is_active = 1 ORDER BY sort_order ASC, id DESC LIMIT 1");
+    $brochure_row = $stmt_brochure->fetch(PDO::FETCH_ASSOC);
+    if ($brochure_row && !empty($brochure_row['image_path'])) {
+        $auction_brochure = array_merge($auction_brochure, $brochure_row);
+        if (empty($auction_brochure['registration_link'])) {
+            $auction_brochure['registration_link'] = 'https://auction.mida-leasing.com';
+        }
+        if (empty($auction_brochure['line_link'])) {
+            $auction_brochure['line_link'] = !empty($settings['site_line']) ? $settings['site_line'] : 'https://line.me/R/ti/p/@midaleasing';
+        }
+    }
+} catch (PDOException $e) {
+}
+
 // Fetch Auction Schedules with actual car count
 $schedules = array();
 try {
@@ -238,7 +262,7 @@ try {
                 radial-gradient(circle at 86% 18%, rgba(255, 255, 255, 0.12), transparent 28%),
                 linear-gradient(135deg, #0f356f 0%, #174b99 46%, #2b68c8 100%);
             color: white;
-            padding: 140px 0 50px;
+            padding: 112px 0 34px;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -257,6 +281,245 @@ try {
             background-size: 48px 48px;
             opacity: 0.22;
             pointer-events: none;
+        }
+
+        .auction-hero .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .auction-hero-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: #ffe08a;
+            font-size: 0.92rem;
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .auction-hero-kicker::before,
+        .auction-hero-kicker::after {
+            content: "";
+            width: 28px;
+            height: 3px;
+            border-radius: 999px;
+            background: #fec435;
+        }
+
+        .auction-hero h1 {
+            max-width: 820px;
+            margin: 0 auto 10px;
+            color: #fec435;
+            font-size: clamp(2rem, 4vw, 3.25rem);
+            font-weight: 800;
+            line-height: 1.08;
+            letter-spacing: -0.04em;
+        }
+
+        .auction-hero p {
+            max-width: 760px;
+            margin: 0 auto;
+            color: #d9e6f7;
+            font-size: 1.05rem;
+            line-height: 1.65;
+        }
+
+        .auction-hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .auction-brochure-section {
+            background:
+                radial-gradient(circle at 14% 8%, rgba(255, 199, 44, 0.18), transparent 30%),
+                linear-gradient(180deg, #ffffff 0%, #f3f8ff 100%);
+        }
+
+        .auction-brochure-grid {
+            display: grid;
+            grid-template-columns: minmax(280px, 0.88fr) minmax(0, 1.12fr);
+            gap: 34px;
+            align-items: center;
+        }
+
+        .auction-brochure-frame {
+            position: relative;
+            padding: 12px;
+            border-radius: 30px;
+            background: #ffffff;
+            border: 1px solid rgba(23, 69, 143, 0.12);
+            box-shadow: 0 28px 70px rgba(18, 72, 148, 0.16);
+        }
+
+        .auction-brochure-frame::after {
+            content: "";
+            position: absolute;
+            inset: 22px -14px -14px 22px;
+            border-radius: 28px;
+            background: linear-gradient(135deg, rgba(23, 69, 143, 0.1), rgba(255, 199, 44, 0.22));
+            z-index: 0;
+        }
+
+        .auction-brochure-frame img {
+            position: relative;
+            z-index: 1;
+            display: block;
+            width: 100%;
+            max-height: 640px;
+            object-fit: contain;
+            border-radius: 22px;
+            background: #e8f4ff;
+        }
+
+        .auction-brochure-copy {
+            position: relative;
+            z-index: 1;
+        }
+
+        .auction-brochure-copy .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            color: #b98500;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .auction-brochure-copy h2 {
+            margin: 0 0 14px;
+            color: var(--primary-blue);
+            font-size: clamp(1.9rem, 3vw, 3rem);
+            line-height: 1.12;
+            letter-spacing: -0.03em;
+        }
+
+        .auction-brochure-copy > p {
+            max-width: 680px;
+            margin: 0 0 22px;
+            color: #536274;
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        .auction-benefit-list {
+            display: grid;
+            gap: 12px;
+            margin: 0 0 26px;
+            padding: 0;
+            list-style: none;
+        }
+
+        .auction-benefit-list li {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            color: #24364d;
+            font-weight: 700;
+            line-height: 1.55;
+        }
+
+        .auction-benefit-list i {
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            flex: 0 0 30px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            background: #fff4cf;
+            color: #b98500;
+        }
+
+        .auction-channel-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .auction-channel-heading {
+            margin: 0 0 14px;
+            color: #0f2d5c;
+            font-size: 1.28rem;
+            font-weight: 900;
+        }
+
+        .auction-channel-card {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            min-height: 190px;
+            padding: 20px;
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid rgba(23, 69, 143, 0.1);
+            box-shadow: 0 16px 36px rgba(18, 72, 148, 0.08);
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .auction-channel-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 22px 44px rgba(18, 72, 148, 0.13);
+        }
+
+        .auction-channel-icon {
+            width: 46px;
+            height: 46px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            background: #edf5ff;
+            color: var(--primary-blue);
+            font-size: 1.25rem;
+        }
+
+        .auction-channel-card h3 {
+            margin: 0;
+            color: #0f2d5c;
+            font-size: 1.08rem;
+        }
+
+        .auction-channel-card p {
+            margin: 0;
+            color: #617187;
+            line-height: 1.6;
+            font-size: 0.94rem;
+        }
+
+        .auction-channel-card a,
+        .auction-hero-actions a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: fit-content;
+            min-height: 42px;
+            margin-top: auto;
+            padding: 0 17px;
+            border-radius: 999px;
+            background: var(--primary-blue);
+            color: #ffffff;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .auction-channel-card a.is-gold,
+        .auction-hero-actions a.is-gold {
+            background: linear-gradient(135deg, var(--accent-gold) 0%, #ffe07a 100%);
+            color: #0f2d5c;
+            box-shadow: 0 10px 22px rgba(255, 199, 44, 0.24);
+        }
+
+        .auction-channel-card a.is-line {
+            background: #00b900;
         }
 
         .schedule-card {
@@ -674,8 +937,17 @@ try {
         }
 
         @media (max-width: 900px) {
+            .auction-brochure-grid,
             .auction-calendar-wrap {
                 grid-template-columns: 1fr;
+            }
+
+            .auction-channel-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .auction-brochure-frame img {
+                max-height: none;
             }
 
             .calendar-day,
@@ -693,20 +965,79 @@ try {
     <?php $active_page = 'auction';
     include 'includes/nav.php'; ?>
 
-    <!-- Hreo Section -->
+    <!-- Hero Section -->
     <section class="auction-hero">
         <div class="container">
-            <h1 style="font-size: 3rem; margin-bottom: 10px; font-weight: 700; color: #fec435;">ประมูลรถยนต์มือสอง
-            </h1>
-            <p style="font-size: 1.2rem; font-weight: 300; max-width: 800px; margin: 0 auto; color: #cbd5e1;">
-                รถสวย สภาพดี ราคาโดนใจ ประมูลง่าย โปร่งใสทุกขั้นตอน <span
-                    style="display: block;">มีรถให้เลือกมากมายทุกประเภท</span>
+            <span class="auction-hero-kicker">MIDA AUCTION</span>
+            <h1>ประมูลรถมือสองไมด้า</h1>
+            <p>
+                เช็กรอบประมูล ดูรายการรถ และเลือกช่องทางเข้าร่วมได้ในที่เดียว
             </p>
+            <div class="auction-hero-actions">
+                <a href="#auction-brochure" class="is-gold"><i class="fa-solid fa-image"></i> ดูโบรชัวร์รอบล่าสุด</a>
+                <a href="#auction-calendar-section"><i class="fa-solid fa-calendar-days"></i> ดูปฏิทินประมูล</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Auction Brochure & Channels -->
+    <section class="section auction-brochure-section" id="auction-brochure">
+        <div class="container">
+            <div class="auction-brochure-grid">
+                <div class="auction-brochure-frame">
+                    <img src="<?php echo htmlspecialchars($auction_brochure['image_path']); ?>"
+                        alt="<?php echo htmlspecialchars($auction_brochure['title']); ?>">
+                </div>
+
+                <div class="auction-brochure-copy">
+                    <span class="eyebrow"><i class="fa-solid fa-bullhorn"></i> <?php echo htmlspecialchars($auction_brochure['round_label']); ?></span>
+                    <h2><?php echo htmlspecialchars($auction_brochure['title']); ?></h2>
+                    <p>
+                        <?php echo htmlspecialchars($auction_brochure['description']); ?>
+                    </p>
+
+                    <ul class="auction-benefit-list">
+                        <li><i class="fa-solid fa-car-side"></i> ดูรถมือสองที่เปิดประมูล พร้อมตรวจสอบรายการรถก่อนตัดสินใจ</li>
+                        <li><i class="fa-solid fa-calendar-check"></i> เช็กวัน เวลา สาขา และรอบประมูลที่สนใจได้ล่วงหน้า</li>
+                        <li><i class="fa-solid fa-handshake"></i> มีเจ้าหน้าที่ให้คำแนะนำช่องทางเข้าร่วมและขั้นตอนประมูล</li>
+                    </ul>
+
+                    <h3 class="auction-channel-heading">ช่องทางเข้าร่วมประมูล</h3>
+                    <div class="auction-channel-grid">
+                        <div class="auction-channel-card">
+                            <span class="auction-channel-icon"><i class="fa-solid fa-user-plus"></i></span>
+                            <h3>ลงทะเบียนออนไลน์</h3>
+                            <p>ลงทะเบียนเข้าร่วมประมูลผ่านระบบของไมด้าได้โดยตรง</p>
+                            <a href="<?php echo htmlspecialchars($auction_brochure['registration_link']); ?>" target="_blank" rel="noopener" class="is-gold">
+                                ลงทะเบียน
+                            </a>
+                        </div>
+
+                        <div class="auction-channel-card">
+                            <span class="auction-channel-icon"><i class="fa-solid fa-list-check"></i></span>
+                            <h3>ดูรายการรถ</h3>
+                            <p>เลือกดูรายการรถของแต่ละรอบก่อนเดินทางไปดูรถหรือเข้าร่วมประมูล</p>
+                            <a href="#auction-calendar-section">
+                                ดูรอบประมูล
+                            </a>
+                        </div>
+
+                        <div class="auction-channel-card">
+                            <span class="auction-channel-icon"><i class="fa-brands fa-line"></i></span>
+                            <h3>สอบถามเจ้าหน้าที่</h3>
+                            <p>ติดต่อเจ้าหน้าที่เพื่อสอบถามรอบประมูล เอกสาร และรายละเอียดเพิ่มเติม</p>
+                            <a href="<?php echo htmlspecialchars($auction_brochure['line_link']); ?>" target="_blank" rel="noopener" class="is-line">
+                                คุยผ่าน LINE
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Auction Calendar Section -->
-    <section class="section" style="background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);">
+    <section class="section" id="auction-calendar-section" style="background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);">
         <div class="container">
             <div class="section-title">
                 <h2>ปฏิทินการประมูล</h2>

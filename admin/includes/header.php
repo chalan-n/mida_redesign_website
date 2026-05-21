@@ -26,6 +26,7 @@ $menuStructure = [
         ['module' => 'loan_applications', 'page' => 'loan_applications.php', 'icon' => 'fa-money-check-dollar', 'label' => 'ผู้สมัครสินเชื่อ'],
         ['module' => 'auction_cars', 'page' => 'auction_cars.php', 'form' => 'auction_car_form.php', 'icon' => 'fa-car', 'label' => 'รถประมูล'],
         ['module' => 'auction_schedules', 'page' => 'auction_schedules.php', 'form' => 'auction_schedule_form.php', 'icon' => 'fa-calendar-days', 'label' => 'ตารางประมูล'],
+        ['module' => 'auction_schedules', 'page' => 'auction_brochures.php', 'form' => 'auction_brochure_form.php', 'icon' => 'fa-images', 'label' => 'โบรชัวร์ประมูล'],
         ['module' => 'auction_schedules', 'page' => 'auction_round_manager.php', 'icon' => 'fa-car-side', 'label' => 'รถเข้ารอบประมูล'],
         ['module' => 'auction_schedules', 'page' => 'auction_featured.php', 'icon' => 'fa-star', 'label' => 'รถเด่นประจำรอบ'],
         ['module' => 'used_cars', 'page' => 'used_cars.php', 'form' => 'used_car_form.php', 'icon' => 'fa-car-rear', 'label' => 'รถสวยพร้อมขาย'],

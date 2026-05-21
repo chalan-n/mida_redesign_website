@@ -7,7 +7,7 @@ $db = $database->getConnection();
 @include_once 'track_visitor.php';
 
 // Fetch Settings
-$settings = [];
+$settings = array();
 try {
     $stmt_settings = $db->query("SELECT * FROM settings WHERE id = 1");
     $settings = $stmt_settings->fetch();
@@ -15,13 +15,13 @@ try {
 }
 
 // Filter Logic
-$where_clauses = ["is_active = 1"];
-$params = [];
+$where_clauses = array("is_active = 1");
+$params = array();
 
 // 1. Filter by Type
-$selected_types = isset($_GET['type']) ? $_GET['type'] : [];
+$selected_types = isset($_GET['type']) ? $_GET['type'] : array();
 if (!empty($selected_types)) {
-    $placeholders = [];
+    $placeholders = array();
     foreach ($selected_types as $idx => $type) {
         $key = ":type_$idx";
         $placeholders[] = $key;
@@ -123,11 +123,198 @@ $locations = $stmt_loc->fetchAll(PDO::FETCH_COLUMN);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        .page-header {
-            background: linear-gradient(135deg, #1c4587 0%, #004a99 100%);
+        .properties-hero {
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 18% 12%, rgba(255, 199, 44, 0.28), transparent 28%),
+                linear-gradient(108deg, #fffaf0 0%, #eef5ff 58%, #1f5fb8 58%, #17488f 100%);
             color: white;
-            padding: 140px 0 60px;
+            padding: 132px 0 70px;
+        }
+
+        .properties-hero::after {
+            content: "";
+            position: absolute;
+            inset: auto -8% -42% 44%;
+            height: 58%;
+            background: rgba(255, 255, 255, 0.12);
+            transform: skewX(-12deg);
+            pointer-events: none;
+        }
+
+        .properties-hero-grid {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: minmax(0, 0.92fr) minmax(360px, 0.78fr);
+            gap: 42px;
+            align-items: center;
+        }
+
+        .properties-hero-copy {
+            max-width: 570px;
+        }
+
+        .properties-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+            color: var(--primary-blue);
+            font-size: 0.88rem;
+            font-weight: 900;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .properties-kicker::before {
+            content: "";
+            width: 34px;
+            height: 3px;
+            border-radius: 999px;
+            background: var(--accent-gold);
+        }
+
+        .properties-hero h1 {
+            max-width: 560px;
+            margin: 0 0 18px;
+            color: var(--primary-blue);
+            font-size: clamp(2.25rem, 5vw, 4.35rem);
+            line-height: 1.02;
+            letter-spacing: -0.05em;
+        }
+
+        .properties-hero p {
+            max-width: 520px;
+            margin: 0;
+            color: #56677d;
+            font-size: 1.08rem;
+            line-height: 1.8;
+        }
+
+        .properties-hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 13px;
+            margin-top: 28px;
+        }
+
+        .properties-hero-actions a,
+        .property-guide-card a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: fit-content;
+            min-height: 44px;
+            padding: 0 18px;
+            border-radius: 999px;
+            background: var(--primary-blue);
+            color: #fff;
+            font-weight: 800;
+            text-decoration: none;
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .properties-hero-actions a:hover,
+        .property-guide-card a:hover {
+            transform: translateY(-2px);
+        }
+
+        .properties-hero-actions .is-gold,
+        .property-guide-card a.is-gold {
+            background: linear-gradient(135deg, var(--accent-gold) 0%, #ffe07a 100%);
+            color: #0f2d5c;
+            box-shadow: 0 12px 26px rgba(255, 199, 44, 0.24);
+        }
+
+        .properties-hero-panel {
+            position: relative;
+            z-index: 1;
+            padding: 30px;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid rgba(255, 255, 255, 0.45);
+            box-shadow: 0 28px 70px rgba(16, 48, 95, 0.24);
+            backdrop-filter: blur(14px);
+        }
+
+        .properties-hero-panel h2 {
+            margin: 0 0 18px;
+            color: var(--primary-blue);
+            font-size: 1.45rem;
+        }
+
+        .property-type-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .property-type-item {
+            padding: 18px 14px;
+            border: 1px solid #dfe8f3;
+            border-radius: 20px;
+            background: #fff;
+            color: #183153;
             text-align: center;
+            font-weight: 800;
+        }
+
+        .property-type-item i {
+            display: block;
+            margin-bottom: 9px;
+            color: var(--primary-blue);
+            font-size: 1.55rem;
+        }
+
+        .property-guide-section {
+            padding: 34px 0 0;
+            background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+        }
+
+        .property-guide-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .property-guide-card {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            min-height: 190px;
+            padding: 22px;
+            border-radius: 24px;
+            background: #ffffff;
+            border: 1px solid rgba(23, 69, 143, 0.1);
+            box-shadow: 0 16px 36px rgba(18, 72, 148, 0.08);
+        }
+
+        .property-guide-card i {
+            width: 46px;
+            height: 46px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            background: #fff4cf;
+            color: #b98600;
+            font-size: 1.25rem;
+        }
+
+        .property-guide-card h3 {
+            margin: 0;
+            color: #0f2d5c;
+            font-size: 1.08rem;
+        }
+
+        .property-guide-card p {
+            margin: 0;
+            color: #617187;
+            line-height: 1.65;
+            font-size: 0.95rem;
         }
 
         .layout-grid {
@@ -140,10 +327,12 @@ $locations = $stmt_loc->fetchAll(PDO::FETCH_COLUMN);
         .filter-sidebar {
             background: white;
             padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            border: 1px solid #eee;
+            border-radius: 24px;
+            box-shadow: 0 18px 42px rgba(23, 69, 143, 0.08);
+            border: 1px solid rgba(23, 69, 143, 0.09);
             height: fit-content;
+            position: sticky;
+            top: 96px;
         }
 
         .filter-group {
@@ -186,10 +375,10 @@ $locations = $stmt_loc->fetchAll(PDO::FETCH_COLUMN);
 
         .prop-card {
             background: white;
-            border-radius: 12px;
+            border-radius: 22px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            border: 1px solid #eee;
+            box-shadow: 0 16px 36px rgba(23, 69, 143, 0.08);
+            border: 1px solid rgba(23, 69, 143, 0.09);
             transition: all 0.3s;
             display: flex;
             flex-direction: column;
@@ -197,7 +386,7 @@ $locations = $stmt_loc->fetchAll(PDO::FETCH_COLUMN);
 
         .prop-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 22px 44px rgba(23, 69, 143, 0.14);
         }
 
         .prop-img {
@@ -216,8 +405,8 @@ $locations = $stmt_loc->fetchAll(PDO::FETCH_COLUMN);
             position: absolute;
             top: 15px;
             left: 15px;
-            background: rgba(0, 0, 0, 0.6);
-            color: white;
+            background: linear-gradient(135deg, var(--accent-gold) 0%, #ffe07a 100%);
+            color: #0f2d5c;
             padding: 5px 12px;
             border-radius: 20px;
             font-size: 0.8rem;
@@ -271,12 +460,42 @@ $locations = $stmt_loc->fetchAll(PDO::FETCH_COLUMN);
         }
 
         @media (max-width: 992px) {
+            .properties-hero {
+                padding: 108px 0 46px;
+                background:
+                    radial-gradient(circle at 18% 12%, rgba(255, 199, 44, 0.28), transparent 34%),
+                    linear-gradient(160deg, #fffaf0 0%, #eef5ff 66%, #e5f0ff 100%);
+            }
+
+            .properties-hero-grid,
+            .property-guide-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .property-type-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+
             .layout-grid {
                 grid-template-columns: 1fr;
             }
 
             .filter-sidebar {
-                display: none;
+                position: static;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .properties-hero h1 {
+                font-size: 2.55rem;
+            }
+
+            .property-type-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .properties-hero-panel {
+                padding: 22px;
             }
         }
     </style>
@@ -288,16 +507,67 @@ $locations = $stmt_loc->fetchAll(PDO::FETCH_COLUMN);
     <?php $active_page = 'properties'; include 'includes/nav.php'; ?>
 
     <!-- Page Header -->
-    <div class="page-header">
+    <section class="properties-hero">
         <div class="container">
-            <h1 style="font-size: 2.5rem; margin-bottom: 10px; font-weight: 700; color: #fec435;">บ้าน-ที่ดินราคาพิเศษ
-            </h1>
-            <p style="opacity: 0.8; font-size: 1.1rem;">บ้าน คอนโด ที่ดิน ทรัพย์คุณภาพ ทำเลดี ราคาคุ้มค่า</p>
+            <div class="properties-hero-grid">
+                <div class="properties-hero-copy">
+                    <span class="properties-kicker">MIDA PROPERTY</span>
+                    <h1>บ้าน คอนโด ที่ดิน ราคาพิเศษจากไมด้า</h1>
+                    <p>รวมทรัพย์พร้อมขายจากบริษัท เลือกดูทำเล รายละเอียด ราคา และช่องทางสอบถามเจ้าหน้าที่ได้ในที่เดียว</p>
+                    <div class="properties-hero-actions">
+                        <a href="#property-listing" class="is-gold"><i class="fa-solid fa-magnifying-glass"></i> ดูรายการทรัพย์</a>
+                        <a href="#property-guide"><i class="fa-solid fa-phone"></i> สอบถามเจ้าหน้าที่</a>
+                    </div>
+                </div>
+
+                <aside class="properties-hero-panel">
+                    <h2>เลือกทรัพย์ที่สนใจ</h2>
+                    <div class="property-type-grid">
+                        <div class="property-type-item">
+                            <i class="fa-solid fa-house-chimney"></i>
+                            บ้าน
+                        </div>
+                        <div class="property-type-item">
+                            <i class="fa-solid fa-building"></i>
+                            คอนโด
+                        </div>
+                        <div class="property-type-item">
+                            <i class="fa-solid fa-mountain-sun"></i>
+                            ที่ดิน
+                        </div>
+                    </div>
+                </aside>
+            </div>
         </div>
-    </div>
+    </section>
+
+    <section class="property-guide-section" id="property-guide">
+        <div class="container">
+            <div class="property-guide-grid">
+                <div class="property-guide-card">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <h3>เลือกทำเลที่ต้องการ</h3>
+                    <p>ค้นหาทรัพย์ตามประเภทและพื้นที่ เพื่อดูรายการที่ตรงกับความสนใจของคุณ</p>
+                    <a href="#property-listing" class="is-gold">ค้นหารายการ</a>
+                </div>
+                <div class="property-guide-card">
+                    <i class="fa-solid fa-file-lines"></i>
+                    <h3>ดูรายละเอียดก่อนตัดสินใจ</h3>
+                    <p>ดูรูป ราคา ขนาดพื้นที่ และข้อมูลทรัพย์ เพื่อเปรียบเทียบก่อนสอบถามเพิ่มเติม</p>
+                    <a href="#property-listing">ดูทรัพย์ทั้งหมด</a>
+                </div>
+                <div class="property-guide-card">
+                    <i class="fa-solid fa-headset"></i>
+                    <h3>ให้เจ้าหน้าที่ติดต่อกลับ</h3>
+                    <p>สนใจทรัพย์รายการไหน ฝากข้อมูลไว้ได้ เจ้าหน้าที่จะติดต่อกลับเพื่อให้รายละเอียด</p>
+                    <a href="contact_us.php">ติดต่อเรา</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Main Content -->
-    <div class="section" style="padding-top: 0; background-color: #f8f9fa; min-height: 80vh;">
+    <div class="section" id="property-listing" style="padding-top: 0; background-color: #f8f9fa; min-height: 80vh;">
         <div class="container">
 
             <div style="padding: 20px 0;">
@@ -312,7 +582,7 @@ $locations = $stmt_loc->fetchAll(PDO::FETCH_COLUMN);
                 <!-- Sidebar Filter -->
                 <aside class="filter-sidebar">
                     <form action="properties.php" method="GET">
-                        <h3 style="margin-bottom: 20px; font-size: 1.2rem;"><i class="fa-solid fa-filter"></i> ค้นหาทรัพย์
+                        <h3 style="margin-bottom: 20px; font-size: 1.2rem; color: #0f2d5c;"><i class="fa-solid fa-filter"></i> ค้นหาทรัพย์ที่สนใจ
                         </h3>
 
                         <div class="filter-group">
@@ -336,7 +606,7 @@ $locations = $stmt_loc->fetchAll(PDO::FETCH_COLUMN);
                         -->
 
                         <div class="filter-group">
-                            <label class="filter-title">ทำเลที่ตั้ง</label>
+                            <label class="filter-title">ทำเล / พื้นที่</label>
                             <select name="location" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ddd;">
                                 <option value="">ทุกทำเล</option>
                                 <?php foreach ($locations as $loc): ?>
@@ -348,7 +618,7 @@ $locations = $stmt_loc->fetchAll(PDO::FETCH_COLUMN);
                             </select>
                         </div>
 
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">ค้นหา</button>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">ค้นหาทรัพย์</button>
                     </form>
                 </aside>
 
@@ -356,7 +626,7 @@ $locations = $stmt_loc->fetchAll(PDO::FETCH_COLUMN);
                 <div>
                     <div
                         style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                        <h2 style="font-size: 1.5rem; margin: 0;">ทรัพย์ทั้งหมด <span
+                        <h2 style="font-size: 1.5rem; margin: 0; color: #0f2d5c;">รายการบ้าน คอนโด ที่ดิน <span
                                 style="font-size: 1rem; color: #666; font-weight: 400;">(
                                 <?php echo $total_rows; ?> รายการ)
                             </span></h2>
@@ -402,7 +672,7 @@ $locations = $stmt_loc->fetchAll(PDO::FETCH_COLUMN);
                         }
 
                         // Load properties via AJAX
-                        async function loadProperties(page, filters = null) {
+                        async function loadProperties(page, filters = null, shouldScroll = false) {
                             if (isLoading) return;
                             isLoading = true;
 
@@ -445,8 +715,9 @@ $locations = $stmt_loc->fetchAll(PDO::FETCH_COLUMN);
                                     // Render pagination
                                     renderPagination(currentPage, totalPages);
 
-                                    // Scroll to top of grid
-                                    propGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                    if (shouldScroll) {
+                                        propGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                    }
                                 } else {
                                     propGrid.innerHTML = `
                                         <div style="grid-column: 1/-1; text-align: center; padding: 40px; background: #fff3cd; border-radius: 10px;">
@@ -597,7 +868,7 @@ $locations = $stmt_loc->fetchAll(PDO::FETCH_COLUMN);
 
                         // Expose function to window
                         window.loadPropertiesPage = function(page) {
-                            loadProperties(page);
+                            loadProperties(page, null, true);
                             updateUrlWithFilters(page);
                         };
 
@@ -627,7 +898,7 @@ $locations = $stmt_loc->fetchAll(PDO::FETCH_COLUMN);
                             if (e.state?.filters) {
                                 restoreFiltersToForm(e.state.filters);
                             }
-                            loadProperties(page);
+                            loadProperties(page, null, true);
                         });
 
                         // Restore filters to form
@@ -653,7 +924,7 @@ $locations = $stmt_loc->fetchAll(PDO::FETCH_COLUMN);
                             searchBtn.type = 'button';
                             searchBtn.innerHTML = '<i class="fa-solid fa-search"></i> ค้นหา';
                             searchBtn.addEventListener('click', function() {
-                                loadProperties(1);
+                                loadProperties(1, null, true);
                                 updateUrlWithFilters(1);
                             });
                         }
@@ -661,7 +932,7 @@ $locations = $stmt_loc->fetchAll(PDO::FETCH_COLUMN);
                         // Initial load
                         const urlParams = new URLSearchParams(window.location.search);
                         const initialPage = parseInt(urlParams.get('page')) || 1;
-                        loadProperties(initialPage);
+                        loadProperties(initialPage, null, false);
                     })();
                     </script>
 
