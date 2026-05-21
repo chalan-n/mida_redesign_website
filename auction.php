@@ -28,6 +28,127 @@ try {
 } catch (PDOException $e) {
 }
 
+function auction_extract_date_parts($date_text)
+{
+    $date_text = trim((string) $date_text);
+    $parts = array('day' => null, 'month' => null, 'year' => null);
+
+    if (preg_match('/(\d{4})-(\d{1,2})-(\d{1,2})/', $date_text, $matches)) {
+        $parts['year'] = (int) $matches[1];
+        $parts['day'] = (int) $matches[3];
+        $parts['month'] = (int) $matches[2];
+        return $parts;
+    }
+
+    if (preg_match('/(\d{1,2})/', $date_text, $matches)) {
+        $parts['day'] = (int) $matches[1];
+    }
+
+    if (preg_match('/(25\d{2}|20\d{2})/', $date_text, $matches)) {
+        $year = (int) $matches[1];
+        $parts['year'] = $year > 2400 ? $year - 543 : $year;
+    }
+
+    $thai_months = array(
+        'มกราคม' => 1,
+        'กุมภาพันธ์' => 2,
+        'มีนาคม' => 3,
+        'เมษายน' => 4,
+        'พฤษภาคม' => 5,
+        'มิถุนายน' => 6,
+        'กรกฎาคม' => 7,
+        'สิงหาคม' => 8,
+        'กันยายน' => 9,
+        'ตุลาคม' => 10,
+        'พฤศจิกายน' => 11,
+        'ธันวาคม' => 12
+    );
+
+    foreach ($thai_months as $month_name => $month_number) {
+        if (strpos($date_text, $month_name) !== false) {
+            $parts['month'] = $month_number;
+            break;
+        }
+    }
+
+    return $parts;
+}
+
+function auction_branch_label($branch_name)
+{
+    return trim(preg_replace('/^สาขา\s*/u', '', (string) $branch_name));
+}
+
+$calendar_month = (int) date('n');
+$calendar_year = (int) date('Y');
+if (!empty($schedules)) {
+    $first_schedule_parts = auction_extract_date_parts($schedules[0]['auction_date']);
+    if (!empty($first_schedule_parts['year'])) {
+        $calendar_year = (int) $first_schedule_parts['year'];
+    }
+    if (!empty($first_schedule_parts['month'])) {
+        $calendar_month = $first_schedule_parts['month'];
+    }
+}
+
+$thai_month_labels = array(
+    1 => 'มกราคม',
+    2 => 'กุมภาพันธ์',
+    3 => 'มีนาคม',
+    4 => 'เมษายน',
+    5 => 'พฤษภาคม',
+    6 => 'มิถุนายน',
+    7 => 'กรกฎาคม',
+    8 => 'สิงหาคม',
+    9 => 'กันยายน',
+    10 => 'ตุลาคม',
+    11 => 'พฤศจิกายน',
+    12 => 'ธันวาคม'
+);
+$auction_calendar_days = array();
+foreach ($schedules as $schedule) {
+    $date_parts = auction_extract_date_parts($schedule['auction_date']);
+    if (empty($date_parts['day'])) {
+        continue;
+    }
+    if (!empty($date_parts['month']) && (int) $date_parts['month'] !== $calendar_month) {
+        continue;
+    }
+    $day = (int) $date_parts['day'];
+    if (!isset($auction_calendar_days[$day])) {
+        $auction_calendar_days[$day] = array();
+    }
+    $auction_calendar_days[$day][] = $schedule;
+}
+$calendar_first_day = (int) date('N', strtotime($calendar_year . '-' . str_pad($calendar_month, 2, '0', STR_PAD_LEFT) . '-01'));
+$calendar_days_in_month = (int) date('t', strtotime($calendar_year . '-' . str_pad($calendar_month, 2, '0', STR_PAD_LEFT) . '-01'));
+$calendar_title = $thai_month_labels[$calendar_month] . ' ' . ($calendar_year + 543);
+$today_datetime = new DateTime('now', new DateTimeZone('Asia/Bangkok'));
+$today_key = (int) $today_datetime->format('Ymd');
+$auction_calendar_events = array();
+foreach ($schedules as $schedule) {
+    $date_parts = auction_extract_date_parts($schedule['auction_date']);
+    if (empty($date_parts['day'])) {
+        continue;
+    }
+
+    $event_year = !empty($date_parts['year']) ? (int) $date_parts['year'] : $calendar_year;
+    $event_month = !empty($date_parts['month']) ? (int) $date_parts['month'] : $calendar_month;
+    $auction_calendar_events[] = array(
+        'id' => (int) $schedule['id'],
+        'day' => (int) $date_parts['day'],
+        'month' => $event_month,
+        'year' => $event_year,
+        'branchName' => $schedule['branch_name'],
+        'branchLabel' => auction_branch_label($schedule['branch_name']),
+        'auctionDate' => $schedule['auction_date'],
+        'timeRegister' => $schedule['time_register'],
+        'timeStart' => $schedule['time_start'],
+        'carCount' => (int) $schedule['actual_car_count'],
+        'url' => 'auction_list.php?schedule_id=' . (int) $schedule['id']
+    );
+}
+
 // Fetch Featured Cars (is_featured=1, fallback to random if less than 4)
 $highlight_cars = array();
 try {
@@ -153,6 +274,284 @@ try {
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
 
+        .auction-calendar-wrap {
+            display: grid;
+            grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
+            gap: 24px;
+            align-items: stretch;
+        }
+
+        .auction-calendar-card,
+        .auction-list-panel {
+            background: #ffffff;
+            border: 1px solid rgba(23, 69, 143, 0.09);
+            border-radius: 24px;
+            box-shadow: 0 18px 42px rgba(23, 69, 143, 0.08);
+            overflow: hidden;
+        }
+
+        .auction-calendar-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            padding: 18px 22px;
+            background: linear-gradient(135deg, #17458f 0%, #2f6bc6 100%);
+            color: #ffffff;
+        }
+
+        .auction-calendar-head h3 {
+            margin: 0;
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: 800;
+        }
+
+        .calendar-nav-dot {
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 0;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.16);
+            color: #ffffff;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .calendar-nav-dot:hover {
+            background: rgba(255, 255, 255, 0.28);
+            transform: translateY(-1px);
+        }
+
+        .auction-calendar-weekdays,
+        .auction-calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+        }
+
+        .auction-calendar-weekdays {
+            padding: 12px 14px 8px;
+            color: var(--primary-blue);
+            font-weight: 800;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .auction-calendar-grid {
+            padding: 0 14px 14px;
+        }
+
+        .calendar-day,
+        .calendar-empty {
+            min-height: 74px;
+            padding: 9px 8px;
+            border: 1px solid rgba(23, 69, 143, 0.08);
+            background: #ffffff;
+            text-align: right;
+            color: #24364d;
+            font-size: 0.9rem;
+        }
+
+        .calendar-empty {
+            background: #f8fbff;
+        }
+
+        .calendar-day.has-auction {
+            background: linear-gradient(180deg, #fff8df 0%, #fffdf4 100%);
+            border-color: rgba(255, 199, 44, 0.45);
+            color: var(--primary-blue);
+            font-weight: 800;
+        }
+
+        .calendar-day.is-active {
+            background: linear-gradient(135deg, var(--accent-gold) 0%, #ffe07a 100%);
+            border-color: var(--accent-gold);
+            box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.62);
+        }
+
+        .calendar-day.is-past {
+            background: #f1f4f8;
+            border-color: rgba(122, 135, 152, 0.16);
+            color: #8b96a6;
+            box-shadow: none;
+        }
+
+        .calendar-day.is-clickable {
+            padding: 0;
+        }
+
+        .calendar-day-link {
+            display: block;
+            min-height: 74px;
+            padding: 9px 8px;
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .calendar-day-link:hover {
+            background: rgba(255, 255, 255, 0.34);
+        }
+
+        .calendar-count {
+            display: block;
+            margin-top: 12px;
+            color: #0f2d5c;
+            font-size: 0.68rem;
+            font-weight: 800;
+            text-align: right;
+            line-height: 1.25;
+            white-space: normal;
+            overflow-wrap: anywhere;
+        }
+
+        .calendar-day.is-past .calendar-count {
+            color: #8b96a6;
+        }
+
+        .auction-list-panel {
+            padding: 24px;
+        }
+
+        .auction-list-panel h3 {
+            margin: 0 0 6px;
+            color: #0f2d5c;
+            font-size: 1.3rem;
+            font-weight: 800;
+        }
+
+        .auction-list-date {
+            margin: 0 0 22px;
+            color: #536274;
+            font-size: 0.95rem;
+        }
+
+        .auction-round-list {
+            display: grid;
+            gap: 16px;
+            max-height: 410px;
+            overflow: auto;
+            padding-right: 6px;
+        }
+
+        .auction-round-item {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 14px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(23, 69, 143, 0.1);
+        }
+
+        .auction-round-count {
+            width: 54px;
+            height: 54px;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            background: linear-gradient(135deg, var(--accent-gold) 0%, #ffe07a 100%);
+            color: #0f2d5c;
+            font-size: 1rem;
+            font-weight: 900;
+            line-height: 1.1;
+            box-shadow: 0 10px 22px rgba(255, 199, 44, 0.24);
+        }
+
+        .auction-round-count span {
+            font-size: 0.62rem;
+            font-weight: 700;
+        }
+
+        .auction-round-count.is-pending {
+            width: 68px;
+            height: 54px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #eef4ff 0%, #ffffff 100%);
+            color: var(--primary-blue);
+            box-shadow: inset 0 0 0 1px rgba(23, 69, 143, 0.12);
+            font-size: 0.78rem;
+        }
+
+        .auction-round-count.is-pending span {
+            font-size: 0.66rem;
+        }
+
+        .auction-round-copy strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #0f2d5c;
+            font-size: 1rem;
+        }
+
+        .auction-round-copy p {
+            margin: 0 0 10px;
+            color: #536274;
+            font-size: 0.9rem;
+            line-height: 1.55;
+        }
+
+        .auction-round-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .auction-register-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 9px 15px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, var(--accent-gold) 0%, #ffe07a 100%);
+            color: #0f2d5c;
+            font-weight: 800;
+            text-decoration: none;
+            box-shadow: 0 10px 22px rgba(255, 199, 44, 0.24);
+        }
+
+        .auction-register-main {
+            width: 100%;
+            margin: 0 0 22px;
+            padding: 13px 18px;
+            font-size: 1rem;
+        }
+
+        .auction-empty-month {
+            padding: 28px 18px;
+            border-radius: 18px;
+            background: #f8fbff;
+            color: #536274;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .auction-detail-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            color: var(--primary-blue);
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .auction-detail-link.is-disabled {
+            color: #7a8798;
+            cursor: default;
+            pointer-events: none;
+        }
+
+        .auction-calendar-note {
+            margin: 18px 0 0;
+            color: #7a5b08;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
         .schedule-header {
             background: var(--primary-blue);
             color: white;
@@ -269,6 +668,22 @@ try {
             gap: 30px;
             text-align: center;
         }
+
+        .auction-legacy-schedule {
+            display: none;
+        }
+
+        @media (max-width: 900px) {
+            .auction-calendar-wrap {
+                grid-template-columns: 1fr;
+            }
+
+            .calendar-day,
+            .calendar-empty {
+                min-height: 58px;
+                padding: 7px 6px;
+            }
+        }
     </style>
 </head>
 
@@ -290,8 +705,145 @@ try {
         </div>
     </section>
 
+    <!-- Auction Calendar Section -->
+    <section class="section" style="background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);">
+        <div class="container">
+            <div class="section-title">
+                <h2>ปฏิทินการประมูล</h2>
+                <p>ตรวจสอบวัน เวลา และรายการรถก่อนเข้าร่วมประมูล</p>
+            </div>
+
+            <div class="auction-calendar-wrap">
+                <div class="auction-calendar-card">
+                    <div class="auction-calendar-head">
+                        <button class="calendar-nav-dot" type="button" id="auctionCalendarPrev" aria-label="เดือนก่อนหน้า"><i class="fa-solid fa-chevron-left"></i></button>
+                        <h3 id="auctionCalendarTitle"><?php echo htmlspecialchars($calendar_title); ?></h3>
+                        <button class="calendar-nav-dot" type="button" id="auctionCalendarNext" aria-label="เดือนถัดไป"><i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                    <div class="auction-calendar-weekdays">
+                        <div>จ.</div>
+                        <div>อ.</div>
+                        <div>พ.</div>
+                        <div>พฤ.</div>
+                        <div>ศ.</div>
+                        <div>ส.</div>
+                        <div>อา.</div>
+                    </div>
+                    <div class="auction-calendar-grid" id="auctionCalendarGrid">
+                        <?php $first_active_day = 0; ?>
+                        <?php for ($empty = 1; $empty < $calendar_first_day; $empty++): ?>
+                            <div class="calendar-empty" aria-hidden="true"></div>
+                        <?php endfor; ?>
+                        <?php for ($day = 1; $day <= $calendar_days_in_month; $day++):
+                            $day_schedules = isset($auction_calendar_days[$day]) ? $auction_calendar_days[$day] : array();
+                            $day_count = count($day_schedules);
+                            $day_branch_label = '';
+                            $day_url = '';
+                            $day_key = (int) ($calendar_year . str_pad($calendar_month, 2, '0', STR_PAD_LEFT) . str_pad($day, 2, '0', STR_PAD_LEFT));
+                            $is_past_day = $day_count > 0 && $day_key < $today_key;
+                            if ($day_count > 0) {
+                                $day_branch_label = auction_branch_label($day_schedules[0]['branch_name']);
+                                $day_url = 'auction_list.php?schedule_id=' . (int) $day_schedules[0]['id'];
+                                if ($day_count > 1) {
+                                    $day_branch_label .= ' +' . ($day_count - 1) . ' รอบ';
+                                }
+                            }
+                            if ($day_count > 0 && !$is_past_day && $first_active_day === 0) {
+                                $first_active_day = $day;
+                            }
+                            $day_class = $day_count > 0 ? 'calendar-day has-auction' : 'calendar-day';
+                            if ($is_past_day) {
+                                $day_class .= ' is-past';
+                            } elseif ($day_count > 0) {
+                                $day_class .= ' is-clickable';
+                            }
+                            if ($day_count > 0 && !$is_past_day && $first_active_day === $day) {
+                                $day_class .= ' is-active';
+                            }
+                            ?>
+                            <div class="<?php echo $day_class; ?>">
+                                <?php if ($day_count > 0 && !$is_past_day): ?>
+                                    <a href="<?php echo htmlspecialchars($day_url); ?>" class="calendar-day-link">
+                                        <?php echo $day; ?>
+                                        <span class="calendar-count"><?php echo htmlspecialchars($day_branch_label); ?></span>
+                                    </a>
+                                <?php else: ?>
+                                    <?php echo $day; ?>
+                                    <?php if ($day_count > 0): ?>
+                                        <span class="calendar-count"><?php echo htmlspecialchars($day_branch_label); ?></span>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                            </div>
+                        <?php endfor; ?>
+                    </div>
+                </div>
+
+                <div class="auction-list-panel">
+                    <h3>รายการประมูล</h3>
+                    <p class="auction-list-date">รอบประมูลล่าสุดและรายการรถที่เปิดให้เข้าร่วม</p>
+
+                    <a href="https://auction.mida-leasing.com" target="_blank" rel="noopener" class="auction-register-btn auction-register-main">
+                        <i class="fa-solid fa-user-plus"></i> ลงทะเบียนเข้าร่วมประมูล
+                    </a>
+
+                    <?php if (count($schedules) > 0): ?>
+                        <div class="auction-round-list" id="auctionRoundList">
+                            <?php foreach ($schedules as $schedule):
+                                $count = (int) $schedule['actual_car_count'];
+                                ?>
+                                <div class="auction-round-item">
+                                    <?php if ($count > 0): ?>
+                                    <div class="auction-round-count">
+                                        <?php echo $count; ?>
+                                        <span>คัน</span>
+                                    </div>
+                                    <?php else: ?>
+                                    <div class="auction-round-count is-pending">
+                                        รอ
+                                        <span>อัปเดต</span>
+                                    </div>
+                                    <?php endif; ?>
+                                    <div class="auction-round-copy">
+                                        <strong><?php echo htmlspecialchars($schedule['branch_name']); ?></strong>
+                                        <p>
+                                            <i class="fa-solid fa-calendar-check"></i>
+                                            <?php echo htmlspecialchars($schedule['auction_date']); ?>
+                                            <?php if (!empty($schedule['time_start'])): ?>
+                                                · เริ่ม <?php echo htmlspecialchars($schedule['time_start']); ?>
+                                            <?php endif; ?>
+                                            <?php if (!empty($schedule['time_register'])): ?>
+                                                · ลงทะเบียน <?php echo htmlspecialchars($schedule['time_register']); ?>
+                                            <?php endif; ?>
+                                        </p>
+                                        <div class="auction-round-actions">
+                                            <?php if ($count > 0): ?>
+                                                <a href="auction_list.php?schedule_id=<?php echo $schedule['id']; ?>" class="auction-detail-link">
+                                                    <i class="fa-solid fa-eye"></i> ดูรายการรถ
+                                                </a>
+                                            <?php else: ?>
+                                                <span class="auction-detail-link is-disabled">
+                                                    <i class="fa-solid fa-clock"></i> รออัปเดตรายการรถ
+                                                </span>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php else: ?>
+                        <div style="text-align: center; padding: 34px 18px; background: #f8fbff; border-radius: 18px;">
+                            <p style="color: #536274; margin: 0;">ยังไม่มีรอบประมูลในขณะนี้</p>
+                        </div>
+                    <?php endif; ?>
+
+                    <p class="auction-calendar-note">* หมายเหตุ: ปฏิทินการประมูลอาจมีการเปลี่ยนแปลงได้</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Schedule Section -->
-    <section class="section" style="background-color: #f8f9fa;">
+    <section class="section auction-legacy-schedule" style="background-color: #f8f9fa;">
         <div class="container">
             <div class="section-title">
                 <h2>ตารางการประมูล</h2>
@@ -380,7 +932,7 @@ try {
     </section>
 
     <!-- Hightlight Cars -->
-    <section class="section">
+    <section class="section" id="featured-auction-cars">
         <div class="container">
             <div class="section-title">
                 <h2>รถเด่นประจำรอบ</h2>
@@ -443,6 +995,199 @@ try {
             </div>
         </div>
     </section>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const auctionEvents = <?php echo json_encode($auction_calendar_events); ?>;
+        const monthLabels = [
+            '',
+            'มกราคม',
+            'กุมภาพันธ์',
+            'มีนาคม',
+            'เมษายน',
+            'พฤษภาคม',
+            'มิถุนายน',
+            'กรกฎาคม',
+            'สิงหาคม',
+            'กันยายน',
+            'ตุลาคม',
+            'พฤศจิกายน',
+            'ธันวาคม'
+        ];
+        let currentMonth = <?php echo (int) $calendar_month; ?>;
+        let currentYear = <?php echo (int) $calendar_year; ?>;
+
+        const title = document.getElementById('auctionCalendarTitle');
+        const grid = document.getElementById('auctionCalendarGrid');
+        const list = document.getElementById('auctionRoundList');
+        const prev = document.getElementById('auctionCalendarPrev');
+        const next = document.getElementById('auctionCalendarNext');
+        const todayDateParts = new Intl.DateTimeFormat('en-CA', {
+            timeZone: 'Asia/Bangkok',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        }).format(new Date()).split('-').map(Number);
+        const todayKey = (todayDateParts[0] * 10000) + (todayDateParts[1] * 100) + todayDateParts[2];
+
+        function getEventsForMonth(year, month) {
+            return auctionEvents
+                .filter(function(event) {
+                    return Number(event.year) === year && Number(event.month) === month;
+                })
+                .sort(function(a, b) {
+                    return Number(a.day) - Number(b.day);
+                });
+        }
+
+        function getDateKey(year, month, day) {
+            return (Number(year) * 10000) + (Number(month) * 100) + Number(day);
+        }
+
+        function getBranchLabel(event) {
+            return String(event.branchLabel || event.branchName || '').replace(/^สาขา\s*/u, '').trim();
+        }
+
+        function renderCalendar() {
+            if (!title || !grid) return;
+
+            const events = getEventsForMonth(currentYear, currentMonth);
+            const eventsByDay = events.reduce(function(groups, event) {
+                const day = Number(event.day);
+                if (!groups[day]) groups[day] = [];
+                groups[day].push(event);
+                return groups;
+            }, {});
+            const firstDay = new Date(currentYear, currentMonth - 1, 1).getDay();
+            const leadingEmpty = (firstDay + 6) % 7;
+            const daysInMonth = new Date(currentYear, currentMonth, 0).getDate();
+            const firstActiveEvent = events.find(function(event) {
+                return getDateKey(Number(event.year), Number(event.month), Number(event.day)) >= todayKey;
+            });
+            const firstActiveDay = firstActiveEvent ? Number(firstActiveEvent.day) : 0;
+            let html = '';
+
+            title.textContent = monthLabels[currentMonth] + ' ' + (currentYear + 543);
+
+            for (let i = 0; i < leadingEmpty; i++) {
+                html += '<div class="calendar-empty" aria-hidden="true"></div>';
+            }
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayEvents = eventsByDay[day] || [];
+                let branchLabel = '';
+                let dayUrl = '';
+                const isPastDay = dayEvents.length > 0 && getDateKey(currentYear, currentMonth, day) < todayKey;
+                const classes = ['calendar-day'];
+
+                if (dayEvents.length) classes.push('has-auction');
+                if (isPastDay) {
+                    classes.push('is-past');
+                } else if (dayEvents.length) {
+                    classes.push('is-clickable');
+                }
+                if (!isPastDay && firstActiveDay === day) classes.push('is-active');
+                if (dayEvents.length) {
+                    branchLabel = getBranchLabel(dayEvents[0]);
+                    dayUrl = dayEvents[0].url || '';
+                    if (dayEvents.length > 1) {
+                        branchLabel += ' +' + (dayEvents.length - 1) + ' รอบ';
+                    }
+                }
+
+                html += '<div class="' + classes.join(' ') + '">';
+                if (dayEvents.length && !isPastDay) {
+                    html += '<a href="' + escapeHtml(dayUrl) + '" class="calendar-day-link">' + day +
+                        '<span class="calendar-count">' + escapeHtml(branchLabel) + '</span></a>';
+                } else {
+                    html += day;
+                    if (dayEvents.length) {
+                        html += '<span class="calendar-count">' + escapeHtml(branchLabel) + '</span>';
+                    }
+                }
+                html += '</div>';
+            }
+
+            grid.innerHTML = html;
+            renderRoundList(events);
+        }
+
+        function renderRoundList(events) {
+            if (!list) return;
+
+            if (!events.length) {
+                list.innerHTML = '<div class="auction-empty-month">ยังไม่มีรอบประมูลในเดือนนี้</div>';
+                return;
+            }
+
+            list.innerHTML = events.map(function(event) {
+                const carCount = Number(event.carCount || 0);
+                const countBadge = carCount > 0
+                    ? '<div class="auction-round-count">' + carCount + '<span>คัน</span></div>'
+                    : '<div class="auction-round-count is-pending">รอ<span>อัปเดต</span></div>';
+                const detailLink = carCount > 0
+                    ? '<a href="' + event.url + '" class="auction-detail-link"><i class="fa-solid fa-eye"></i> ดูรายการรถ</a>'
+                    : '<span class="auction-detail-link is-disabled"><i class="fa-solid fa-clock"></i> รออัปเดตรายการรถ</span>';
+
+                return [
+                    '<div class="auction-round-item">',
+                        countBadge,
+                        '<div class="auction-round-copy">',
+                            '<strong>' + escapeHtml(event.branchName || '') + '</strong>',
+                            '<p><i class="fa-solid fa-calendar-check"></i> ' + escapeHtml(event.auctionDate || '') +
+                                (event.timeStart ? ' · เริ่ม ' + escapeHtml(event.timeStart) : '') +
+                                (event.timeRegister ? ' · ลงทะเบียน ' + escapeHtml(event.timeRegister) : '') +
+                            '</p>',
+                            '<div class="auction-round-actions">' + detailLink + '</div>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+            }).join('');
+        }
+
+        function escapeHtml(value) {
+            return String(value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function shiftMonth(offset) {
+            currentMonth += offset;
+            if (currentMonth < 1) {
+                currentMonth = 12;
+                currentYear -= 1;
+            }
+            if (currentMonth > 12) {
+                currentMonth = 1;
+                currentYear += 1;
+            }
+            renderCalendar();
+        }
+
+        if (prev) prev.addEventListener('click', function() { shiftMonth(-1); });
+        if (next) next.addEventListener('click', function() { shiftMonth(1); });
+
+        renderCalendar();
+    });
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var featuredTitle = document.querySelector('#featured-auction-cars .section-title h2');
+        var featuredSubtitle = document.querySelector('#featured-auction-cars .section-title p');
+
+        if (featuredTitle) {
+            featuredTitle.textContent = 'รถสวยคัดพิเศษ สภาพพร้อมใช้งาน';
+        }
+
+        if (featuredSubtitle) {
+            featuredSubtitle.textContent = 'คัดจากรายการรถประมูลที่น่าสนใจ พร้อมดูรายละเอียดก่อนเข้าร่วมประมูล';
+        }
+    });
+    </script>
 
     <!-- How to -->
     <section class="section" style="background-color: #f0f4f8;">
