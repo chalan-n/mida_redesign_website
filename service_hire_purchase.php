@@ -226,6 +226,43 @@ try {
         </div>
     </section>
 
+    <!-- Quick Summary Section -->
+    <section class="section service-summary-section">
+        <div class="container">
+            <div class="section-title">
+                <h2 style="font-size: 1.85rem;">อยากออกรถกับไมด้า เราช่วยแนะนำให้ได้</h2>
+                <p>ดูทางเลือกที่เหมาะกับรถและการใช้งานของคุณ แล้วให้เจ้าหน้าที่ไมด้าช่วยแนะนำต่อได้เลย</p>
+            </div>
+
+            <div class="service-summary-grid">
+                <div class="service-summary-card">
+                    <span class="service-summary-icon"><i class="fa-solid fa-user-check"></i></span>
+                    <h3>เหมาะกับใคร</h3>
+                    <p>คนที่อยากออกรถมือสองไว้ใช้ส่วนตัว ทำงาน หรือใช้ต่อยอดธุรกิจ โดยผ่อนเป็นงวดได้</p>
+                </div>
+                <div class="service-summary-card">
+                    <span class="service-summary-icon"><i class="fa-solid fa-star"></i></span>
+                    <h3>จุดเด่น</h3>
+                    <ul>
+                        <li>รองรับรถหลายประเภท</li>
+                        <li>ช่วยดูวงเงินจากรถที่สนใจ</li>
+                        <li>มีเจ้าหน้าที่คอยแนะนำ</li>
+                    </ul>
+                </div>
+                <div class="service-summary-card">
+                    <span class="service-summary-icon"><i class="fa-solid fa-list-check"></i></span>
+                    <h3>เริ่มยังไง</h3>
+                    <p>เลือกประเภทรถที่สนใจ ฝากเบอร์ติดต่อไว้ แล้วเจ้าหน้าที่จะโทรกลับไปคุยรายละเอียดกับคุณ</p>
+                </div>
+                <div class="service-summary-card">
+                    <span class="service-summary-icon"><i class="fa-solid fa-file-lines"></i></span>
+                    <h3>เตรียมอะไรไว้บ้าง</h3>
+                    <p>เตรียมบัตรประชาชน ทะเบียนบ้าน และเอกสารรายได้ไว้คร่าว ๆ เจ้าหน้าที่จะแนะนำเพิ่มเติมให้</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Why Choose Us -->
     <section class="section">
         <div class="container">
@@ -358,16 +395,45 @@ try {
         </div>
     </section>
 
+    <!-- FAQ Section -->
+    <section class="section" style="background-color: #f8fbff;">
+        <div class="container">
+            <div class="section-title">
+                <h2>คำถามที่พบบ่อย</h2>
+                <p>ข้อสงสัยที่ลูกค้ามักถามก่อนเริ่มคุยเรื่องสินเชื่อรถ</p>
+            </div>
+
+            <div class="faq-grid">
+                <div class="faq-card">
+                    <h3>ต้องมีรถก่อนสมัครไหม?</h3>
+                    <p>ถ้ามีรถที่สนใจอยู่แล้วจะช่วยให้คุยง่ายขึ้น เช่น ประเภทรถ รุ่น ปีรถ หรือเต็นท์รถที่ดูไว้</p>
+                </div>
+                <div class="faq-card">
+                    <h3>รู้ผลนานไหม?</h3>
+                    <p>ขึ้นอยู่กับรถและเอกสารที่เตรียมไว้ ถ้าข้อมูลครบ เจ้าหน้าที่จะช่วยดูเรื่องให้เร็วที่สุด</p>
+                </div>
+                <div class="faq-card">
+                    <h3>ผ่อนได้นานแค่ไหน?</h3>
+                    <p>เลือกระยะเวลาผ่อนได้ตามเงื่อนไขและความเหมาะสมของรายได้ เจ้าหน้าที่ช่วยแนะนำให้ได้</p>
+                </div>
+                <div class="faq-card">
+                    <h3>สมัครแล้วผูกมัดทันทีไหม?</h3>
+                    <p>ยังไม่ผูกมัดครับ เป็นเพียงการให้เจ้าหน้าที่โทรกลับไปอธิบายรายละเอียดก่อนตัดสินใจ</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- CTA Section -->
     <section class="section cta-section">
         <div class="container">
             <h2 style="margin-bottom: 16px; color: white;">สนใจสินเชื่อเช่าซื้อรถยนต์?</h2>
             <p style="margin-bottom: 28px; font-size: 1.05rem;">
-                ส่งข้อมูลสั้น ๆ แล้วให้เจ้าหน้าที่ไมด้าติดต่อกลับเพื่อแนะนำขั้นตอนที่เหมาะกับคุณ</p>
+                ฝากเบอร์ติดต่อไว้ แล้วให้เจ้าหน้าที่ไมด้าโทรกลับไปแนะนำแบบเข้าใจง่าย</p>
             <div class="cta-actions">
                 <a href="register_hire_purchase.php" class="btn"
-                    style="background: var(--accent-gold); color: white; min-width: 220px;">ส่งข้อมูลให้ติดต่อกลับ</a>
-                <a href="contact_us.php" class="btn btn-secondary-light" style="min-width: 220px;">ติดต่อเจ้าหน้าที่</a>
+                    style="background: var(--accent-gold); color: white; min-width: 220px;">สมัครสินเชื่อ</a>
+                <a href="contact_us.php" class="btn btn-secondary-light" style="min-width: 220px;">คุยกับเจ้าหน้าที่</a>
             </div>
             <p class="loan-note"><i class="fa-solid fa-triangle-exclamation"
                     style="margin-right: 8px;"></i>กู้เท่าที่จำเป็นและชำระคืนไหว</p>

@@ -207,6 +207,43 @@ try {
         </div>
     </section>
 
+    <!-- Quick Summary Section -->
+    <section class="section service-summary-section">
+        <div class="container">
+            <div class="section-title">
+                <h2 style="font-size: 1.85rem;">อยากมีเงินก้อนพร้อมใช้ ไมด้าช่วยดูให้ได้</h2>
+                <p>ต้องการเงินก้อนไปจัดการค่าใช้จ่ายหรือเสริมสภาพคล่อง คุยกับไมด้าได้ง่าย ๆ</p>
+            </div>
+
+            <div class="service-summary-grid">
+                <div class="service-summary-card">
+                    <span class="service-summary-icon"><i class="fa-solid fa-user-check"></i></span>
+                    <h3>เหมาะกับใคร</h3>
+                    <p>พนักงานประจำ เจ้าของกิจการ หรืออาชีพอิสระที่อยากมีเงินก้อนพร้อมใช้ตามความจำเป็น</p>
+                </div>
+                <div class="service-summary-card">
+                    <span class="service-summary-icon"><i class="fa-solid fa-star"></i></span>
+                    <h3>จุดเด่น</h3>
+                    <ul>
+                        <li>ไม่ต้องมีคนค้ำ</li>
+                        <li>ไม่ต้องใช้หลักทรัพย์ค้ำประกัน</li>
+                        <li>มีเจ้าหน้าที่ช่วยแนะนำ</li>
+                    </ul>
+                </div>
+                <div class="service-summary-card">
+                    <span class="service-summary-icon"><i class="fa-solid fa-list-check"></i></span>
+                    <h3>เริ่มยังไง</h3>
+                    <p>ฝากเบอร์ติดต่อไว้ แล้วเจ้าหน้าที่จะโทรกลับไปคุยรายละเอียดและแนะนำสิ่งที่ควรเตรียม</p>
+                </div>
+                <div class="service-summary-card">
+                    <span class="service-summary-icon"><i class="fa-solid fa-file-lines"></i></span>
+                    <h3>เตรียมอะไรไว้บ้าง</h3>
+                    <p>เตรียมบัตรประชาชน ทะเบียนบ้าน และเอกสารรายได้ไว้คร่าว ๆ เจ้าหน้าที่จะแนะนำเพิ่มเติมให้</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Why Choose Us -->
     <section class="section">
         <div class="container">
@@ -321,16 +358,45 @@ try {
         </div>
     </section>
 
+    <!-- FAQ Section -->
+    <section class="section" style="background-color: #f8fbff;">
+        <div class="container">
+            <div class="section-title">
+                <h2>คำถามที่พบบ่อย</h2>
+                <p>ข้อสงสัยที่ลูกค้ามักถามก่อนเริ่มคุยเรื่องสินเชื่อส่วนบุคคล</p>
+            </div>
+
+            <div class="faq-grid">
+                <div class="faq-card">
+                    <h3>ต้องมีคนค้ำไหม?</h3>
+                    <p>โดยทั่วไปไม่ต้องมีคนค้ำ รายละเอียดจะพิจารณาจากรายได้และคุณสมบัติของลูกค้าแต่ละท่าน</p>
+                </div>
+                <div class="faq-card">
+                    <h3>อาชีพอิสระสมัครได้ไหม?</h3>
+                    <p>สมัครได้ครับ แนะนำให้เตรียมรายการเดินบัญชีหรือหลักฐานรายได้ เพื่อให้เจ้าหน้าที่ช่วยดูเบื้องต้น</p>
+                </div>
+                <div class="faq-card">
+                    <h3>ต้องใช้หลักทรัพย์ค้ำประกันไหม?</h3>
+                    <p>ไม่จำเป็นต้องใช้หลักทรัพย์ค้ำประกัน รายละเอียดขึ้นอยู่กับเงื่อนไขและคุณสมบัติของลูกค้า</p>
+                </div>
+                <div class="faq-card">
+                    <h3>ฝากข้อมูลแล้วต้องทำสัญญาทันทีไหม?</h3>
+                    <p>ยังไม่ต้องทำสัญญาทันที เจ้าหน้าที่จะโทรกลับไปอธิบายรายละเอียดให้เข้าใจก่อนตัดสินใจ</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- CTA Section -->
     <section class="section cta-section">
         <div class="container">
             <h2 style="margin-bottom: 16px; color: white;">สนใจสินเชื่อส่วนบุคคล?</h2>
             <p style="margin-bottom: 28px; font-size: 1.05rem;">
-                ส่งข้อมูลสั้น ๆ แล้วให้เจ้าหน้าที่ไมด้าติดต่อกลับเพื่อแนะนำวงเงินที่เหมาะกับคุณ</p>
+                ฝากเบอร์ติดต่อไว้ แล้วให้เจ้าหน้าที่ไมด้าโทรกลับไปแนะนำวงเงินที่เหมาะกับคุณ</p>
             <div class="cta-actions">
                 <a href="register_personal_loan.php" class="btn"
-                    style="background: var(--accent-gold); color: white; min-width: 220px;">ส่งข้อมูลให้ติดต่อกลับ</a>
-                <a href="contact_us.php" class="btn btn-secondary-light" style="min-width: 220px;">ติดต่อเจ้าหน้าที่</a>
+                    style="background: var(--accent-gold); color: white; min-width: 220px;">สมัครสินเชื่อ</a>
+                <a href="contact_us.php" class="btn btn-secondary-light" style="min-width: 220px;">คุยกับเจ้าหน้าที่</a>
             </div>
         </div>
     </section>

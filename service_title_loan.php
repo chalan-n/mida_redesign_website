@@ -209,6 +209,43 @@ try {
         </div>
     </section>
 
+    <!-- Quick Summary Section -->
+    <section class="section service-summary-section">
+        <div class="container">
+            <div class="section-title">
+                <h2 style="font-size: 1.85rem;">มีเล่มทะเบียน อยากใช้เงิน ไมด้าช่วยดูให้ได้</h2>
+                <p>มีรถอยู่แล้วและอยากได้เงินก้อนไปหมุนใช้ โดยยังอยากใช้รถได้ตามปกติ</p>
+            </div>
+
+            <div class="service-summary-grid">
+                <div class="service-summary-card">
+                    <span class="service-summary-icon"><i class="fa-solid fa-user-check"></i></span>
+                    <h3>เหมาะกับใคร</h3>
+                    <p>คนมีรถที่อยากใช้เล่มทะเบียนช่วยเรื่องเงิน ไม่ว่าจะหมุนธุรกิจหรือจัดการค่าใช้จ่ายจำเป็น</p>
+                </div>
+                <div class="service-summary-card">
+                    <span class="service-summary-icon"><i class="fa-solid fa-star"></i></span>
+                    <h3>จุดเด่น</h3>
+                    <ul>
+                        <li>รถยังมีขับตามปกติ</li>
+                        <li>ไม่ต้องโอนเล่ม</li>
+                        <li>ช่วยดูวงเงินจากรถของคุณ</li>
+                    </ul>
+                </div>
+                <div class="service-summary-card">
+                    <span class="service-summary-icon"><i class="fa-solid fa-list-check"></i></span>
+                    <h3>เริ่มยังไง</h3>
+                    <p>เลือกประเภทรถ ฝากเบอร์ติดต่อไว้ แล้วเจ้าหน้าที่จะโทรกลับไปช่วยดูรายละเอียดรถให้</p>
+                </div>
+                <div class="service-summary-card">
+                    <span class="service-summary-icon"><i class="fa-solid fa-file-lines"></i></span>
+                    <h3>เตรียมอะไรไว้บ้าง</h3>
+                    <p>เตรียมบัตรประชาชน ทะเบียนบ้าน เล่มทะเบียนรถ และเอกสารรายได้ไว้คร่าว ๆ ก่อนคุยได้เลย</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Why Choose Us -->
     <section class="section">
         <div class="container">
@@ -341,16 +378,45 @@ try {
         </div>
     </section>
 
+    <!-- FAQ Section -->
+    <section class="section" style="background-color: #f8fbff;">
+        <div class="container">
+            <div class="section-title">
+                <h2>คำถามที่พบบ่อย</h2>
+                <p>ข้อสงสัยที่ลูกค้ามักถามก่อนใช้เล่มทะเบียนขอสินเชื่อ</p>
+            </div>
+
+            <div class="faq-grid">
+                <div class="faq-card">
+                    <h3>รถยังใช้งานได้ไหม?</h3>
+                    <p>ยังใช้งานได้ตามปกติ เหมาะกับคนที่ต้องใช้รถทุกวัน ทั้งใช้ส่วนตัวและใช้ทำงาน</p>
+                </div>
+                <div class="faq-card">
+                    <h3>ต้องโอนเล่มหรือไม่?</h3>
+                    <p>ไม่ต้องโอนเล่ม กรรมสิทธิ์ยังเป็นของลูกค้า รายละเอียดเจ้าหน้าที่จะอธิบายให้ชัดเจนก่อนทำเรื่อง</p>
+                </div>
+                <div class="faq-card">
+                    <h3>รถติดไฟแนนซ์อยู่สมัครได้ไหม?</h3>
+                    <p>ฝากข้อมูลให้เจ้าหน้าที่ช่วยดูเบื้องต้นได้ครับ โดยจะดูจากรถ ภาระเดิม และรายละเอียดของลูกค้า</p>
+                </div>
+                <div class="faq-card">
+                    <h3>ฝากข้อมูลแล้วผูกมัดทันทีไหม?</h3>
+                    <p>ยังไม่ผูกมัดครับ เป็นเพียงการให้เจ้าหน้าที่โทรกลับไปคุยเรื่องวงเงินและรายละเอียดก่อน</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- CTA Section -->
     <section class="section cta-section">
         <div class="container">
             <h2 style="margin-bottom: 16px; color: white;">ต้องการใช้เล่มทะเบียนช่วยเสริมสภาพคล่อง?</h2>
             <p style="margin-bottom: 28px; font-size: 1.05rem;">
-                ส่งข้อมูลสั้น ๆ แล้วให้เจ้าหน้าที่ไมด้าติดต่อกลับเพื่อประเมินวงเงินเบื้องต้น</p>
+                ฝากเบอร์ติดต่อไว้ แล้วให้เจ้าหน้าที่ไมด้าโทรกลับไปช่วยดูวงเงินเบื้องต้นให้</p>
             <div class="cta-actions">
                 <a href="register_title_loan.php" class="btn"
-                    style="background: var(--accent-gold); color: white; min-width: 220px;">ส่งข้อมูลให้ติดต่อกลับ</a>
-                <a href="contact_us.php" class="btn btn-secondary-light" style="min-width: 220px;">ติดต่อเจ้าหน้าที่</a>
+                    style="background: var(--accent-gold); color: white; min-width: 220px;">สมัครสินเชื่อ</a>
+                <a href="contact_us.php" class="btn btn-secondary-light" style="min-width: 220px;">คุยกับเจ้าหน้าที่</a>
             </div>
         </div>
     </section>

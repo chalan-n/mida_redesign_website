@@ -176,6 +176,71 @@ body.service-page {
     color: rgba(255, 255, 255, 0.78);
 }
 
+.service-page .service-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.service-page .service-summary-card,
+.service-page .faq-card {
+    border: 1px solid rgba(23, 69, 143, 0.1);
+    border-radius: 24px;
+    background: #ffffff;
+    box-shadow: 0 16px 38px rgba(23, 69, 143, 0.08);
+}
+
+.service-page .service-summary-card {
+    padding: 24px;
+}
+
+.service-page .service-summary-icon {
+    width: 46px;
+    height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    border-radius: 16px;
+    background: #fff4cf;
+    color: var(--primary-blue);
+    font-size: 1.2rem;
+}
+
+.service-page .service-summary-card h3 {
+    margin-bottom: 10px;
+    color: var(--primary-blue);
+    font-size: 1.08rem;
+}
+
+.service-page .service-summary-card p,
+.service-page .service-summary-card li,
+.service-page .faq-card p {
+    color: #536274;
+    line-height: 1.65;
+}
+
+.service-page .service-summary-card ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.service-page .faq-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.service-page .faq-card {
+    padding: 22px 24px;
+}
+
+.service-page .faq-card h3 {
+    margin-bottom: 8px;
+    color: #0f2d5c;
+    font-size: 1.05rem;
+}
+
 @media (max-width: 768px) {
     .content-page .section,
     .service-page .section {
@@ -220,5 +285,16 @@ body.service-page {
     .service-page .cta-actions .btn {
         width: 100%;
         max-width: 320px;
+    }
+
+    .service-page .service-summary-grid,
+    .service-page .faq-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .service-page .service-summary-card,
+    .service-page .faq-card {
+        border-radius: 20px;
+        padding: 20px;
     }
 }
