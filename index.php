@@ -296,7 +296,6 @@ $popup_title = $popup_news && isset($popup_news['title']) ? htmlspecialchars($po
                     <div class="hero-form-trust" aria-label="ความมั่นใจก่อนส่งข้อมูล">
                         <span><i class="fa-solid fa-lock"></i> ข้อมูลเป็นความลับ</span>
                         <span><i class="fa-solid fa-phone-volume"></i> เจ้าหน้าที่ติดต่อกลับ</span>
-                        <span><i class="fa-solid fa-shield-halved"></i> ไม่มีผลต่อเครดิตทันที</span>
                     </div>
 
                     <button type="submit" class="btn btn-accent hero-submit-btn">ส่งข้อมูล</button>

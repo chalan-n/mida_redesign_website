@@ -203,10 +203,6 @@ $thai_n2 = $thaiNumbers[$math_n2];
                                 style="font-weight: 600;"><?php echo htmlspecialchars($settings['site_phone']); ?></span>
                         </div>
                         <div style="margin-bottom: 15px;">
-                            <i class="fa-solid fa-fax" style="color: var(--primary-blue); width: 25px;"></i>
-                            <span>02-574-6902</span>
-                        </div>
-                        <div style="margin-bottom: 15px;">
                             <i class="fa-solid fa-envelope" style="color: var(--primary-blue); width: 25px;"></i>
                             <span><?php echo htmlspecialchars($settings['site_email']); ?></span>
                         </div>

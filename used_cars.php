@@ -218,7 +218,7 @@ try {
         }
 
         .used-cars-hero-actions a,
-        .used-car-guide-card a {
+        .used-car-guide-note {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -234,16 +234,25 @@ try {
             transition: transform 0.18s ease, box-shadow 0.18s ease;
         }
 
-        .used-cars-hero-actions a:hover,
-        .used-car-guide-card a:hover {
+        .used-cars-hero-actions a:hover {
             transform: translateY(-2px);
         }
 
-        .used-cars-hero-actions .is-gold,
-        .used-car-guide-card a.is-gold {
+        .used-cars-hero-actions .is-gold {
             background: linear-gradient(135deg, var(--accent-gold) 0%, #ffe07a 100%);
             color: #0f2d5c;
             box-shadow: 0 12px 26px rgba(255, 199, 44, 0.24);
+        }
+
+        .used-car-guide-note {
+            width: fit-content;
+            min-height: 34px;
+            margin-top: auto;
+            padding: 0 12px;
+            background: #f8fbff;
+            color: var(--primary-blue);
+            font-size: 0.86rem;
+            box-shadow: inset 0 0 0 1px rgba(23, 69, 143, 0.08);
         }
 
         .used-cars-hero-panel {
@@ -598,19 +607,19 @@ try {
                     <i class="fa-solid fa-magnifying-glass"></i>
                     <h3>ค้นหารถที่ต้องการ</h3>
                     <p>เลือกดูตามยี่ห้อหรือประเภทรถ เพื่อเจอรถที่ตรงกับการใช้งานของคุณเร็วขึ้น</p>
-                    <a href="#used-car-listing" class="is-gold">ค้นหารายการรถ</a>
+                    <span class="used-car-guide-note">ใช้ตัวกรองด้านล่าง</span>
                 </div>
                 <div class="used-car-guide-card">
                     <i class="fa-solid fa-file-lines"></i>
                     <h3>ดูรายละเอียดก่อนตัดสินใจ</h3>
                     <p>ดูรูป ราคา ปีรถ เลขไมล์ และข้อมูลเบื้องต้นของรถแต่ละคันก่อนสอบถามเพิ่มเติม</p>
-                    <a href="#used-car-listing">ดูรถทั้งหมด</a>
+                    <span class="used-car-guide-note">กดดูในรายการรถ</span>
                 </div>
                 <div class="used-car-guide-card">
                     <i class="fa-solid fa-comments"></i>
                     <h3>ให้เจ้าหน้าที่ช่วยดูแล</h3>
                     <p>สนใจรถคันไหน สามารถติดต่อเจ้าหน้าที่เพื่อสอบถามรายละเอียดและนัดหมายได้</p>
-                    <a href="contact_us.php">ติดต่อเรา</a>
+                    <span class="used-car-guide-note">สอบถามจากหน้ารายละเอียดรถ</span>
                 </div>
             </div>
         </div>

@@ -146,6 +146,17 @@ try {
     $cars = $stmt->fetchAll();
 } catch (PDOException $e) {
 }
+
+$auction_round_label = '';
+$auction_branch_label = '';
+$auction_register_label = '';
+$auction_start_label = '';
+if (!empty($selected_schedule)) {
+    $auction_round_label = trim((string) (isset($selected_schedule['auction_date']) ? $selected_schedule['auction_date'] : ''));
+    $auction_branch_label = trim(preg_replace('/^สาขา\s*/u', '', (string) (isset($selected_schedule['branch_name']) ? $selected_schedule['branch_name'] : '')));
+    $auction_register_label = trim((string) (isset($selected_schedule['time_register']) ? $selected_schedule['time_register'] : ''));
+    $auction_start_label = trim((string) (isset($selected_schedule['time_start']) ? $selected_schedule['time_start'] : ''));
+}
 ?>
 <!DOCTYPE html>
 <html lang="th">
@@ -181,7 +192,7 @@ try {
                 radial-gradient(circle at 86% 18%, rgba(255, 255, 255, 0.12), transparent 28%),
                 linear-gradient(135deg, #0f356f 0%, #174b99 46%, #2b68c8 100%);
             color: white;
-            padding: 140px 0 60px;
+            padding: 112px 0 36px;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -204,6 +215,193 @@ try {
             z-index: 1;
         }
 
+        .auction-list-hero {
+            max-width: 920px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .auction-list-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            padding: 6px 11px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            color: #ffe08a;
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+        }
+
+        .auction-list-title {
+            max-width: 760px;
+            margin: 0 0 8px;
+            color: #ffffff;
+            font-size: clamp(1.8rem, 4.2vw, 2.75rem);
+            line-height: 1.12;
+            letter-spacing: -0.04em;
+        }
+
+        .auction-round-card {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            margin-top: 16px;
+        }
+
+        .auction-round-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            min-height: 36px;
+            padding: 0 12px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            color: #fff;
+            font-weight: 800;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .auction-round-pill i {
+            color: var(--accent-gold);
+        }
+
+        .auction-hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .auction-hero-actions a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 40px;
+            padding: 0 16px;
+            border-radius: 999px;
+            font-weight: 900;
+            font-size: 0.92rem;
+            text-decoration: none;
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .auction-hero-actions a:hover {
+            transform: translateY(-2px);
+        }
+
+        .auction-register-link {
+            background: linear-gradient(135deg, var(--accent-gold) 0%, #ffe07a 100%);
+            color: #0f2d5c;
+            box-shadow: 0 14px 30px rgba(255, 199, 44, 0.24);
+        }
+
+        .auction-back-link {
+            background: rgba(255, 255, 255, 0.14);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.24);
+        }
+
+        .auction-breadcrumb {
+            padding: 22px 0 8px;
+        }
+
+        .auction-breadcrumb a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #49627d;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .auction-list-intro {
+            display: flex;
+            justify-content: space-between;
+            gap: 18px;
+            align-items: flex-end;
+            margin-bottom: 22px;
+            padding: 22px;
+            border-radius: 24px;
+            background: #ffffff;
+            border: 1px solid rgba(23, 69, 143, 0.08);
+            box-shadow: 0 16px 36px rgba(23, 69, 143, 0.07);
+        }
+
+        .auction-list-intro h2 {
+            margin: 0 0 8px;
+            color: #0f2d5c;
+            font-size: 1.55rem;
+        }
+
+        .auction-list-intro p {
+            max-width: 640px;
+            margin: 0;
+            color: #607086;
+            line-height: 1.65;
+        }
+
+        .auction-total-badge {
+            flex: 0 0 auto;
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: #fff4cf;
+            color: #0f2d5c;
+            font-weight: 900;
+        }
+
+        .auction-filter-toggle {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 42px;
+            padding: 0 15px;
+            border: 0;
+            border-radius: 999px;
+            background: var(--primary-blue);
+            color: #fff;
+            font-family: 'Prompt', sans-serif;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 12px 26px rgba(23, 69, 143, 0.18);
+        }
+
+        .auction-filter-close {
+            display: none;
+            width: 38px;
+            height: 38px;
+            border: 0;
+            border-radius: 999px;
+            background: #f3f7fb;
+            color: #0f2d5c;
+            cursor: pointer;
+        }
+
+        .auction-filter-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .auction-filter-heading h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #0f2d5c;
+        }
+
+        .auction-filter-backdrop {
+            display: none;
+        }
+
         .layout-grid {
             display: grid;
             grid-template-columns: 280px 1fr;
@@ -214,10 +412,12 @@ try {
         .filter-sidebar {
             background: white;
             padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            border: 1px solid #eee;
+            border-radius: 24px;
+            box-shadow: 0 18px 42px rgba(23, 69, 143, 0.08);
+            border: 1px solid rgba(23, 69, 143, 0.09);
             height: fit-content;
+            position: sticky;
+            top: 96px;
         }
 
         .filter-group {
@@ -233,9 +433,10 @@ try {
 
         .filter-title {
             font-size: 1.1rem;
-            font-weight: 600;
+            font-weight: 800;
             margin-bottom: 15px;
             display: block;
+            color: #0f2d5c;
         }
 
         .filter-checkbox {
@@ -243,7 +444,8 @@ try {
             align-items: center;
             margin-bottom: 10px;
             cursor: pointer;
-            color: #666;
+            color: #465a73;
+            line-height: 1.5;
         }
 
         .filter-checkbox input {
@@ -254,26 +456,28 @@ try {
 
         .car-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 22px;
         }
 
         .car-card {
             background: white;
-            border-radius: 10px;
+            border-radius: 22px;
             overflow: hidden;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-            border: 1px solid #eee;
+            box-shadow: 0 16px 36px rgba(23, 69, 143, 0.08);
+            border: 1px solid rgba(23, 69, 143, 0.09);
             transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
         }
 
         .car-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 24px 50px rgba(23, 69, 143, 0.14);
         }
 
         .car-img {
-            height: 180px;
+            height: 196px;
             background-color: #f1f5f9;
             display: flex;
             align-items: center;
@@ -281,6 +485,24 @@ try {
             color: #94a3b8;
             font-size: 3rem;
             position: relative;
+            overflow: hidden;
+        }
+
+        .car-queue-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            min-height: 30px;
+            padding: 0 10px;
+            border-radius: 999px;
+            background: rgba(15, 45, 92, 0.88);
+            color: #fff;
+            font-size: 0.82rem;
+            font-weight: 900;
+            backdrop-filter: blur(8px);
         }
 
         .car-badge {
@@ -296,22 +518,36 @@ try {
         }
 
         .car-info {
-            padding: 15px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
         }
 
         .car-title {
             font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: #333;
+            font-weight: 800;
+            margin: 0 0 10px;
+            color: #0f2d5c;
+            line-height: 1.45;
         }
 
         .car-details {
             font-size: 0.9rem;
-            color: #666;
-            margin-bottom: 15px;
+            color: #607086;
+            margin-bottom: 18px;
             display: flex;
-            gap: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .car-details span {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 9px;
+            border-radius: 999px;
+            background: #f6f9fd;
         }
 
         .car-price {
@@ -320,14 +556,148 @@ try {
             font-weight: 700;
         }
 
+        .car-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 12px;
+            margin-top: auto;
+        }
+
+        .car-card-footer .btn {
+            flex: 0 0 auto;
+            border-radius: 999px;
+            padding: 9px 16px !important;
+            font-size: 0.88rem !important;
+            font-weight: 900;
+        }
+
+        .empty-auction-list {
+            grid-column: 1/-1;
+            padding: 48px 24px;
+            border-radius: 24px;
+            background: #ffffff;
+            border: 1px solid rgba(23, 69, 143, 0.08);
+            text-align: center;
+            box-shadow: 0 16px 36px rgba(23, 69, 143, 0.07);
+        }
+
+        .empty-auction-list i {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 70px;
+            height: 70px;
+            margin-bottom: 14px;
+            border-radius: 24px;
+            background: #fff4cf;
+            color: #b98600;
+            font-size: 1.8rem;
+        }
+
         @media (max-width: 992px) {
+            .page-header {
+                padding: 100px 0 34px;
+            }
+
+            .auction-list-hero {
+                text-align: center;
+            }
+
+            .auction-round-card,
+            .auction-hero-actions {
+                justify-content: center;
+            }
+
             .layout-grid {
                 grid-template-columns: 1fr;
+                gap: 20px;
+                margin-top: 24px;
+            }
+
+            .auction-filter-toggle {
+                display: inline-flex;
             }
 
             .filter-sidebar {
+                display: none;
+                position: fixed;
+                left: 12px;
+                right: 12px;
+                bottom: 12px;
+                top: auto;
+                z-index: 1002;
+                max-height: min(76vh, 640px);
+                margin: 0;
+                overflow-y: auto;
+                border-radius: 28px;
+                box-shadow: 0 28px 80px rgba(8, 26, 54, 0.28);
+            }
+
+            .filter-sidebar.is-open {
                 display: block;
-                margin-bottom: 24px;
+            }
+
+            .auction-filter-close {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .auction-filter-backdrop {
+                position: fixed;
+                inset: 0;
+                z-index: 1001;
+                background: rgba(8, 20, 38, 0.45);
+                backdrop-filter: blur(4px);
+            }
+
+            .auction-filter-backdrop.is-open {
+                display: block;
+            }
+
+            body.auction-filter-open {
+                overflow: hidden;
+            }
+
+            .auction-list-intro {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .page-header {
+                padding: 92px 0 28px;
+            }
+
+            .auction-list-title {
+                font-size: 1.75rem;
+            }
+
+            .auction-list-intro {
+                padding: 18px;
+            }
+
+            .auction-list-intro > div {
+                width: 100%;
+            }
+
+            .auction-filter-toggle {
+                width: 100%;
+            }
+
+            .auction-hero-actions a {
+                width: 100%;
+            }
+
+            .car-card-footer {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .car-card-footer .btn {
+                width: 100%;
             }
         }
     </style>
@@ -341,15 +711,37 @@ try {
     <!-- Page Header -->
     <div class="page-header">
         <div class="container">
-            <h1 style="font-size: 2.5rem; margin-bottom: 10px; font-weight: 700; color: #fec435;">รายการรถประมูล</h1>
-            <?php if (!empty($selected_schedule)): ?>
-                <p style="opacity: 0.88;">
-                    รอบประมูล: <?php echo htmlspecialchars($selected_schedule['auction_date']); ?>
-                    - สาขา<?php echo htmlspecialchars($selected_schedule['branch_name']); ?>
-                </p>
-            <?php else: ?>
-                <p style="opacity: 0.88;">เลือกรถประมูลสภาพดีจากรอบประมูลของไมด้า</p>
-            <?php endif; ?>
+            <div class="auction-list-hero">
+                <span class="auction-list-kicker"><i class="fa-solid fa-gavel"></i> MIDA AUCTION</span>
+                <h1 class="auction-list-title">ประมูลรถยนต์</h1>
+
+                <?php if (!empty($selected_schedule)): ?>
+                    <div class="auction-round-card" aria-label="ข้อมูลรอบประมูล">
+                        <span class="auction-round-pill">
+                            <i class="fa-solid fa-calendar-day"></i>
+                            <?php echo htmlspecialchars($auction_round_label); ?>
+                        </span>
+                        <?php if ($auction_branch_label !== ''): ?>
+                            <span class="auction-round-pill">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <?php echo htmlspecialchars($auction_branch_label); ?>
+                            </span>
+                        <?php endif; ?>
+                        <?php if ($auction_start_label !== ''): ?>
+                            <span class="auction-round-pill">
+                                <i class="fa-solid fa-clock"></i>
+                                เริ่มประมูล <?php echo htmlspecialchars($auction_start_label); ?>
+                            </span>
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
+
+                <div class="auction-hero-actions">
+                    <a href="https://auction.mida-leasing.com" target="_blank" rel="noopener" class="auction-register-link">
+                        <i class="fa-solid fa-pen-to-square"></i> ลงทะเบียนเข้าร่วมประมูล
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -357,21 +749,25 @@ try {
     <div class="section" style="padding-top: 0; background-color: #f8f9fa; min-height: 80vh;">
         <div class="container">
 
-            <div style="padding: 20px 0;">
-                <a href="auction.php"
-                    style="text-decoration: none; color: #666; display: inline-flex; align-items: center;">
-                    <i class="fa-solid fa-arrow-left" style="margin-right: 8px;"></i> ย้อนกลับ
+            <div class="auction-breadcrumb">
+                <a href="auction.php">
+                    <i class="fa-solid fa-arrow-left"></i> กลับไปหน้าปฏิทินการประมูล
                 </a>
             </div>
 
             <div class="layout-grid">
 
                 <!-- Sidebar Filter -->
-                <aside class="filter-sidebar">
+                <div class="auction-filter-backdrop" id="auctionFilterBackdrop" aria-hidden="true"></div>
+
+                <aside class="filter-sidebar" id="auctionFilterPanel" aria-label="ตัวกรองรายการรถประมูล">
                     <form action="" method="GET" id="filterForm">
-                        <h3 style="margin-bottom: 20px; font-size: 1.2rem;"><i class="fa-solid fa-filter"></i>
-                            กรองข้อมูล
-                        </h3>
+                        <div class="auction-filter-heading">
+                            <h3><i class="fa-solid fa-filter"></i> ค้นหารถที่สนใจ</h3>
+                            <button type="button" class="auction-filter-close" id="auctionFilterClose" aria-label="ปิดตัวกรอง">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
 
                         <!-- Brands Filter -->
                         <div class="filter-group">
@@ -410,22 +806,26 @@ try {
 
 
                         <button type="button" id="btnSearch" class="btn btn-primary" style="width: 100%;">
-                            <i class="fa-solid fa-search"></i> ค้นหา
+                            <i class="fa-solid fa-search"></i> ค้นหารายการรถ
                         </button>
                         <button type="button" id="btnClear" class="btn"
                             style="width: 100%; margin-top: 10px; display: block; text-align: center; border: 1px solid #eee; color: #666;">
-                            <i class="fa-solid fa-times"></i> ล้างค่า
+                            <i class="fa-solid fa-times"></i> ล้างตัวกรอง
                         </button>
                     </form>
                 </aside>
 
                 <!-- Car Grid -->
                 <div>
-                    <div
-                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                        <h2 style="font-size: 1.5rem; margin: 0;">รถทั้งหมด <span
-                                style="font-size: 1rem; color: #666; font-weight: 400;">(<?php echo $total_cars; ?>
-                                รายการ)</span></h2>
+                    <div class="auction-list-intro">
+                        <div>
+                            <h2>รายการรถประมูล</h2>
+                            <p>กดดูรายละเอียดรถแต่ละคันเพื่อดูรูป ข้อมูลเบื้องต้น และราคาเปิดประมูล แนะนำตรวจสอบข้อมูลอีกครั้งก่อนลงทะเบียนเข้าร่วมประมูล</p>
+                        </div>
+                        <span class="auction-total-badge" id="totalCarsCount"><?php echo $total_cars; ?> คัน</span>
+                        <button type="button" class="auction-filter-toggle" id="auctionFilterToggle" aria-controls="auctionFilterPanel" aria-expanded="false">
+                            <i class="fa-solid fa-sliders"></i> ตัวกรอง
+                        </button>
                     </div>
 
                     <div class="car-grid" id="carGrid">
@@ -461,6 +861,42 @@ try {
                             let currentPage = 1;
                             let totalPages = 1;
                             let isLoading = false;
+                            const filterPanel = document.getElementById('auctionFilterPanel');
+                            const filterBackdrop = document.getElementById('auctionFilterBackdrop');
+                            const filterToggle = document.getElementById('auctionFilterToggle');
+                            const filterClose = document.getElementById('auctionFilterClose');
+
+                            function setFilterOpen(isOpen) {
+                                if (!filterPanel || !filterBackdrop || !filterToggle) return;
+                                filterPanel.classList.toggle('is-open', isOpen);
+                                filterBackdrop.classList.toggle('is-open', isOpen);
+                                document.body.classList.toggle('auction-filter-open', isOpen);
+                                filterToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                            }
+
+                            if (filterToggle) {
+                                filterToggle.addEventListener('click', function () {
+                                    setFilterOpen(true);
+                                });
+                            }
+
+                            if (filterClose) {
+                                filterClose.addEventListener('click', function () {
+                                    setFilterOpen(false);
+                                });
+                            }
+
+                            if (filterBackdrop) {
+                                filterBackdrop.addEventListener('click', function () {
+                                    setFilterOpen(false);
+                                });
+                            }
+
+                            document.addEventListener('keydown', function (event) {
+                                if (event.key === 'Escape') {
+                                    setFilterOpen(false);
+                                }
+                            });
 
                             // Get filters from checkboxes (dynamic)
                             function getFiltersFromForm() {
@@ -532,9 +968,9 @@ try {
                                         totalPages = result.data.total_pages;
 
                                         // Update total cars count
-                                        const totalCarsEl = document.querySelector('h2 span');
+                                        const totalCarsEl = document.getElementById('totalCarsCount');
                                         if (totalCarsEl) {
-                                            totalCarsEl.textContent = `(${result.data.total_cars} รายการ)`;
+                                            totalCarsEl.textContent = `${result.data.total_cars} คัน`;
                                         }
 
                                         // Render cars
@@ -543,8 +979,6 @@ try {
                                         // Render pagination
                                         renderPagination(currentPage, totalPages);
 
-                                        // Scroll to top of grid smoothly
-                                        carGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
                                     } else {
                                         carGrid.innerHTML = `
                                         <div style="grid-column: 1/-1; text-align: center; padding: 40px; background: #fff3cd; border-radius: 10px;">
@@ -569,8 +1003,10 @@ try {
 
                                 if (cars.length === 0) {
                                     carGrid.innerHTML = `
-                                    <div style="grid-column: 1/-1; text-align: center; padding: 40px; background: white; border-radius: 10px;">
-                                        <p style="color: #888;">ไม่พบรายการรถในขณะนี้</p>
+                                    <div class="empty-auction-list">
+                                        <i class="fa-solid fa-car-side"></i>
+                                        <h3 style="margin: 0 0 8px; color: #0f2d5c;">ยังไม่มีรถในเงื่อนไขนี้</h3>
+                                        <p style="color: #607086; margin: 0;">ลองล้างตัวกรอง หรือกลับไปดูรอบประมูลอื่นในปฏิทินการประมูล</p>
                                     </div>
                                 `;
                                     return;
@@ -583,7 +1019,7 @@ try {
                                         : `<i class="fa-solid fa-car-side"></i>`;
 
                                     const queueBadge = car.queue_number
-                                        ? `<span style="position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.7); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;">คันที่: ${escapeHtml(car.queue_number)}</span>`
+                                        ? `<span class="car-queue-badge"><i class="fa-solid fa-hashtag"></i> คันที่ ${escapeHtml(car.queue_number)}</span>`
                                         : '';
 
                                     html += `
@@ -598,12 +1034,12 @@ try {
                                                 <span><i class="fa-solid fa-gauge"></i> ${escapeHtml(car.mileage || '-')}</span>
                                                 <span><i class="fa-solid fa-gear"></i> ${escapeHtml(car.transmission || '-')}</span>
                                             </div>
-                                            <div style="display: flex; justify-content: space-between; align-items: end;">
+                                            <div class="car-card-footer">
                                                 <div>
-                                                    <div style="font-size: 0.8rem; color: #888;">ราคาเปิดประมูล</div>
+                                                    <div style="font-size: 0.8rem; color: #607086;">ราคาเปิดประมูล</div>
                                                     <div class="car-price" ${car.no_starting_price == 1 ? 'style="color: #e74c3c;"' : ''}>${car.no_starting_price == 1 ? 'ไม่มีราคาเริ่มต้น' : escapeHtml(car.price || '-')}</div>
                                                 </div>
-                                                <a href="auction_detail.php?id=${car.id}" class="btn btn-accent" style="padding: 5px 15px; font-size: 0.9rem;">ดูรายละเอียด</a>
+                                                <a href="auction_detail.php?id=${car.id}" class="btn btn-accent">ดูรายละเอียด</a>
                                             </div>
                                         </div>
                                     </div>
@@ -751,6 +1187,7 @@ try {
                             document.getElementById('btnSearch').addEventListener('click', function () {
                                 loadCars(1); // Always start from page 1 when filtering
                                 updateUrlWithFilters(1);
+                                setFilterOpen(false);
                             });
 
                             // Clear button handler
@@ -763,6 +1200,7 @@ try {
                                 const filters = getFiltersFromForm();
                                 const clearUrl = filters.schedule_id ? `auction_list.php?schedule_id=${encodeURIComponent(filters.schedule_id)}` : 'auction_list.php';
                                 window.history.pushState({ page: 1, filters: filters.schedule_id ? { schedule_id: filters.schedule_id } : {} }, '', clearUrl);
+                                setFilterOpen(false);
                             });
 
                             // Initial load

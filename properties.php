@@ -201,7 +201,7 @@ $locations = $stmt_loc->fetchAll(PDO::FETCH_COLUMN);
         }
 
         .properties-hero-actions a,
-        .property-guide-card a {
+        .property-guide-note {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -217,16 +217,25 @@ $locations = $stmt_loc->fetchAll(PDO::FETCH_COLUMN);
             transition: transform 0.18s ease, box-shadow 0.18s ease;
         }
 
-        .properties-hero-actions a:hover,
-        .property-guide-card a:hover {
+        .properties-hero-actions a:hover {
             transform: translateY(-2px);
         }
 
-        .properties-hero-actions .is-gold,
-        .property-guide-card a.is-gold {
+        .properties-hero-actions .is-gold {
             background: linear-gradient(135deg, var(--accent-gold) 0%, #ffe07a 100%);
             color: #0f2d5c;
             box-shadow: 0 12px 26px rgba(255, 199, 44, 0.24);
+        }
+
+        .property-guide-note {
+            width: fit-content;
+            min-height: 34px;
+            margin-top: auto;
+            padding: 0 12px;
+            background: #f8fbff;
+            color: var(--primary-blue);
+            font-size: 0.86rem;
+            box-shadow: inset 0 0 0 1px rgba(23, 69, 143, 0.08);
         }
 
         .properties-hero-panel {
@@ -516,7 +525,6 @@ $locations = $stmt_loc->fetchAll(PDO::FETCH_COLUMN);
                     <p>รวมทรัพย์พร้อมขายจากบริษัท เลือกดูทำเล รายละเอียด ราคา และช่องทางสอบถามเจ้าหน้าที่ได้ในที่เดียว</p>
                     <div class="properties-hero-actions">
                         <a href="#property-listing" class="is-gold"><i class="fa-solid fa-magnifying-glass"></i> ดูรายการทรัพย์</a>
-                        <a href="#property-guide"><i class="fa-solid fa-phone"></i> สอบถามเจ้าหน้าที่</a>
                     </div>
                 </div>
 
@@ -532,7 +540,7 @@ $locations = $stmt_loc->fetchAll(PDO::FETCH_COLUMN);
                             คอนโด
                         </div>
                         <div class="property-type-item">
-                            <i class="fa-solid fa-mountain-sun"></i>
+                            <i class="fa-solid fa-map-location-dot"></i>
                             ที่ดิน
                         </div>
                     </div>
@@ -548,19 +556,19 @@ $locations = $stmt_loc->fetchAll(PDO::FETCH_COLUMN);
                     <i class="fa-solid fa-location-dot"></i>
                     <h3>เลือกทำเลที่ต้องการ</h3>
                     <p>ค้นหาทรัพย์ตามประเภทและพื้นที่ เพื่อดูรายการที่ตรงกับความสนใจของคุณ</p>
-                    <a href="#property-listing" class="is-gold">ค้นหารายการ</a>
+                    <span class="property-guide-note">ใช้ตัวกรองด้านล่าง</span>
                 </div>
                 <div class="property-guide-card">
                     <i class="fa-solid fa-file-lines"></i>
                     <h3>ดูรายละเอียดก่อนตัดสินใจ</h3>
                     <p>ดูรูป ราคา ขนาดพื้นที่ และข้อมูลทรัพย์ เพื่อเปรียบเทียบก่อนสอบถามเพิ่มเติม</p>
-                    <a href="#property-listing">ดูทรัพย์ทั้งหมด</a>
+                    <span class="property-guide-note">กดดูในรายการทรัพย์</span>
                 </div>
                 <div class="property-guide-card">
                     <i class="fa-solid fa-headset"></i>
                     <h3>ให้เจ้าหน้าที่ติดต่อกลับ</h3>
                     <p>สนใจทรัพย์รายการไหน ฝากข้อมูลไว้ได้ เจ้าหน้าที่จะติดต่อกลับเพื่อให้รายละเอียด</p>
-                    <a href="contact_us.php">ติดต่อเรา</a>
+                    <span class="property-guide-note">สอบถามจากหน้ารายละเอียดทรัพย์</span>
                 </div>
             </div>
         </div>
@@ -754,7 +762,7 @@ $locations = $stmt_loc->fetchAll(PDO::FETCH_COLUMN);
                             properties.forEach(prop => {
                                 // ใช้ไอคอนต่างกันตามประเภท
                                 const isLand = prop.type === 'ที่ดินเปล่า';
-                                const placeholderIcon = isLand ? 'fa-solid fa-mountain-sun' : 'fa-solid fa-house-chimney';
+                                const placeholderIcon = isLand ? 'fa-solid fa-map-location-dot' : 'fa-solid fa-house-chimney';
                                 
                                 const imageHtml = prop.image_path
                                     ? `<img src="${escapeHtml(prop.image_path)}" alt="${escapeHtml(prop.title)}" style="width: 100%; height: 100%; object-fit: cover;">`
@@ -773,7 +781,7 @@ $locations = $stmt_loc->fetchAll(PDO::FETCH_COLUMN);
                                 // แสดงพื้นที่ที่ดินสำหรับทุกประเภท
                                 const areaValue = prop.land_size || prop.area;
                                 if (areaValue) {
-                                    const areaIcon = isLand ? 'fa-solid fa-mountain-sun' : 'fa-solid fa-ruler-combined';
+                                    const areaIcon = isLand ? 'fa-solid fa-map-location-dot' : 'fa-solid fa-ruler-combined';
                                     facilityHtml += `<div><i class="${areaIcon}"></i> ${escapeHtml(areaValue)}</div>`;
                                 }
 
