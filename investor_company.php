@@ -569,7 +569,7 @@ $shareholder_percent_column = companyPickColumn($shareholder_columns, array('sha
                         <ul class="company-highlight-list">
                             <li><i class="fa-solid fa-circle-check"></i><span>สรุปข้อมูลธุรกิจและข้อมูลจดทะเบียนของบริษัท</span></li>
                             <li><i class="fa-solid fa-circle-check"></i><span>แสดงทุนจดทะเบียนและทุนชำระแล้วสำหรับนักลงทุน</span></li>
-                            <li><i class="fa-solid fa-circle-check"></i><span>ดึงรายชื่อผู้ถือหุ้นรายใหญ่จากฐานข้อมูลหลัก</span></li>
+                            <li><i class="fa-solid fa-circle-check"></i><span>แสดงรายชื่อผู้ถือหุ้นรายใหญ่เพื่อประกอบการติดตามข้อมูลบริษัท</span></li>
                         </ul>
                     </aside>
                 </div>
@@ -723,6 +723,7 @@ $shareholder_percent_column = companyPickColumn($shareholder_columns, array('sha
                         <li><a href="investor_company.php">ข้อมูลบริษัท</a></li>
                         <li><a href="investor_financial.php">ข้อมูลทางการเงิน</a></li>
                         <li><a href="investor_publications.php">เอกสารเผยแพร่</a></li>
+                            <li><a href="investor_contact.php">ติดต่อนักลงทุนสัมพันธ์</a></li>
                     </ul>
                 </div>
 

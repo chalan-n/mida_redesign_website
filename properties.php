@@ -1021,6 +1021,7 @@ $locations = $stmt_loc->fetchAll(PDO::FETCH_COLUMN);
                         <li><a href="investor_company.php">ข้อมูลบริษัท</a></li>
                         <li><a href="investor_financial.php">ข้อมูลทางการเงิน</a></li>
                         <li><a href="investor_publications.php">เอกสารเผยแพร่</a></li>
+                            <li><a href="investor_contact.php">ติดต่อนักลงทุนสัมพันธ์</a></li>
                     </ul>
                 </div>
                 <div class="footer-links">
