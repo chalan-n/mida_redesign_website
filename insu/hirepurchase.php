@@ -167,6 +167,50 @@ if ($_SESSION['sess_login'] == "") {
 			font-weight: 700;
 		}
 
+		.installment-breakdowns {
+			display: grid;
+			grid-template-columns: 1fr;
+			gap: var(--spacing-md);
+			margin-bottom: var(--spacing-lg);
+		}
+
+		.installment-breakdown-card {
+			padding: var(--spacing-lg);
+			border: 1px solid rgba(99, 102, 241, 0.22);
+			border-radius: 20px;
+			background: rgba(99, 102, 241, 0.10);
+		}
+
+		.installment-breakdown-title {
+			margin-bottom: var(--spacing-sm);
+			color: var(--primary);
+			font-size: 0.88rem;
+			font-weight: 700;
+		}
+
+		.installment-breakdown-row {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			gap: var(--spacing-md);
+			padding: 11px 0;
+			border-bottom: 1px solid rgba(99, 102, 241, 0.14);
+			color: var(--text-secondary);
+			font-size: 0.9rem;
+		}
+
+		.installment-breakdown-row:last-child {
+			border-bottom: 0;
+			padding-bottom: 0;
+		}
+
+		.installment-breakdown-value {
+			color: var(--text-primary);
+			font-size: 1.05rem;
+			font-weight: 700;
+			text-align: right;
+		}
+
 		.info-grid {
 			display: flex;
 			justify-content: center;
@@ -405,7 +449,7 @@ if ($_SESSION['sess_login'] == "") {
 
 			var insuranceBadge = '';
 			if (arryData[17] == "TLIFE") {
-				insuranceBadge = '<span class="insurance-badge tlife"><i class="fas fa-shield-halved"></i> T Life</span>';
+				insuranceBadge = '<span class="insurance-badge tlife"><i class="fas fa-shield-halved"></i> T Life - อัตรา ' + arryData[0] + '% | เบี้ย ' + arryData[1] + '</span>';
 			} else if (arryData[17] == "NO") {
 				insuranceBadge = '<span class="insurance-badge no-insurance"><i class="fas fa-times-circle"></i> ไม่มีประกัน</span>';
 			}
@@ -430,8 +474,7 @@ if ($_SESSION['sess_login'] == "") {
 				'<div class="result-row"><span class="result-label">รวมยอดเช่าซื้อ + VAT</span><span class="result-value">' + arryData[11] + '</span></div>';
 
 			if (arryData[17] != "NO") {
-				resData += '<div class="result-row"><span class="result-label">ค่าเบี้ยประกัน</span><span class="result-value">' + arryData[1] + '</span></div>' +
-					'<div class="result-row"><span class="result-label">ทุนประกัน</span><span class="result-value">' + arryData[28] + '</span></div>';
+				resData += '<div class="result-row"><span class="result-label">ค่าเบี้ยประกัน</span><span class="result-value">' + arryData[1] + '</span></div>';
 			}
 
 			resData += '</div>' +
@@ -469,9 +512,6 @@ if ($_SESSION['sess_login'] == "") {
 				'<div class="result-row"><span class="result-label">อัตราดอกเบี้ย</span><span class="result-value">' + arryData[15] + '% <small class="text-danger">(EF ' + EffRate + ')</small></span></div>' +
 				'<div class="result-row"><span class="result-label">จำนวนงวด</span><span class="result-value">' + arryData[16] + ' งวด</span></div>';
 
-			if (arryData[17] != "NO") {
-				resData += '<div class="result-row"><span class="result-label">ทุนประกัน</span><span class="result-value">' + arryData[28] + '</span></div>';
-			}
 			resData += '</div>';
 
 			// Loan Summary
@@ -496,9 +536,17 @@ if ($_SESSION['sess_login'] == "") {
 				'</div>';
 
 			// Installments
-			resData += '<div class="summary-cards">' +
-				'<div class="summary-card warning"><div class="summary-card-label">ชำระงวดแรก</div><div class="summary-card-value">' + arryData[14] + '</div></div>' +
-				'<div class="summary-card success"><div class="summary-card-label">ชำระงวดสุดท้าย</div><div class="summary-card-value">' + arryData[20] + '</div></div>' +
+			resData += '<div class="installment-breakdowns">' +
+				'<div class="installment-breakdown-card">' +
+				'<div class="installment-breakdown-row"><span>ชำระงวดแรก</span><span class="installment-breakdown-value">' + arryData[12] + '</span></div>' +
+				'<div class="installment-breakdown-row"><span>VAT</span><span class="installment-breakdown-value">' + arryData[13] + '</span></div>' +
+				'<div class="installment-breakdown-row"><span>รวม</span><span class="installment-breakdown-value">' + arryData[14] + '</span></div>' +
+				'</div>' +
+				'<div class="installment-breakdown-card">' +
+				'<div class="installment-breakdown-row"><span>ชำระงวดสุดท้าย</span><span class="installment-breakdown-value">' + arryData[22] + '</span></div>' +
+				'<div class="installment-breakdown-row"><span>VAT</span><span class="installment-breakdown-value">' + arryData[21] + '</span></div>' +
+				'<div class="installment-breakdown-row"><span>รวม</span><span class="installment-breakdown-value">' + arryData[20] + '</span></div>' +
+				'</div>' +
 				'</div>';
 
 			resData += '<div class="btn-group mt-3">' +

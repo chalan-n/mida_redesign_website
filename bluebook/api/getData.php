@@ -3,16 +3,50 @@
  * Bluebook API - SPA Data Endpoint
  * PHP 8 Compatible
  */
+ini_set('display_errors', '0');
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 include("../includes/config.php");
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 $response = array('success' => false, 'data' => array(), 'message' => '');
+
 function bluebookGetCid()
 {
     $cid = isset($_GET['cid']) ? trim($_GET['cid']) : '';
     return ($cid === '1') ? '1' : '2';
 }
+
+function bluebookHasColumn($column)
+{
+    static $columns = array();
+    global $objConnect;
+
+    if (isset($columns[$column])) {
+        return $columns[$column];
+    }
+
+    if (!$objConnect) {
+        $columns[$column] = false;
+        return false;
+    }
+
+    $table = str_replace('`', '``', DB_TABLE_NAME);
+    $columnEscaped = mysqli_real_escape_string($objConnect, $column);
+    $result = mysqli_query($objConnect, "SHOW COLUMNS FROM `" . $table . "` LIKE '" . $columnEscaped . "'");
+    $columns[$column] = ($result && mysqli_num_rows($result) > 0);
+
+    if ($result) {
+        mysqli_free_result($result);
+    }
+
+    return $columns[$column];
+}
+
+function bluebookCarPictureSelect()
+{
+    return bluebookHasColumn('car_picture') ? 'car_picture' : "'' AS car_picture";
+}
+
 switch ($action) {
     case 'getTypes':
         // Get car types (pickup and sedan)
@@ -88,8 +122,9 @@ switch ($action) {
         $mid = isset($_GET['mid']) ? trim($_GET['mid']) : '';
         $yy = isset($_GET['yy']) ? trim($_GET['yy']) : '';
         $submodels = array();
+        $carPictureSelect = bluebookCarPictureSelect();
         $rows = sqlFetchAllAssoc(
-            "SELECT ID, carSubModel, carGear, carPrice, car_picture FROM " . DB_TABLE_NAME . " WHERE carID = ? AND carType = ? AND carBrand = ? AND carModel = ? AND carYear = ? ORDER BY carSubModel, carGear ASC",
+            "SELECT ID, carSubModel, carGear, carPrice, " . $carPictureSelect . " FROM " . DB_TABLE_NAME . " WHERE carID = ? AND carType = ? AND carBrand = ? AND carModel = ? AND carYear = ? ORDER BY carSubModel, carGear ASC",
             'sssss',
             array($bluebook_year, $cid, $bid, $mid, $yy)
         );
@@ -99,7 +134,7 @@ switch ($action) {
                 'submodel' => trim($row['carSubModel']),
                 'gear' => trim($row['carGear']),
                 'price' => (int) $row['carPrice'],
-                'hasPicture' => trim($row['car_picture']) !== ''
+                'hasPicture' => isset($row['car_picture']) && trim($row['car_picture']) !== ''
             );
         }
         $response['success'] = true;
@@ -107,13 +142,14 @@ switch ($action) {
         break;
     case 'getPrice':
         $carid = isset($_GET['carid']) ? (int) $_GET['carid'] : 0;
+        $carPictureSelect = bluebookCarPictureSelect();
         $row = sqlFetchOneAssoc(
-            "SELECT carSubModel, carGear, carPrice, carCode, car_picture FROM " . DB_TABLE_NAME . " WHERE ID = ?",
+            "SELECT carSubModel, carGear, carPrice, carCode, " . $carPictureSelect . " FROM " . DB_TABLE_NAME . " WHERE ID = ?",
             'i',
             array($carid)
         );
         if ($row) {
-            $carPicture = trim($row['car_picture']);
+            $carPicture = isset($row['car_picture']) ? trim($row['car_picture']) : '';
             $response['success'] = true;
             $response['data'] = array(
                 'code' => trim($row['carCode']),
