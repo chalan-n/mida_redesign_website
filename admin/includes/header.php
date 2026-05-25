@@ -37,6 +37,7 @@ $menuStructure = [
         ['module' => 'careers', 'page' => 'careers.php', 'form' => 'career_form.php', 'icon' => 'fa-briefcase', 'label' => 'ร่วมงานกับเรา'],
     ],
     'investor' => [
+        ['module' => 'financials', 'page' => 'company_info.php', 'icon' => 'fa-building', 'label' => 'จัดการข้อมูลบริษัท'],
         ['module' => 'financials', 'page' => 'financials.php', 'form' => 'financial_form.php', 'icon' => 'fa-file-invoice-dollar', 'label' => 'ข้อมูลทางการเงิน'],
         ['module' => 'publications', 'page' => 'publications.php', 'form' => 'publication_form.php', 'icon' => 'fa-file-arrow-down', 'label' => 'เอกสารดาวน์โหลด'],
     ],

@@ -1315,6 +1315,7 @@ if (!empty($selected_schedule)) {
                     <h4>นักลงทุนสัมพันธ์</h4>
                     <ul>
                         <li><a href="investor_business.php">วิสัยทัศน์และพันธกิจ</a></li>
+                        <li><a href="investor_company.php">ข้อมูลบริษัท</a></li>
                         <li><a href="investor_financial.php">ข้อมูลทางการเงิน</a></li>
                         <li><a href="investor_publications.php">เอกสารเผยแพร่</a></li>
                     </ul>
