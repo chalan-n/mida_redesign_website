@@ -96,11 +96,43 @@ function auction_extract_date_parts($date_text)
         'ธันวาคม' => 12
     );
 
+    $thai_months = array_merge($thai_months, array(
+        'ม.ค.' => 1,
+        'มค' => 1,
+        'ก.พ.' => 2,
+        'กพ' => 2,
+        'มี.ค.' => 3,
+        'มีค' => 3,
+        'เม.ย.' => 4,
+        'เมย' => 4,
+        'พ.ค.' => 5,
+        'พค' => 5,
+        'มิ.ย.' => 6,
+        'มิย' => 6,
+        'ก.ค.' => 7,
+        'กค' => 7,
+        'ส.ค.' => 8,
+        'สค' => 8,
+        'ก.ย.' => 9,
+        'กย' => 9,
+        'ต.ค.' => 10,
+        'ตค' => 10,
+        'พ.ย.' => 11,
+        'พย' => 11,
+        'ธ.ค.' => 12,
+        'ธค' => 12
+    ));
+
     foreach ($thai_months as $month_name => $month_number) {
         if (strpos($date_text, $month_name) !== false) {
             $parts['month'] = $month_number;
             break;
         }
+    }
+
+    if (empty($parts['year']) && preg_match('/(?:^|\D)(\d{2})(?:\D*)$/u', $date_text, $matches)) {
+        $year = (int) $matches[1];
+        $parts['year'] = 1957 + $year;
     }
 
     return $parts;
@@ -169,6 +201,20 @@ $calendar_days_in_month = (int) date('t', strtotime($calendar_year . '-' . str_p
 $calendar_title = $thai_month_labels[$calendar_month] . ' ' . ($calendar_year + 543);
 $today_datetime = new DateTime('now', new DateTimeZone('Asia/Bangkok'));
 $today_key = (int) $today_datetime->format('Ymd');
+$upcoming_schedules = array();
+foreach ($schedules as $schedule) {
+    $date_parts = auction_extract_date_parts($schedule['auction_date']);
+    if (empty($date_parts['day'])) {
+        continue;
+    }
+
+    $schedule_year = !empty($date_parts['year']) ? (int) $date_parts['year'] : $calendar_year;
+    $schedule_month = !empty($date_parts['month']) ? (int) $date_parts['month'] : $calendar_month;
+    $schedule_key = (int) ($schedule_year . str_pad($schedule_month, 2, '0', STR_PAD_LEFT) . str_pad((int) $date_parts['day'], 2, '0', STR_PAD_LEFT));
+    if ($schedule_key >= $today_key) {
+        $upcoming_schedules[] = $schedule;
+    }
+}
 $auction_calendar_events = array();
 foreach ($schedules as $schedule) {
     $date_parts = auction_extract_date_parts($schedule['auction_date']);
@@ -189,6 +235,7 @@ foreach ($schedules as $schedule) {
         'timeRegister' => $schedule['time_register'],
         'timeStart' => $schedule['time_start'],
         'carCount' => (int) $schedule['actual_car_count'],
+        'dateKey' => (int) ($event_year . str_pad($event_month, 2, '0', STR_PAD_LEFT) . str_pad((int) $date_parts['day'], 2, '0', STR_PAD_LEFT)),
         'url' => 'auction_list.php?schedule_id=' . (int) $schedule['id']
     );
 }
@@ -1230,9 +1277,9 @@ foreach ($schedules as $schedule) {
                         <i class="fa-solid fa-user-plus"></i> ลงทะเบียนเข้าร่วมประมูล
                     </a>
 
-                    <?php if (count($schedules) > 0): ?>
+                    <?php if (count($upcoming_schedules) > 0): ?>
                         <div class="auction-round-list" id="auctionRoundList">
-                            <?php foreach ($schedules as $schedule):
+                            <?php foreach ($upcoming_schedules as $schedule):
                                 $count = (int) $schedule['actual_car_count'];
                                 ?>
                                 <div class="auction-round-item">
@@ -1394,8 +1441,8 @@ foreach ($schedules as $schedule) {
 
             <div class="row"
                 style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px;">
-                <?php if (count($schedules) > 0): ?>
-                    <?php foreach ($schedules as $index => $schedule):
+                <?php if (count($upcoming_schedules) > 0): ?>
+                    <?php foreach ($upcoming_schedules as $index => $schedule):
                         $count = $schedule['actual_car_count'];
                         ?>
                         <div class="schedule-card"
@@ -1592,6 +1639,10 @@ foreach ($schedules as $schedule) {
 
         function renderRoundList(events) {
             if (!list) return;
+
+            events = events.filter(function(event) {
+                return Number(event.dateKey || getDateKey(Number(event.year), Number(event.month), Number(event.day))) >= todayKey;
+            });
 
             if (!events.length) {
                 list.innerHTML = '<div class="auction-empty-month">ยังไม่มีรอบประมูลในเดือนนี้</div>';
