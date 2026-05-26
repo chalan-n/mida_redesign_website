@@ -57,6 +57,14 @@ try {
         $messages[] = "ℹ️ column role_id มีอยู่แล้ว";
     }
 
+    $adminIdColumn = $db->query("SHOW COLUMNS FROM admins LIKE 'id'")->fetch(PDO::FETCH_ASSOC);
+    if ($adminIdColumn && stripos($adminIdColumn['Extra'] ?? '', 'auto_increment') === false) {
+        $db->exec("ALTER TABLE admins MODIFY id INT NOT NULL AUTO_INCREMENT");
+        $nextAdminId = (int) $db->query("SELECT COALESCE(MAX(id), 0) + 1 FROM admins")->fetchColumn();
+        $db->exec("ALTER TABLE admins AUTO_INCREMENT = " . max(1, $nextAdminId));
+        $messages[] = "✅ ปรับ column id ในตาราง admins ให้เป็น AUTO_INCREMENT สำเร็จ";
+    }
+
     // 5. เพิ่ม column is_active ในตาราง admins (ถ้ายังไม่มี)
     $checkColumn = $db->query("SHOW COLUMNS FROM admins LIKE 'is_active'");
     if ($checkColumn->rowCount() == 0) {

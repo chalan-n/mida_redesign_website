@@ -6,6 +6,33 @@ require_once 'includes/AdminPermission.php';
 $database = new Database();
 $db = $database->getConnection();
 
+function ensureAdminsAutoIncrement($db)
+{
+    $columnStmt = $db->query("SHOW COLUMNS FROM admins LIKE 'id'");
+    $idColumn = $columnStmt ? $columnStmt->fetch(PDO::FETCH_ASSOC) : null;
+    if (!$idColumn) {
+        return;
+    }
+
+    $zeroUserStmt = $db->query("SELECT id FROM admins WHERE id = 0 LIMIT 1");
+    if ($zeroUserStmt && $zeroUserStmt->fetch()) {
+        $nextId = (int) $db->query("SELECT COALESCE(MAX(id), 0) + 1 FROM admins WHERE id > 0")->fetchColumn();
+        $updateUserStmt = $db->prepare("UPDATE admins SET id = ? WHERE id = 0");
+        $updateUserStmt->execute([$nextId]);
+
+        if (isset($_SESSION['admin_id']) && (int) $_SESSION['admin_id'] === 0) {
+            $_SESSION['admin_id'] = $nextId;
+        }
+    }
+
+    if (stripos($idColumn['Extra'] ?? '', 'auto_increment') === false) {
+        $db->exec("ALTER TABLE admins MODIFY id INT NOT NULL AUTO_INCREMENT");
+    }
+
+    $nextAutoIncrement = (int) $db->query("SELECT COALESCE(MAX(id), 0) + 1 FROM admins")->fetchColumn();
+    $db->exec("ALTER TABLE admins AUTO_INCREMENT = " . max(1, $nextAutoIncrement));
+}
+
 // ตรวจสอบสิทธิ์
 $perm = new AdminPermission($db, $_SESSION['admin_id'] ?? null);
 
@@ -84,6 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $user = $stmt->fetch();
                 } else {
                     // Insert
+                    ensureAdminsAutoIncrement($db);
                     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
                     $sql = "INSERT INTO admins (username, name, password, role_id, is_active) VALUES (?, ?, ?, ?, ?)";
                     $stmt = $db->prepare($sql);
