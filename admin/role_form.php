@@ -6,6 +6,38 @@ require_once 'includes/AdminPermission.php';
 $database = new Database();
 $db = $database->getConnection();
 
+function ensureAdminRolesAutoIncrement($db)
+{
+    $columnStmt = $db->query("SHOW COLUMNS FROM admin_roles LIKE 'id'");
+    $idColumn = $columnStmt ? $columnStmt->fetch(PDO::FETCH_ASSOC) : null;
+    if (!$idColumn) {
+        return;
+    }
+
+    $db->exec("SET FOREIGN_KEY_CHECKS = 0");
+    try {
+        $zeroRoleStmt = $db->query("SELECT id FROM admin_roles WHERE id = 0 LIMIT 1");
+        if ($zeroRoleStmt && $zeroRoleStmt->fetch()) {
+            $nextId = (int) $db->query("SELECT COALESCE(MAX(id), 0) + 1 FROM admin_roles WHERE id > 0")->fetchColumn();
+            $updateRoleStmt = $db->prepare("UPDATE admin_roles SET id = ? WHERE id = 0");
+            $updateRoleStmt->execute([$nextId]);
+            $updatePermissionsStmt = $db->prepare("UPDATE role_permissions SET role_id = ? WHERE role_id = 0");
+            $updatePermissionsStmt->execute([$nextId]);
+            $updateAdminsStmt = $db->prepare("UPDATE admins SET role_id = ? WHERE role_id = 0");
+            $updateAdminsStmt->execute([$nextId]);
+        }
+
+        if (stripos($idColumn['Extra'] ?? '', 'auto_increment') === false) {
+            $db->exec("ALTER TABLE admin_roles MODIFY id INT NOT NULL AUTO_INCREMENT");
+        }
+
+        $nextAutoIncrement = (int) $db->query("SELECT COALESCE(MAX(id), 0) + 1 FROM admin_roles")->fetchColumn();
+        $db->exec("ALTER TABLE admin_roles AUTO_INCREMENT = " . max(1, $nextAutoIncrement));
+    } finally {
+        $db->exec("SET FOREIGN_KEY_CHECKS = 1");
+    }
+}
+
 // ตรวจสอบสิทธิ์
 $perm = new AdminPermission($db, $_SESSION['admin_id'] ?? null);
 
@@ -60,6 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = 'ชื่อกลุ่มนี้มีอยู่แล้ว';
         } else {
             try {
+                ensureAdminRolesAutoIncrement($db);
                 $db->beginTransaction();
 
                 if ($isEdit) {
@@ -131,6 +164,12 @@ include 'includes/header.php';
         margin-bottom: 10px;
         padding-bottom: 8px;
         border-bottom: 1px solid #ddd;
+    }
+
+    .permission-covered-menus {
+        color: #6c757d;
+        font-size: 0.85rem;
+        margin: -4px 0 10px 0;
     }
 
     .permission-checkbox {
@@ -218,6 +257,12 @@ include 'includes/header.php';
                             เลือกทั้งหมด
                         </button>
                     </h6>
+                    <?php if (!empty($data['covered_menus'])): ?>
+                        <div class="permission-covered-menus">
+                            ครอบคลุมเมนู:
+                            <?php echo htmlspecialchars(implode(' / ', $data['covered_menus'])); ?>
+                        </div>
+                    <?php endif; ?>
                     <div>
                         <?php foreach ($data['permissions'] as $permission): ?>
                             <label class="permission-checkbox">

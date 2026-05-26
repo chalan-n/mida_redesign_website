@@ -120,6 +120,11 @@ try {
         ['auction_schedules', 'update', 'แก้ไขตารางประมูล', null, 72],
         ['auction_schedules', 'delete', 'ลบตารางประมูล', null, 73],
 
+        ['used_cars', 'view', 'ดูรถสวยพร้อมขาย', 'fa-car-rear', 75],
+        ['used_cars', 'create', 'เพิ่มรถสวยพร้อมขาย', null, 76],
+        ['used_cars', 'update', 'แก้ไขรถสวยพร้อมขาย', null, 77],
+        ['used_cars', 'delete', 'ลบรถสวยพร้อมขาย', null, 78],
+
         ['properties', 'view', 'ดูทรัพย์สินรอขาย', 'fa-house-chimney', 80],
         ['properties', 'create', 'เพิ่มทรัพย์สิน', null, 81],
         ['properties', 'update', 'แก้ไขทรัพย์สิน', null, 82],

@@ -165,6 +165,7 @@ class AdminPermission
             if (!isset($grouped[$module])) {
                 $grouped[$module] = [
                     'label' => $this->getModuleLabel($module),
+                    'covered_menus' => $this->getModuleCoveredMenus($module),
                     'permissions' => []
                 ];
             }
@@ -201,6 +202,30 @@ class AdminPermission
             'roles' => 'กลุ่มผู้ใช้'
         ];
         return isset($labels[$module]) ? $labels[$module] : $module;
+    }
+
+    private function getModuleCoveredMenus($module)
+    {
+        $menus = [
+            'auction_schedules' => [
+                'ตารางประมูล',
+                'โบรชัวร์ประมูล',
+                'รถเข้ารอบประมูล',
+                'รถเด่นประจำรอบ',
+                'แผนที่งานประมูล'
+            ],
+            'financials' => [
+                'จัดการข้อมูลบริษัท',
+                'ข้อมูลทางการเงิน'
+            ],
+            'settings' => [
+                'ตั้งค่าเว็บไซต์',
+                'ปุ่มแชร์หน้านี้',
+                'สถิติผู้เข้าชม'
+            ]
+        ];
+
+        return isset($menus[$module]) ? $menus[$module] : [];
     }
 
     /**
