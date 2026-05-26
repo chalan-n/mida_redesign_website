@@ -398,6 +398,10 @@ try {
                     style="background: var(--accent-gold); color: white; min-width: 220px;">สมัครสินเชื่อ</a>
                 <a href="contact_us.php" class="btn btn-secondary-light" style="min-width: 220px;">คุยกับเจ้าหน้าที่</a>
             </div>
+            <p class="loan-note"><i class="fa-solid fa-triangle-exclamation"
+                    style="margin-right: 8px;"></i>กู้เท่าที่จำเป็นและชำระคืนไหว</p>
+            <p style="font-size: 0.9rem; color: rgba(255,255,255,0.72);">อัตราดอกเบี้ย 11.99% - 23.99% ต่อปี
+                เงื่อนไขเป็นไปตามที่บริษัทฯ กำหนด</p>
         </div>
     </section>
 
